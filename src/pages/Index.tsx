@@ -1,10 +1,14 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "@/components/ui/icon";
+
+/* ─── Logo ─── */
+const LOGO_URL = "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/df225f17-1c64-48bc-8a83-f21266f04de2.png";
 
 /* ─── Images ─── */
 const IMG = {
-  ps399: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/files/57a4b5d8-1f1c-4508-a159-fb6be9bae91e.jpg",
+  ps399: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/df225f17-1c64-48bc-8a83-f21266f04de2.png",
   ps850: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/files/fbbf6388-f4a0-4b11-b028-922a1afcbe41.jpg",
+
   ps990: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/files/899434e1-ed1d-487b-af20-846bc37bd0fd.jpg",
   ps1900: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/files/c88e067c-8a64-48ad-8b87-dc695ae3a2b5.jpg",
   beach: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/files/498b08e6-66ba-49c0-9b63-ec77de184bf2.jpg",
@@ -67,6 +71,60 @@ function scrollTo(id: string) {
 }
 
 /* ════════════════════════════════════════════════════════════ */
+/* ─── PS-399 real photos ─── */
+const PS399_PHOTOS = [
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/df225f17-1c64-48bc-8a83-f21266f04de2.png", alt: "SVEN PS-399, вид спереди" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/11c91f54-cb42-43d4-9fae-0d0ec59f4959.jpg", alt: "SVEN PS-399 — 3-полосная акустика" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/284be3c8-775e-4f37-9575-edd6985b8d16.jpg", alt: "SVEN PS-399 — Bluetooth и Auracast" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/6b846afd-46b3-4265-adbf-563aec0d984d.jpg", alt: "SVEN PS-399 — 16 часов автономности" },
+];
+
+function ProductSlider({ photos }: { photos: { src: string; alt: string }[] }) {
+  const [current, setCurrent] = useState(0);
+  return (
+    <div style={{ position: "relative", borderRadius: 20, overflow: "hidden" }}>
+      {/* Main image */}
+      <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", borderRadius: 20, background: "#111" }}>
+        <img
+          src={photos[current].src}
+          alt={photos[current].alt}
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "opacity 0.3s ease" }}
+          loading="lazy"
+        />
+        {/* Arrows */}
+        {photos.length > 1 && (
+          <>
+            <button onClick={() => setCurrent(c => (c - 1 + photos.length) % photos.length)}
+              style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", width: 36, height: 36, borderRadius: "50%", background: "rgba(0,0,0,0.55)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)", zIndex: 2 }}>
+              ‹
+            </button>
+            <button onClick={() => setCurrent(c => (c + 1) % photos.length)}
+              style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", width: 36, height: 36, borderRadius: "50%", background: "rgba(0,0,0,0.55)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(4px)", zIndex: 2 }}>
+              ›
+            </button>
+          </>
+        )}
+        {/* Dot counter */}
+        <div style={{ position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 6, zIndex: 2 }}>
+          {photos.map((_, i) => (
+            <button key={i} onClick={() => setCurrent(i)}
+              style={{ width: i === current ? 20 : 8, height: 8, borderRadius: 4, background: i === current ? "#0072CE" : "rgba(255,255,255,0.35)", border: "none", cursor: "pointer", padding: 0, transition: "all 0.25s ease" }} />
+          ))}
+        </div>
+      </div>
+      {/* Thumbnails */}
+      <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+        {photos.map((p, i) => (
+          <button key={i} onClick={() => setCurrent(i)}
+            style={{ flex: 1, aspectRatio: "1", borderRadius: 10, overflow: "hidden", border: `2px solid ${i === current ? "#0072CE" : "rgba(255,255,255,0.1)"}`, padding: 0, cursor: "pointer", transition: "border-color 0.2s" }}>
+            <img src={p.src} alt={p.alt} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} loading="lazy" />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Index() {
   useFadeUp();
   useScrollEffects();
@@ -81,13 +139,9 @@ export default function Index() {
       <header id="main-header" style={{ padding: "0 32px" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           {/* Logo */}
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{
-              background: "#fff", color: "#0072CE",
-              fontFamily: "Montserrat, sans-serif", fontWeight: 900,
-              fontSize: "1.4rem", padding: "4px 10px", borderRadius: 4, letterSpacing: 2
-            }}>SVEN</div>
-            <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.7)", letterSpacing: "0.15em", textTransform: "uppercase" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <img src={LOGO_URL} alt="SVEN" style={{ height: 44, width: "auto", display: "block", objectFit: "contain" }} />
+            <span style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.65)", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "Montserrat, sans-serif", fontWeight: 600 }}>
               YOU WANT — WE CAN
             </span>
           </div>
@@ -149,7 +203,7 @@ export default function Index() {
           {/* 4 speakers lineup */}
           <div className="fade-up" style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 16, padding: "20px 0" }}>
             {[
-              { img: IMG.ps399, h: 160, name: "PS-399", glow: "#8338EC" },
+              { img: PS399_PHOTOS[0].src, h: 160, name: "PS-399", glow: "#8338EC" },
               { img: IMG.ps850, h: 200, name: "PS-850", glow: "#3A86FF" },
               { img: IMG.ps990, h: 240, name: "PS-990", glow: "#06FFA5" },
               { img: IMG.ps1900, h: 300, name: "PS-1900", glow: "#FFB800" },
@@ -181,7 +235,7 @@ export default function Index() {
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 20 }}>
             {[
-              { img: IMG.beach, icon: "🌊", title: "На пляже и пикнике", text: "Лёгкая, защищённая от воды и брызг. Вещайте музыку сразу на несколько Bluetooth-наушников", btn: "→ SVEN PS-399", anchor: "ps399", goal: "click_scenario_beach", btnClass: "sven-btn-primary" },
+              { img: IMG.beach, icon: "🌊", title: "На пляже и пикнике",  text: "Лёгкая, защищённая от воды и брызг. Вещайте музыку сразу на несколько Bluetooth-наушников", btn: "→ SVEN PS-399", anchor: "ps399", goal: "click_scenario_beach", btnClass: "sven-btn-primary" },
               { img: IMG.karaoke, icon: "🎤", title: "Караоке-вечеринка дома", text: "Микрофон в комплекте, управление со смартфона, до 28 часов работы без розетки", btn: "→ SVEN PS-850", anchor: "ps850", goal: "click_scenario_karaoke", btnClass: "sven-btn-primary" },
               { img: IMG.dacha, icon: "💧", title: "Рыбалка, дача, у воды", text: "180 Вт мощности. Не боится полного погружения в воду. Работает от розетки и заряжает телефон", btn: "→ SVEN PS-990", anchor: "ps990", goal: "click_scenario_dacha", btnClass: "sven-btn-primary" },
               { img: IMG.event, icon: "⚡", title: "Свадьба, корпоратив, концерт", text: "1000 Вт. Профессиональные усилители. 2 микрофона + гитарный вход. На колёсиках", btn: "→ SVEN PS-1900", anchor: "ps1900", goal: "click_scenario_event", btnClass: "sven-btn-gold" },
@@ -217,10 +271,7 @@ export default function Index() {
         <div id="ps399" style={{ background: "#1A1A1A", padding: "60px 32px" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2">
             <div className="fade-up model-img-wrap" style={{ borderRadius: 24 }}>
-              <div className="model-img-float">
-                <img src={IMG.ps399} alt="Портативная акустика SVEN PS-399, вид спереди, цвет чёрный"
-                  style={{ width: "100%", borderRadius: 20, display: "block" }} loading="lazy" />
-              </div>
+              <ProductSlider photos={PS399_PHOTOS} />
             </div>
             <div className="fade-up">
               <div style={{ marginBottom: 16 }}>
@@ -262,7 +313,7 @@ export default function Index() {
         {/* PS-850 */}
         <div id="ps850" style={{ background: "#2C2C2C", padding: "60px 32px" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2">
-            <div className="fade-up" style={{ order: 2 }}>
+            <div className="fade-up">
               <div style={{ marginBottom: 16 }}>
                 <span className="badge">🎤 С КАРАОКЕ</span>
                 <span className="badge">🎁 МИКРОФОН В КОМПЛЕКТЕ</span>
@@ -305,7 +356,7 @@ export default function Index() {
                 </a>
               </div>
             </div>
-            <div className="fade-up model-img-wrap" style={{ borderRadius: 24, order: 1 }}>
+            <div className="fade-up model-img-wrap" style={{ borderRadius: 24 }}>
               <div className="model-img-float">
                 <img src={IMG.ps850} alt="Портативная акустика SVEN PS-850 с микрофоном для кара­оке"
                   style={{ width: "100%", borderRadius: 20, display: "block" }} loading="lazy" />
@@ -372,7 +423,7 @@ export default function Index() {
         {/* PS-1900 */}
         <div id="ps1900" className="gold-model" style={{ background: "#1a1508", padding: "60px 32px", borderTop: "1px solid rgba(255,184,0,0.15)" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2">
-            <div className="fade-up" style={{ order: 2 }}>
+            <div className="fade-up">
               <div style={{ marginBottom: 16 }}>
                 <span className="badge gold">👑 ФЛАГМАН</span>
                 <span className="badge gold">🪵 ДЕРЕВЯННЫЙ КОРПУС</span>
@@ -421,7 +472,7 @@ export default function Index() {
                 </a>
               </div>
             </div>
-            <div className="fade-up model-img-wrap" style={{ borderRadius: 24, order: 1, boxShadow: "0 0 40px rgba(255,184,0,0.25)" }}>
+            <div className="fade-up model-img-wrap" style={{ borderRadius: 24, boxShadow: "0 0 40px rgba(255,184,0,0.25)" }}>
               <div className="model-img-float">
                 <img src={IMG.ps1900} alt="Портативная акустика SVEN PS-1900 1000 Вт на колёсиках"
                   style={{ width: "100%", borderRadius: 20, display: "block" }} loading="lazy" />
@@ -522,7 +573,7 @@ export default function Index() {
             {/* PS-399 — заглушка */}
             <div className="video-card fade-up">
               <div className="video-thumb" style={{ cursor: "default" }}>
-                <img src={IMG.ps399} alt="SVEN PS-399 видео скоро" loading="lazy" />
+                <img src={PS399_PHOTOS[0].src} alt="SVEN PS-399 видео скоро" loading="lazy" />
                 <div className="video-play-overlay">
                   <div style={{ textAlign: "center" }}>
                     <div style={{ width: 64, height: 64, borderRadius: "50%", background: "#555", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 10px" }}>
@@ -648,8 +699,8 @@ export default function Index() {
         <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
           {/* Logo + slogan */}
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 8 }}>
-              <div style={{ background: "#0072CE", color: "#fff", fontFamily: "Montserrat, sans-serif", fontWeight: 900, fontSize: "1.4rem", padding: "4px 10px", borderRadius: 4, letterSpacing: 2 }}>SVEN</div>
+            <div style={{ marginBottom: 8 }}>
+              <img src={LOGO_URL} alt="SVEN" style={{ height: 48, width: "auto", display: "block", objectFit: "contain" }} />
             </div>
             <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 600, fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", letterSpacing: "0.15em" }}>YOU WANT — WE CAN</p>
           </div>
