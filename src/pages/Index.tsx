@@ -88,6 +88,15 @@ const PS990_PHOTOS = [
   { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/640109cd-1909-4cb5-9778-53f9dfc5c058.jpg", alt: "SVEN PS-990 — разъёмы питания, AUX, USB" },
 ];
 
+/* ─── PS-1900 real photos ─── */
+const PS1900_PHOTOS = [
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/b06b5f40-c527-4817-b770-a34190601160.png", alt: "SVEN PS-1900, вид спереди, 1000 Вт" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/0ad8b22e-8e5f-4c7f-8cc0-8de90c612e4b.JPG", alt: "SVEN PS-1900 — гитарный вход" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/76c4966f-a0f3-4dfb-a76e-84a170dc7dfb.jpg", alt: "SVEN PS-1900 — 1000 Вт настоящего веселья" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/f319d747-5070-4645-837a-7e397255babc.jpg", alt: "SVEN PS-1900 — 2 микрофона, кара­оке для двоих" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/12a183c8-c388-4fb9-9b52-7cc53954ae2e.JPG", alt: "SVEN PS-1900 — NFC подключение одним касанием" },
+];
+
 /* ─── PS-399 real photos ─── */
 const PS399_PHOTOS = [
   { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/df225f17-1c64-48bc-8a83-f21266f04de2.png", alt: "SVEN PS-399, вид спереди" },
@@ -218,9 +227,9 @@ export default function Index() {
           <div className="fade-up" style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 16, padding: "20px 0" }}>
             {[
               { img: PS399_PHOTOS[0].src, h: 160, name: "PS-399", glow: "#8338EC" },
-              { img: IMG.ps850, h: 200, name: "PS-850", glow: "#3A86FF" },
-              { img: IMG.ps990, h: 240, name: "PS-990", glow: "#06FFA5" },
-              { img: IMG.ps1900, h: 300, name: "PS-1900", glow: "#FFB800" },
+              { img: PS850_PHOTOS[0].src, h: 200, name: "PS-850", glow: "#3A86FF" },
+              { img: PS990_PHOTOS[0].src, h: 240, name: "PS-990", glow: "#06FFA5" },
+              { img: PS1900_PHOTOS[0].src, h: 300, name: "PS-1900", glow: "#FFB800" },
             ].map((sp, i) => (
               <div key={sp.name} className="model-img-float" style={{ animationDelay: `${i * 0.3}s`, textAlign: "center" }}>
                 <div style={{
@@ -481,10 +490,7 @@ export default function Index() {
               </div>
             </div>
             <div className="fade-up model-img-wrap" style={{ borderRadius: 24, boxShadow: "0 0 40px rgba(255,184,0,0.25)" }}>
-              <div className="model-img-float">
-                <img src={IMG.ps1900} alt="Портативная акустика SVEN PS-1900 1000 Вт на колёсиках"
-                  style={{ width: "100%", borderRadius: 20, display: "block" }} loading="lazy" />
-              </div>
+              <ProductSlider photos={PS1900_PHOTOS} />
             </div>
           </div>
         </div>
