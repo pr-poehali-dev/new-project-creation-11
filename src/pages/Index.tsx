@@ -79,6 +79,15 @@ const PS850_PHOTOS = [
   { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/2847c2f2-bb1a-44be-a483-57dde52216dc.jpg", alt: "SVEN PS-850 — TWS стереопара" },
 ];
 
+/* ─── PS-990 real photos ─── */
+const PS990_PHOTOS = [
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/02cdba62-82ae-4d3f-be8c-4a8949eaf891.png", alt: "SVEN PS-990, IPx7 защита от воды" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/4ca4b266-77c6-48ee-85c4-543e18d3c044.jpg", alt: "SVEN PS-990 — 16 часов автономности" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/b013661a-b6e0-4e6b-86a9-31bf5eb953d8.jpg", alt: "SVEN PS-990 — акустическая система изнутри" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/3644f976-fc3c-49e0-aad7-53b6e672bc97.jpg", alt: "SVEN PS-990 — мощный бас 180 Вт" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/640109cd-1909-4cb5-9778-53f9dfc5c058.jpg", alt: "SVEN PS-990 — разъёмы питания, AUX, USB" },
+];
+
 /* ─── PS-399 real photos ─── */
 const PS399_PHOTOS = [
   { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/df225f17-1c64-48bc-8a83-f21266f04de2.png", alt: "SVEN PS-399, вид спереди" },
@@ -371,10 +380,7 @@ export default function Index() {
         <div id="ps990" style={{ background: "#1A1A1A", padding: "60px 32px" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2">
             <div className="fade-up model-img-wrap" style={{ borderRadius: 24 }}>
-              <div className="model-img-float">
-                <img src={IMG.ps990} alt="Портативная акустика SVEN PS-990 IPx7 защита от воды"
-                  style={{ width: "100%", borderRadius: 20, display: "block" }} loading="lazy" />
-              </div>
+              <ProductSlider photos={PS990_PHOTOS} />
             </div>
             <div className="fade-up">
               <div style={{ marginBottom: 16 }}>
