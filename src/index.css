@@ -29,6 +29,8 @@
     --sven-dark2: #2c2c2c;
     --sven-light: #f5f7fa;
     --sven-gold: #ffb800;
+    --wb-color: #cb11ab;
+    --ozon-color: #005bff;
     --rgb-1: #ff006e;
     --rgb-2: #8338ec;
     --rgb-3: #3a86ff;
@@ -235,6 +237,54 @@
   border-color: #e0a400;
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(255, 184, 0, 0.4);
+}
+.sven-btn-wb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--wb-color);
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: 2px solid var(--wb-color);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.sven-btn-wb:hover {
+  background-color: #a80d8e;
+  border-color: #a80d8e;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(203, 17, 171, 0.45);
+}
+.sven-btn-ozon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--ozon-color);
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 14px 28px;
+  border-radius: 8px;
+  border: 2px solid var(--ozon-color);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.sven-btn-ozon:hover {
+  background-color: #0049cc;
+  border-color: #0049cc;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 91, 255, 0.45);
 }
 .sven-btn-disabled {
   display: inline-flex;

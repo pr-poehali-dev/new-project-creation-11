@@ -370,13 +370,13 @@ export default function Index() {
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <a href={LINKS.ps850wb} target="_blank" rel="noopener noreferrer"
-                  className="sven-btn-primary" onClick={() => ymGoal("click_buy_ps850_wb")}>
+                  className="sven-btn-wb" onClick={() => ymGoal("click_buy_ps850_wb")}>
                   🛒 Купить на Wildberries
                 </a>
-                <a href={LINKS.video850} target="_blank" rel="noopener noreferrer"
-                  className="sven-btn-video" onClick={() => ymGoal("click_video_ps850")}>
+                <button className="sven-btn-video"
+                  onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456240809&hd=2"); ymGoal("click_video_ps850"); }}>
                   ▶ Смотреть распаковку
-                </a>
+                </button>
               </div>
             </div>
             <div className="fade-up model-img-wrap" style={{ borderRadius: 24 }}>
@@ -425,13 +425,13 @@ export default function Index() {
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <a href={LINKS.ps990wb} target="_blank" rel="noopener noreferrer"
-                  className="sven-btn-primary" onClick={() => ymGoal("click_buy_ps990_wb")}>
+                  className="sven-btn-wb" onClick={() => ymGoal("click_buy_ps990_wb")}>
                   🛒 Купить на Wildberries
                 </a>
-                <a href={LINKS.video990} target="_blank" rel="noopener noreferrer"
-                  className="sven-btn-video" onClick={() => ymGoal("click_video_ps990")}>
+                <button className="sven-btn-video"
+                  onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456240946&hd=2"); ymGoal("click_video_ps990"); }}>
                   ▶ Смотреть распаковку
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -480,13 +480,13 @@ export default function Index() {
               </p>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <a href={LINKS.ps1900ozon} target="_blank" rel="noopener noreferrer"
-                  className="sven-btn-gold" onClick={() => ymGoal("click_buy_ps1900_ozon")}>
+                  className="sven-btn-ozon" onClick={() => ymGoal("click_buy_ps1900_ozon")}>
                   🛒 Купить на OZON
                 </a>
-                <a href={LINKS.video1900} target="_blank" rel="noopener noreferrer"
-                  className="sven-btn-video" onClick={() => ymGoal("click_video_ps1900")}>
+                <button className="sven-btn-video"
+                  onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456239518&hd=2"); ymGoal("click_video_ps1900"); }}>
                   ▶ Смотреть распаковку
-                </a>
+                </button>
               </div>
             </div>
             <div className="fade-up model-img-wrap" style={{ borderRadius: 24, boxShadow: "0 0 40px rgba(255,184,0,0.25)" }}>
@@ -606,8 +606,8 @@ export default function Index() {
 
             {/* PS-850 */}
             <div className="video-card fade-up">
-              <div className="video-thumb" onClick={() => { setActiveVideo(LINKS.video850); ymGoal("click_video_ps850"); }}>
-                <img src={IMG.ps850} alt="SVEN PS-850 обзор и распаковка" loading="lazy" />
+              <div className="video-thumb" onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456240809&hd=2"); ymGoal("click_video_ps850"); }}>
+                <img src={PS850_PHOTOS[0].src} alt="SVEN PS-850 обзор и распаковка" loading="lazy" />
                 <div className="video-play-overlay">
                   <div className="play-circle"><Icon name="Play" size={26} className="ml-1" style={{ color: "#fff" }} /></div>
                 </div>
@@ -616,18 +616,17 @@ export default function Index() {
                 <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 600, fontSize: "0.88rem" }}>
                   SVEN PS-850 — обзор и настройка приложения SVEN SOUND
                 </p>
-                <a href={LINKS.video850} target="_blank" rel="noopener noreferrer"
-                  className="sven-btn-video" style={{ marginTop: 12, fontSize: "0.8rem", padding: "8px 16px" }}
-                  onClick={() => ymGoal("click_video_ps850")}>
-                  ▶ Смотреть на VK
-                </a>
+                <button className="sven-btn-video" style={{ marginTop: 12, fontSize: "0.8rem", padding: "8px 16px" }}
+                  onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456240809&hd=2"); ymGoal("click_video_ps850"); }}>
+                  ▶ Смотреть видео
+                </button>
               </div>
             </div>
 
             {/* PS-990 */}
             <div className="video-card fade-up">
-              <div className="video-thumb" onClick={() => { setActiveVideo(LINKS.video990); ymGoal("click_video_ps990"); }}>
-                <img src={IMG.ps990} alt="SVEN PS-990 распаковка" loading="lazy" />
+              <div className="video-thumb" onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456240946&hd=2"); ymGoal("click_video_ps990"); }}>
+                <img src={PS990_PHOTOS[0].src} alt="SVEN PS-990 распаковка" loading="lazy" />
                 <div className="video-play-overlay">
                   <div className="play-circle"><Icon name="Play" size={26} className="ml-1" style={{ color: "#fff" }} /></div>
                 </div>
@@ -636,18 +635,17 @@ export default function Index() {
                 <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 600, fontSize: "0.88rem" }}>
                   SVEN PS-990 — распаковка флагмана водозащиты
                 </p>
-                <a href={LINKS.video990} target="_blank" rel="noopener noreferrer"
-                  className="sven-btn-video" style={{ marginTop: 12, fontSize: "0.8rem", padding: "8px 16px" }}
-                  onClick={() => ymGoal("click_video_ps990")}>
-                  ▶ Смотреть на VK
-                </a>
+                <button className="sven-btn-video" style={{ marginTop: 12, fontSize: "0.8rem", padding: "8px 16px" }}
+                  onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456240946&hd=2"); ymGoal("click_video_ps990"); }}>
+                  ▶ Смотреть видео
+                </button>
               </div>
             </div>
 
             {/* PS-1900 */}
             <div className="video-card fade-up">
-              <div className="video-thumb" onClick={() => { setActiveVideo(LINKS.video1900); ymGoal("click_video_ps1900"); }}>
-                <img src={IMG.ps1900} alt="SVEN PS-1900 распаковка" loading="lazy" />
+              <div className="video-thumb" onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456239518&hd=2"); ymGoal("click_video_ps1900"); }}>
+                <img src={PS1900_PHOTOS[0].src} alt="SVEN PS-1900 распаковка" loading="lazy" />
                 <div className="video-play-overlay">
                   <div className="play-circle" style={{ background: "#FFB800", boxShadow: "0 0 30px rgba(255,184,0,0.5)" }}>
                     <Icon name="Play" size={26} className="ml-1" style={{ color: "#1A1A1A" }} />
@@ -658,11 +656,10 @@ export default function Index() {
                 <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 600, fontSize: "0.88rem" }}>
                   SVEN PS-1900 — распаковка мобильного клуба на 1000 Вт
                 </p>
-                <a href={LINKS.video1900} target="_blank" rel="noopener noreferrer"
-                  className="sven-btn-video" style={{ marginTop: 12, fontSize: "0.8rem", padding: "8px 16px" }}
-                  onClick={() => ymGoal("click_video_ps1900")}>
-                  ▶ Смотреть на VK
-                </a>
+                <button className="sven-btn-video" style={{ marginTop: 12, fontSize: "0.8rem", padding: "8px 16px" }}
+                  onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456239518&hd=2"); ymGoal("click_video_ps1900"); }}>
+                  ▶ Смотреть видео
+                </button>
               </div>
             </div>
           </div>
@@ -671,14 +668,21 @@ export default function Index() {
         {/* Video lightbox */}
         {activeVideo && (
           <div onClick={() => setActiveVideo(null)}
-            style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.85)", zIndex: 9000, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-            <div onClick={e => e.stopPropagation()} style={{ width: "100%", maxWidth: 900, position: "relative" }}>
+            style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.9)", zIndex: 9000, display: "flex", alignItems: "center", justifyContent: "center", padding: "24px 16px" }}>
+            <div onClick={e => e.stopPropagation()} style={{ width: "100%", maxWidth: 960, position: "relative" }}>
               <button onClick={() => setActiveVideo(null)}
-                style={{ position: "absolute", top: -40, right: 0, background: "none", border: "none", color: "#fff", fontSize: "1.4rem", cursor: "pointer" }}>✕ Закрыть</button>
-              <div style={{ aspectRatio: "16/9", borderRadius: 12, overflow: "hidden" }}>
-                <iframe src={activeVideo.replace("vkvideo.ru/video", "vk.com/video_ext.php?oid=-16115403&id=")}
-                  width="100%" height="100%" frameBorder="0" allowFullScreen
-                  style={{ display: "block" }} />
+                style={{ position: "absolute", top: -44, right: 0, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", fontSize: "0.9rem", fontFamily: "Montserrat, sans-serif", fontWeight: 600, cursor: "pointer", padding: "6px 16px", borderRadius: 6, display: "flex", alignItems: "center", gap: 6 }}>
+                ✕ Закрыть
+              </button>
+              <div style={{ aspectRatio: "16/9", borderRadius: 12, overflow: "hidden", background: "#000", boxShadow: "0 0 60px rgba(0,0,0,0.8)" }}>
+                <iframe
+                  src={activeVideo}
+                  width="100%" height="100%"
+                  allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+                  frameBorder="0"
+                  allowFullScreen
+                  style={{ display: "block" }}
+                />
               </div>
             </div>
           </div>
@@ -718,42 +722,19 @@ export default function Index() {
 
           {/* Social links */}
           <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-            {/* VK */}
-            <a href="https://vk.com/sven_global" target="_blank" rel="noopener noreferrer" title="ВКонтакте"
-              style={{ width: 44, height: 44, borderRadius: 10, background: "#0077FF", display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", transition: "opacity 0.2s, transform 0.2s", flexShrink: 0 }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.85"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13.162 18.994c.609 0 .87-.405.857-1.003-.03-1.21.516-1.843 1.476-1.843.9 0 1.327.47 1.327 1.42 0 .23-.026.46-.076.676-.1.427.107.75.524.75h2.45c.47 0 .78-.296.78-.76 0-2.69-1.615-4.27-4.374-4.27-1.783 0-3.042.87-3.546 2.38h-.077V13.42c0-.514-.3-.8-.8-.8h-2.21c-.514 0-.8.286-.8.8v5.774c0 .514.286.8.8.8h3.67zm-7.024 0h2.21c.5 0 .8-.286.8-.8v-2.67c0-.917.24-1.316.813-1.316.452 0 .713.258.713.858v3.128c0 .514.286.8.8.8h2.21c.5 0 .8-.286.8-.8v-3.41c0-1.876-.97-2.97-2.616-2.97-1.103 0-1.89.543-2.31 1.504h-.077V13.42c0-.514-.3-.8-.8-.8H6.138c-.5 0-.8.286-.8.8v5.774c0 .514.3.8.8.8zM2 12.56C2 17.85 6.15 22 11.44 22h1.12C17.85 22 22 17.85 22 12.56v-1.12C22 6.15 17.85 2 12.56 2h-1.12C6.15 2 2 6.15 2 11.44v1.12z" fill="white"/>
-              </svg>
-            </a>
-            {/* Rutube */}
-            <a href="https://rutube.ru/channel/24199565/" target="_blank" rel="noopener noreferrer" title="Rutube"
-              style={{ width: 44, height: 44, borderRadius: 10, background: "#14191F", border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", transition: "opacity 0.2s, transform 0.2s", flexShrink: 0 }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.75"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.293 11.707-4 4a1 1 0 0 1-1.414-1.414L13.172 13H8a1 1 0 1 1 0-2h5.172L9.879 7.707a1 1 0 1 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414z" fill="#FF3D00"/>
-              </svg>
-            </a>
-            {/* Telegram */}
-            <a href="https://t.me/svenglobal" target="_blank" rel="noopener noreferrer" title="Telegram"
-              style={{ width: 44, height: 44, borderRadius: 10, background: "#2AABEE", display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", transition: "opacity 0.2s, transform 0.2s", flexShrink: 0 }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.85"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8-1.7 8.02c-.12.58-.46.72-.93.45l-2.58-1.9-1.24 1.19c-.14.14-.25.25-.51.25l.18-2.6 4.72-4.26c.2-.18-.05-.28-.32-.1L7.9 14.6l-2.54-.79c-.55-.17-.56-.55.12-.82l9.93-3.83c.46-.17.86.11.71.84h.02z" fill="white"/>
-              </svg>
-            </a>
-            {/* Дзен */}
-            <a href="https://zen.yandex.ru/id/5cbd9ca636a7a700b369294a?lang=ru&clid=300" target="_blank" rel="noopener noreferrer" title="Яндекс Дзен"
-              style={{ width: 44, height: 44, borderRadius: 10, background: "#000", border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", transition: "opacity 0.2s, transform 0.2s", flexShrink: 0 }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.75"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm.5 15.5h-1v-4.793l-3.146 3.147-.708-.708L11.793 11.5H7V10.5h4.793L8.646 7.354l.708-.708L12.5 9.793V5h1v4.793l3.146-3.147.708.708L14.207 10.5H19v1h-4.793l3.147 3.146-.708.708L13.5 12.207V17.5z" fill="white"/>
-              </svg>
-            </a>
+            {[
+              { href: "https://vk.com/sven_global", title: "ВКонтакте", img: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/efc30639-b0c0-4bae-bb45-51faabb53685.png" },
+              { href: "https://rutube.ru/channel/24199565/", title: "Rutube", img: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/402eb07e-6868-4999-89e0-42b169191754.png" },
+              { href: "https://t.me/svenglobal", title: "Telegram", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Telegram_logo.svg/512px-Telegram_logo.svg.png" },
+              { href: "https://zen.yandex.ru/id/5cbd9ca636a7a700b369294a?lang=ru&clid=300", title: "Яндекс Дзен", img: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/13e84ed0-1199-4172-b0dc-274e44b75998.png" },
+            ].map(s => (
+              <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" title={s.title}
+                style={{ width: 44, height: 44, borderRadius: 10, overflow: "hidden", display: "block", textDecoration: "none", transition: "opacity 0.2s, transform 0.2s", flexShrink: 0 }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.8"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
+                <img src={s.img} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+              </a>
+            ))}
           </div>
 
           {/* Copyright */}
