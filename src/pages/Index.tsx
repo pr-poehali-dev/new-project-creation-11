@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Icon from "@/components/ui/icon";
 
 /* ─── Logo ─── */
-const LOGO_URL = "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/df225f17-1c64-48bc-8a83-f21266f04de2.png";
+const LOGO_URL = "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/299703f9-d2b1-41c4-a3ef-728a48ef1ba8.png";
 
 /* ─── Images ─── */
 const IMG = {
@@ -71,6 +71,14 @@ function scrollTo(id: string) {
 }
 
 /* ════════════════════════════════════════════════════════════ */
+/* ─── PS-850 real photos ─── */
+const PS850_PHOTOS = [
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/db6a4403-f216-4149-999a-c495391de7cf.png", alt: "SVEN PS-850, вид спереди с микрофоном и пультом" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/222dab07-1a6a-480a-b1ad-91a0c1242cad.jpg", alt: "SVEN PS-850 — приложение SVEN SOUND" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/f4dc814d-a65c-4730-82dd-02e2e764efdb.jpg", alt: "SVEN PS-850 — 28 часов автономности" },
+  { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/2847c2f2-bb1a-44be-a483-57dde52216dc.jpg", alt: "SVEN PS-850 — TWS стереопара" },
+];
+
 /* ─── PS-399 real photos ─── */
 const PS399_PHOTOS = [
   { src: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/df225f17-1c64-48bc-8a83-f21266f04de2.png", alt: "SVEN PS-399, вид спереди" },
@@ -139,11 +147,8 @@ export default function Index() {
       <header id="main-header" style={{ padding: "0 32px" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           {/* Logo */}
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <img src={LOGO_URL} alt="SVEN" style={{ height: 44, width: "auto", display: "block", objectFit: "contain" }} />
-            <span style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.65)", letterSpacing: "0.15em", textTransform: "uppercase", fontFamily: "Montserrat, sans-serif", fontWeight: 600 }}>
-              YOU WANT — WE CAN
-            </span>
+          <div>
+            <img src={LOGO_URL} alt="SVEN — YOU WANT WE CAN" style={{ height: 48, width: "auto", display: "block", objectFit: "contain" }} />
           </div>
           {/* Nav */}
           <nav style={{ display: "flex", alignItems: "center", gap: 28 }} className="hidden md:flex">
@@ -357,10 +362,7 @@ export default function Index() {
               </div>
             </div>
             <div className="fade-up model-img-wrap" style={{ borderRadius: 24 }}>
-              <div className="model-img-float">
-                <img src={IMG.ps850} alt="Портативная акустика SVEN PS-850 с микрофоном для кара­оке"
-                  style={{ width: "100%", borderRadius: 20, display: "block" }} loading="lazy" />
-              </div>
+              <ProductSlider photos={PS850_PHOTOS} />
             </div>
           </div>
         </div>
@@ -697,30 +699,49 @@ export default function Index() {
       {/* ── FOOTER ── */}
       <footer style={{ background: "#111", padding: "40px 32px", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
-          {/* Logo + slogan */}
+          {/* Logo */}
           <div>
-            <div style={{ marginBottom: 8 }}>
-              <img src={LOGO_URL} alt="SVEN" style={{ height: 48, width: "auto", display: "block", objectFit: "contain" }} />
-            </div>
-            <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 600, fontSize: "0.75rem", color: "rgba(255,255,255,0.5)", letterSpacing: "0.15em" }}>YOU WANT — WE CAN</p>
+            <img src={LOGO_URL} alt="SVEN — YOU WANT WE CAN" style={{ height: 52, width: "auto", display: "block", objectFit: "contain" }} />
           </div>
 
           {/* Social links */}
-          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-            {[
-              { label: "ВКонтакте", href: "https://vk.com/sven_global", icon: "VK" },
-              { label: "Rutube", href: "https://rutube.ru/channel/24199565/", icon: "RT" },
-              { label: "Telegram", href: "https://t.me/svenglobal", icon: "TG" },
-              { label: "Дзен", href: "https://zen.yandex.ru/id/5cbd9ca636a7a700b369294a?lang=ru&clid=300", icon: "ДЗ" },
-            ].map(s => (
-              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                style={{ width: 40, height: 40, borderRadius: 8, border: "1px solid rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", color: "rgba(255,255,255,0.6)", fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: "0.65rem", transition: "all 0.2s" }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#0072CE"; (e.currentTarget as HTMLElement).style.color = "#5bb8ff"; }}
-                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.15)"; (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.6)"; }}
-                title={s.label}>
-                {s.icon}
-              </a>
-            ))}
+          <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            {/* VK */}
+            <a href="https://vk.com/sven_global" target="_blank" rel="noopener noreferrer" title="ВКонтакте"
+              style={{ width: 44, height: 44, borderRadius: 10, background: "#0077FF", display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", transition: "opacity 0.2s, transform 0.2s", flexShrink: 0 }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.85"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.162 18.994c.609 0 .87-.405.857-1.003-.03-1.21.516-1.843 1.476-1.843.9 0 1.327.47 1.327 1.42 0 .23-.026.46-.076.676-.1.427.107.75.524.75h2.45c.47 0 .78-.296.78-.76 0-2.69-1.615-4.27-4.374-4.27-1.783 0-3.042.87-3.546 2.38h-.077V13.42c0-.514-.3-.8-.8-.8h-2.21c-.514 0-.8.286-.8.8v5.774c0 .514.286.8.8.8h3.67zm-7.024 0h2.21c.5 0 .8-.286.8-.8v-2.67c0-.917.24-1.316.813-1.316.452 0 .713.258.713.858v3.128c0 .514.286.8.8.8h2.21c.5 0 .8-.286.8-.8v-3.41c0-1.876-.97-2.97-2.616-2.97-1.103 0-1.89.543-2.31 1.504h-.077V13.42c0-.514-.3-.8-.8-.8H6.138c-.5 0-.8.286-.8.8v5.774c0 .514.3.8.8.8zM2 12.56C2 17.85 6.15 22 11.44 22h1.12C17.85 22 22 17.85 22 12.56v-1.12C22 6.15 17.85 2 12.56 2h-1.12C6.15 2 2 6.15 2 11.44v1.12z" fill="white"/>
+              </svg>
+            </a>
+            {/* Rutube */}
+            <a href="https://rutube.ru/channel/24199565/" target="_blank" rel="noopener noreferrer" title="Rutube"
+              style={{ width: 44, height: 44, borderRadius: 10, background: "#14191F", border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", transition: "opacity 0.2s, transform 0.2s", flexShrink: 0 }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.75"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.293 11.707-4 4a1 1 0 0 1-1.414-1.414L13.172 13H8a1 1 0 1 1 0-2h5.172L9.879 7.707a1 1 0 1 1 1.414-1.414l4 4a1 1 0 0 1 0 1.414z" fill="#FF3D00"/>
+              </svg>
+            </a>
+            {/* Telegram */}
+            <a href="https://t.me/svenglobal" target="_blank" rel="noopener noreferrer" title="Telegram"
+              style={{ width: 44, height: 44, borderRadius: 10, background: "#2AABEE", display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", transition: "opacity 0.2s, transform 0.2s", flexShrink: 0 }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.85"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8-1.7 8.02c-.12.58-.46.72-.93.45l-2.58-1.9-1.24 1.19c-.14.14-.25.25-.51.25l.18-2.6 4.72-4.26c.2-.18-.05-.28-.32-.1L7.9 14.6l-2.54-.79c-.55-.17-.56-.55.12-.82l9.93-3.83c.46-.17.86.11.71.84h.02z" fill="white"/>
+              </svg>
+            </a>
+            {/* Дзен */}
+            <a href="https://zen.yandex.ru/id/5cbd9ca636a7a700b369294a?lang=ru&clid=300" target="_blank" rel="noopener noreferrer" title="Яндекс Дзен"
+              style={{ width: 44, height: 44, borderRadius: 10, background: "#000", border: "1px solid rgba(255,255,255,0.12)", display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", transition: "opacity 0.2s, transform 0.2s", flexShrink: 0 }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.75"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm.5 15.5h-1v-4.793l-3.146 3.147-.708-.708L11.793 11.5H7V10.5h4.793L8.646 7.354l.708-.708L12.5 9.793V5h1v4.793l3.146-3.147.708.708L14.207 10.5H19v1h-4.793l3.147 3.146-.708.708L13.5 12.207V17.5z" fill="white"/>
+              </svg>
+            </a>
           </div>
 
           {/* Copyright */}
