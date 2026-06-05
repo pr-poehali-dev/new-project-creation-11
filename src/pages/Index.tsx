@@ -13,7 +13,7 @@ const IMG = {
   ps1900: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/files/c88e067c-8a64-48ad-8b87-dc695ae3a2b5.jpg",
   beach: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/files/498b08e6-66ba-49c0-9b63-ec77de184bf2.jpg",
   karaoke: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/files/97c7b226-74a1-49d2-bb5e-015a1593555d.jpg",
-  dacha: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/files/c489ce0d-f61d-456f-bdf8-077eb14b2a0e.jpg",
+  dacha: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/26aa13c2-17ec-4c0e-928a-338af0da164e.jpg",
   event: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/files/ccc1add1-d458-49fd-88df-157c2db54426.jpg",
 };
 
