@@ -320,7 +320,7 @@ export default function Index() {
                   </div>
                 ))}
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 28 }}>
+              <div className="stat-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 28 }}>
                 {[["100 Вт","Мощность"],["16 ч","Автономность"],["IPx6","Защита"],["3,7 кг","Вес"]].map(([n,l]) => (
                   <div key={l} className="stat-pill"><div className="stat-num">{n}</div><div className="stat-label">{l}</div></div>
                 ))}
@@ -360,7 +360,7 @@ export default function Index() {
                   </div>
                 ))}
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 12 }}>
+              <div className="stat-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 12 }}>
                 {[["100 Вт","Мощность"],["28 ч","Автономность"],["NFC","Подключение"],["+ Пульт ДУ","В комплекте"]].map(([n,l]) => (
                   <div key={l} className="stat-pill"><div className="stat-num">{n}</div><div className="stat-label">{l}</div></div>
                 ))}
@@ -415,7 +415,7 @@ export default function Index() {
                   </div>
                 ))}
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 12 }}>
+              <div className="stat-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 12 }}>
                 {[["180 Вт","Мощность"],["16 ч","Автономность"],["IPx7","Защита"],["FLAC","Lossless"]].map(([n,l]) => (
                   <div key={l} className="stat-pill"><div className="stat-num">{n}</div><div className="stat-label">{l}</div></div>
                 ))}
@@ -464,7 +464,7 @@ export default function Index() {
                   </div>
                 ))}
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 12 }}>
+              <div className="stat-grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10, marginBottom: 12 }}>
                 {[["1000 Вт","Мощность"],["МДФ","Корпус"],["2 микр.","Кара­оке"],["Колёса","Транспорт"]].map(([n,l]) => (
                   <div key={l} className="stat-pill" style={{ borderColor: "rgba(255,184,0,0.2)" }}>
                     <div className="stat-num" style={{ color: "#FFB800" }}>{n}</div>

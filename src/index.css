@@ -350,12 +350,25 @@
   .model-grid {
     display: flex !important;
     flex-direction: column !important;
+    gap: 32px !important;
   }
   .model-img-first {
     order: 1 !important;
   }
   .model-text-second {
     order: 2 !important;
+  }
+  /* Убираем боковые отступы у блоков моделей на мобильном */
+  #ps399,
+  #ps850,
+  #ps990,
+  #ps1900 {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  /* Таблица характеристик — 2 колонки вместо 4 */
+  .stat-grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 .model-img-float {
