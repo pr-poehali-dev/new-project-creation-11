@@ -398,10 +398,15 @@
     padding-right: 16px !important;
   }
 
-  /* Hero: убираем колонку колонок, оставляем только текст */
+  /* Hero: уменьшаем отступы и скрываем декоративную колонку колонок */
   .hero-grid-inner {
     padding-left: 16px !important;
     padding-right: 16px !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+  .hero-speakers-col {
+    display: none !important;
   }
 
   .model-grid {

@@ -224,7 +224,7 @@ export default function Index() {
           </div>
 
           {/* 4 speakers lineup */}
-          <div className="fade-up" style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 16, padding: "20px 0" }}>
+          <div className="fade-up hero-speakers-col" style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 16, padding: "20px 0" }}>
             {[
               { img: PS399_PHOTOS[0].src, h: 160, name: "PS-399", glow: "#8338EC" },
               { img: PS850_PHOTOS[0].src, h: 200, name: "PS-850", glow: "#3A86FF" },
