@@ -344,6 +344,20 @@
 .model-img-wrap {
   animation: pulsRgb 4s ease-in-out infinite;
 }
+
+/* На мобильном: фото всегда первым, текст вторым */
+@media (max-width: 767px) {
+  .model-grid {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .model-img-first {
+    order: 1 !important;
+  }
+  .model-text-second {
+    order: 2 !important;
+  }
+}
 .model-img-float {
   animation: float 5s ease-in-out infinite;
 }

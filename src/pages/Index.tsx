@@ -292,11 +292,11 @@ export default function Index() {
 
         {/* PS-399 */}
         <div id="ps399" style={{ background: "#1A1A1A", padding: "60px 32px" }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2">
-            <div className="fade-up model-img-wrap" style={{ borderRadius: 24 }}>
+          <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2 model-grid">
+            <div className="fade-up model-img-wrap model-img-first" style={{ borderRadius: 24 }}>
               <ProductSlider photos={PS399_PHOTOS} />
             </div>
-            <div className="fade-up">
+            <div className="fade-up model-text-second">
               <div style={{ marginBottom: 16 }}>
                 <span className="badge new">🆕 NEW</span>
                 <span className="badge">ПОРТАТИВНАЯ КОЛОНКА</span>
@@ -335,8 +335,8 @@ export default function Index() {
 
         {/* PS-850 */}
         <div id="ps850" style={{ background: "#2C2C2C", padding: "60px 32px" }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2">
-            <div className="fade-up">
+          <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2 model-grid">
+            <div className="fade-up model-text-second">
               <div style={{ marginBottom: 16 }}>
                 <span className="badge">🎤 С КАРАОКЕ</span>
                 <span className="badge">🎁 МИКРОФОН В КОМПЛЕКТЕ</span>
@@ -379,7 +379,7 @@ export default function Index() {
                 </button>
               </div>
             </div>
-            <div className="fade-up model-img-wrap" style={{ borderRadius: 24 }}>
+            <div className="fade-up model-img-wrap model-img-first" style={{ borderRadius: 24 }}>
               <ProductSlider photos={PS850_PHOTOS} />
             </div>
           </div>
@@ -387,11 +387,11 @@ export default function Index() {
 
         {/* PS-990 */}
         <div id="ps990" style={{ background: "#1A1A1A", padding: "60px 32px" }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2">
-            <div className="fade-up model-img-wrap" style={{ borderRadius: 24 }}>
+          <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2 model-grid">
+            <div className="fade-up model-img-wrap model-img-first" style={{ borderRadius: 24 }}>
               <ProductSlider photos={PS990_PHOTOS} />
             </div>
-            <div className="fade-up">
+            <div className="fade-up model-text-second">
               <div style={{ marginBottom: 16 }}>
                 <span className="badge">💧 IPx7</span>
                 <span className="badge">🔌 СЕТЬ + АККУМУЛЯТОР</span>
@@ -439,8 +439,8 @@ export default function Index() {
 
         {/* PS-1900 */}
         <div id="ps1900" className="gold-model" style={{ background: "#1a1508", padding: "60px 32px", borderTop: "1px solid rgba(255,184,0,0.15)" }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2">
-            <div className="fade-up">
+          <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }} className="grid-cols-1 lg:grid-cols-2 model-grid">
+            <div className="fade-up model-text-second">
               <div style={{ marginBottom: 16 }}>
                 <span className="badge gold">👑 ФЛАГМАН</span>
                 <span className="badge gold">🪵 ДЕРЕВЯННЫЙ КОРПУС</span>
@@ -489,7 +489,7 @@ export default function Index() {
                 </button>
               </div>
             </div>
-            <div className="fade-up model-img-wrap" style={{ borderRadius: 24, boxShadow: "0 0 40px rgba(255,184,0,0.25)" }}>
+            <div className="fade-up model-img-wrap model-img-first" style={{ borderRadius: 24, boxShadow: "0 0 40px rgba(255,184,0,0.25)" }}>
               <ProductSlider photos={PS1900_PHOTOS} />
             </div>
           </div>
