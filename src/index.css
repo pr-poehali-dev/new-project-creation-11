@@ -345,8 +345,65 @@
   animation: pulsRgb 4s ease-in-out infinite;
 }
 
+/* Стрелки-подсказки для таблицы сравнения */
+.compare-scroll-hint {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.compare-arrow {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--sven-blue);
+  line-height: 1;
+}
+.compare-arrow-left {
+  animation: arrowPulseLeft 1.4s ease-in-out infinite;
+}
+.compare-arrow-right {
+  animation: arrowPulseRight 1.4s ease-in-out infinite;
+}
+@keyframes arrowPulseLeft {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(-6px);
+    opacity: 1;
+  }
+}
+@keyframes arrowPulseRight {
+  0%,
+  100% {
+    transform: translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(6px);
+    opacity: 1;
+  }
+}
+
 /* На мобильном: фото всегда первым, текст вторым */
 @media (max-width: 767px) {
+  /* Глобальное уменьшение горизонтальных отступов */
+  section,
+  header,
+  footer {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Hero: убираем колонку колонок, оставляем только текст */
+  .hero-grid-inner {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
   .model-grid {
     display: flex !important;
     flex-direction: column !important;
@@ -369,6 +426,10 @@
   /* Таблица характеристик — 2 колонки вместо 4 */
   .stat-grid-4 {
     grid-template-columns: repeat(2, 1fr) !important;
+  }
+  /* Показываем стрелки-подсказки только на мобильном */
+  .compare-scroll-hint {
+    display: flex;
   }
 }
 .model-img-float {

@@ -192,7 +192,7 @@ export default function Index() {
         <div style={{ position: "absolute", bottom: "10%", right: "5%", width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(0,114,206,0.18) 0%, transparent 70%)", filter: "blur(60px)", pointerEvents: "none" }} />
 
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "60px 32px", width: "100%", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}
-          className="grid-cols-1 lg:grid-cols-2">
+          className="grid-cols-1 lg:grid-cols-2 hero-grid-inner">
           {/* Text */}
           <div className="fade-up">
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
@@ -502,6 +502,11 @@ export default function Index() {
           <div className="fade-up" style={{ textAlign: "center", marginBottom: 48 }}>
             <h2 className="section-title">Сравните и выберите свою</h2>
             <p className="section-sub" style={{ marginTop: 10 }}>Все ключевые характеристики в одной таблице</p>
+          </div>
+          <div className="compare-scroll-hint fade-up">
+            <span className="compare-arrow compare-arrow-left">‹</span>
+            <span style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.45)", fontFamily: "Montserrat, sans-serif" }}>листайте</span>
+            <span className="compare-arrow compare-arrow-right">›</span>
           </div>
           <div className="compare-wrap fade-up" style={{ borderRadius: 16, border: "1px solid rgba(255,255,255,0.08)" }}>
             <table className="compare-table">
