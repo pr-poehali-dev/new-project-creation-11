@@ -198,7 +198,7 @@ export default function Index() {
             <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24 }}>
               <div style={{ width: 8, height: 8, borderRadius: "50%", background: "#06FFA5", boxShadow: "0 0 12px #06FFA5" }} />
               <span style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 700, fontSize: "0.75rem", letterSpacing: "0.15em", color: "#06FFA5", textTransform: "uppercase" }}>
-                Официальная линейка SVEN 2024
+                Официальная линейка SVEN 2026
               </span>
             </div>
             <h1 style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 800, fontSize: "clamp(2.2rem, 5vw, 4rem)", lineHeight: 1.1, marginBottom: 24 }}>
@@ -702,7 +702,7 @@ export default function Index() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 0 }}>
             {[
-              { icon: "🏆", num: "30+", label: "лет на рынке аудио" },
+              { icon: "🏆", num: "35+", label: "лет на рынке аудио" },
               { icon: "🌍", num: "30+", label: "стран присутствия бренда" },
               { icon: "🛡", num: "12 мес.", label: "официальной гарантии РФ" },
               { icon: "🎵", num: "4", label: "модели под любой сценарий" },
