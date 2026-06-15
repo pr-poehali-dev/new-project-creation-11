@@ -28,9 +28,9 @@ const LINKS = {
   video1900: "https://vkvideo.ru/video-16115403_456239518",
 };
 
-const YM_ID = "XXXXXXXX";
+const YM_ID = 109868001;
  
-type YmFn = (id: string, event: string, goal: string) => void;
+type YmFn = (id: number, event: string, goal: string) => void;
 function ymGoal(goal: string) {
   if (typeof window !== "undefined" && typeof (window as Record<string, unknown>)["ym"] === "function") {
     ((window as Record<string, unknown>)["ym"] as YmFn)(YM_ID, "reachGoal", goal);
