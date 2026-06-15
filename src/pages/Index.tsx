@@ -728,13 +728,13 @@ export default function Index() {
           {/* Social links */}
           <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
             {[
-              { href: "https://vk.com/sven_global", title: "ВКонтакте", img: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/efc30639-b0c0-4bae-bb45-51faabb53685.png" },
-              { href: "https://rutube.ru/channel/24199565/", title: "Rutube", img: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/402eb07e-6868-4999-89e0-42b169191754.png" },
-              { href: "https://t.me/svenglobal", title: "Telegram", img: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/f9c079de-0c87-44e5-bf61-d504e9b84410.png" },
-              { href: "https://zen.yandex.ru/id/5cbd9ca636a7a700b369294a?lang=ru&clid=300", title: "Яндекс Дзен", img: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/13e84ed0-1199-4172-b0dc-274e44b75998.png" },
+              { href: "https://vk.com/sven_global", title: "ВКонтакте", img: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/efc30639-b0c0-4bae-bb45-51faabb53685.png", goal: "click_social_vk" },
+              { href: "https://rutube.ru/channel/24199565/", title: "Rutube", img: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/402eb07e-6868-4999-89e0-42b169191754.png", goal: "click_social_rutube" },
+              { href: "https://t.me/svenglobal", title: "Telegram", img: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/f9c079de-0c87-44e5-bf61-d504e9b84410.png", goal: "click_social_telegram" },
+              { href: "https://zen.yandex.ru/id/5cbd9ca636a7a700b369294a?lang=ru&clid=300", title: "Яндекс Дзен", img: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/13e84ed0-1199-4172-b0dc-274e44b75998.png", goal: "click_social_dzen" },
             ].map(s => (
               <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" title={s.title}
-                onClick={() => ymGoal("click_social_" + s.title.toLowerCase().replace(/\s/g, "_"))}
+                onClick={() => ymGoal(s.goal)}
                 style={{ width: 44, height: 44, borderRadius: 10, overflow: "hidden", display: "block", textDecoration: "none", transition: "opacity 0.2s, transform 0.2s", flexShrink: 0 }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.8"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
