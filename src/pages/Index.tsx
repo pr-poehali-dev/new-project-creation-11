@@ -209,10 +209,10 @@ export default function Index() {
               4 модели портативной акустики SVEN — от пляжного бумбокса до мобильного клуба на 1000 ватт
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 32 }}>
-              <button onClick={() => scrollTo("scenarios")} className="sven-btn-primary">
+              <button onClick={() => { scrollTo("scenarios"); ymGoal("click_hero_pick_scenario"); }} className="sven-btn-primary">
                 🎯 Подобрать под мой сценарий
               </button>
-              <button onClick={() => scrollTo("models")} className="sven-btn-outline">
+              <button onClick={() => { scrollTo("models"); ymGoal("click_hero_all_models"); }} className="sven-btn-outline">
                 Смотреть все модели
               </button>
             </div>
@@ -675,7 +675,7 @@ export default function Index() {
           <div onClick={() => setActiveVideo(null)}
             style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.9)", zIndex: 9000, display: "flex", alignItems: "center", justifyContent: "center", padding: "24px 16px" }}>
             <div onClick={e => e.stopPropagation()} style={{ width: "100%", maxWidth: 960, position: "relative" }}>
-              <button onClick={() => setActiveVideo(null)}
+              <button onClick={() => { setActiveVideo(null); ymGoal("click_video_close"); }}
                 style={{ position: "absolute", top: -44, right: 0, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", fontSize: "0.9rem", fontFamily: "Montserrat, sans-serif", fontWeight: 600, cursor: "pointer", padding: "6px 16px", borderRadius: 6, display: "flex", alignItems: "center", gap: 6 }}>
                 ✕ Закрыть
               </button>
@@ -734,6 +734,7 @@ export default function Index() {
               { href: "https://zen.yandex.ru/id/5cbd9ca636a7a700b369294a?lang=ru&clid=300", title: "Яндекс Дзен", img: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/13e84ed0-1199-4172-b0dc-274e44b75998.png" },
             ].map(s => (
               <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" title={s.title}
+                onClick={() => ymGoal("click_social_" + s.title.toLowerCase().replace(/\s/g, "_"))}
                 style={{ width: 44, height: 44, borderRadius: 10, overflow: "hidden", display: "block", textDecoration: "none", transition: "opacity 0.2s, transform 0.2s", flexShrink: 0 }}
                 onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.8"; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
@@ -751,7 +752,7 @@ export default function Index() {
       </footer>
 
       {/* ── Sticky float button ── */}
-      <button id="sticky-btn" onClick={() => scrollTo("scenarios")} title="Подобрать колонку">
+      <button id="sticky-btn" onClick={() => { scrollTo("scenarios"); ymGoal("click_sticky_pick_scenario"); }} title="Подобрать колонку">
         <Icon name="Music" size={22} style={{ color: "#fff" }} />
       </button>
     </div>
