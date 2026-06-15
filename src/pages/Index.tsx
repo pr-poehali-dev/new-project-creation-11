@@ -23,6 +23,7 @@ const LINKS = {
   ps850wb: "https://www.wildberries.ru/catalog/362109847/detail.aspx?utm_campaign=48164-id-Yandex&utm_source=Yandex&utm_medium=cpc&utm_content=product&utm_term=362109847",
   ps990wb: "https://www.wildberries.ru/catalog/535430822/detail.aspx?utm_campaign=48164-id-Yandex&utm_source=Yandex&utm_medium=cpc&utm_content=product&utm_term=535430822",
   ps1900ozon: "https://ozon.ru/product/sven-ps-1900-bolshaya-bluetooth-kolonka-audiosistema-dlya-vecherinok-s-razemami-dlya-karaoke-i-1304273035/?hs=1&utm_campaign=vendor_org_16927_yandex_direct&utm_medium=cpc&utm_source=yandex_direct&utm_term=PS-1900",
+  video399: "https://vkvideo.ru/video-16115403_456241259",
   video850: "https://vkvideo.ru/video-16115403_456240809",
   video990: "https://vkvideo.ru/video-16115403_456240946",
   video1900: "https://vkvideo.ru/video-16115403_456239518",
@@ -327,6 +328,10 @@ export default function Index() {
               </div>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <span className="sven-btn-disabled">🛒 Купить — скоро</span>
+                <button className="sven-btn-video"
+                  onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456241259&hd=2"); ymGoal("click_video_ps399"); }}>
+                  ▶ Смотреть видеообзор
+                </button>
               </div>
               <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", marginTop: 10 }}>⚠️ Ссылка на покупку появится в ближайшее время</p>
             </div>
@@ -589,23 +594,22 @@ export default function Index() {
             <p className="section-sub" style={{ marginTop: 10 }}>Распаковки и обзоры от команды SVEN</p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
-            {/* PS-399 — заглушка */}
+            {/* PS-399 */}
             <div className="video-card fade-up">
-              <div className="video-thumb" style={{ cursor: "default" }}>
-                <img src={PS399_PHOTOS[0].src} alt="SVEN PS-399 видео скоро" loading="lazy" />
+              <div className="video-thumb" onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456241259&hd=2"); ymGoal("click_video_ps399"); }}>
+                <img src={PS399_PHOTOS[0].src} alt="SVEN PS-399 видеообзор" loading="lazy" />
                 <div className="video-play-overlay">
-                  <div style={{ textAlign: "center" }}>
-                    <div style={{ width: 64, height: 64, borderRadius: "50%", background: "#555", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 10px" }}>
-                      <Icon name="Clock" size={24} style={{ color: "#999" }} />
-                    </div>
-                    <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.82rem" }}>Видео скоро будет добавлено</p>
-                  </div>
+                  <div className="play-circle"><Icon name="Play" size={26} className="ml-1" style={{ color: "#fff" }} /></div>
                 </div>
               </div>
               <div style={{ padding: "16px 18px" }}>
-                <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 600, fontSize: "0.88rem", color: "rgba(255,255,255,0.5)" }}>
-                  SVEN PS-399 — обзор скоро
+                <p style={{ fontFamily: "Montserrat, sans-serif", fontWeight: 600, fontSize: "0.88rem" }}>
+                  SVEN PS-399 — видеообзор новинки
                 </p>
+                <button className="sven-btn-video" style={{ marginTop: 12, fontSize: "0.8rem", padding: "8px 16px" }}
+                  onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456241259&hd=2"); ymGoal("click_video_ps399"); }}>
+                  ▶ Смотреть видео
+                </button>
               </div>
             </div>
 
