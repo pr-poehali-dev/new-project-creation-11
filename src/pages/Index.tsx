@@ -564,7 +564,9 @@ export default function Index() {
                 <tr>
                   <td style={{ fontWeight: 700, color: "#fff" }}>Купить</td>
                   <td>
-                    <span className="sven-btn-disabled" style={{ fontSize: "0.78rem", padding: "7px 14px" }}>Скоро</span>
+                    <a href={LINKS.ps399wb} target="_blank" rel="noopener noreferrer"
+                      className="sven-btn-primary" style={{ fontSize: "0.78rem", padding: "7px 14px" }}
+                      onClick={() => ymGoal("click_buy_ps399_wb")}>Купить</a>
                   </td>
                   <td>
                     <a href={LINKS.ps850wb} target="_blank" rel="noopener noreferrer"
