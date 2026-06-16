@@ -19,7 +19,7 @@ const IMG = {
 
 /* ─── UTM links ─── */
 const LINKS = {
-  ps399: "https://sven.fi/",
+  ps399wb: "https://www.wildberries.ru/catalog/1097593972/detail.aspx?targetUrl=GP&utm_campaign=48164-id-PS_399_YADirekt&utm_source=YADirekt&utm_medium=cpc&utm_content=product&utm_term=1097593972",
   ps850wb: "https://www.wildberries.ru/catalog/362109847/detail.aspx?utm_campaign=48164-id-Yandex&utm_source=Yandex&utm_medium=cpc&utm_content=product&utm_term=362109847",
   ps990wb: "https://www.wildberries.ru/catalog/535430822/detail.aspx?utm_campaign=48164-id-Yandex&utm_source=Yandex&utm_medium=cpc&utm_content=product&utm_term=535430822",
   ps1900ozon: "https://ozon.ru/product/sven-ps-1900-bolshaya-bluetooth-kolonka-audiosistema-dlya-vecherinok-s-razemami-dlya-karaoke-i-1304273035/?hs=1&utm_campaign=vendor_org_16927_yandex_direct&utm_medium=cpc&utm_source=yandex_direct&utm_term=PS-1900",
@@ -327,13 +327,15 @@ export default function Index() {
                 ))}
               </div>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <span className="sven-btn-disabled">🛒 Купить — скоро</span>
+                <a href={LINKS.ps399wb} target="_blank" rel="noopener noreferrer"
+                  className="sven-btn-wb" onClick={() => ymGoal("click_buy_ps399_wb")}>
+                  🛒 Купить на Wildberries
+                </a>
                 <button className="sven-btn-video"
                   onClick={() => { setActiveVideo("https://vk.com/video_ext.php?oid=-16115403&id=456241259&hd=2"); ymGoal("click_video_ps399"); }}>
                   ▶ Смотреть видеообзор
                 </button>
               </div>
-              <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.4)", marginTop: 10 }}>⚠️ Ссылка на покупку появится в ближайшее время</p>
             </div>
           </div>
         </div>
