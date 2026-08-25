@@ -10,9 +10,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 /* ─── Constants ─── */
 const REGISTER_URL = "https://functions.poehali.dev/4af27964-7aa8-44d4-8e2d-9a5bfea7e8ff";
-const WEBINAR_DATE = new Date("2026-09-22T19:00:00+03:00");
+const DAY1_DATE = new Date("2026-09-22T19:00:00+03:00");
 const TG_LINK = "https://t.me/InnaFaloleevaPsy";
 const MAX_LINK = "https://max.ru/join/Um75KJ9X-7yhUGiL1A0c6GPOup5OBhMH_PkMiyEZDjk";
+const EXPERT_PHOTO = "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/eb35afcc-496d-44e9-9309-8c0483ba19cc.JPG";
 
 const YM_IDS = [101026698, 109868001];
 type YmFn = (id: number, event: string, goal: string) => void;
@@ -43,12 +44,17 @@ function useCountdown(target: Date) {
   };
 }
 
-function googleCalendarLink() {
-  const text = encodeURIComponent("Вебинар «Сильная снаружи, сломанная внутри»");
-  const details = encodeURIComponent(
-    "Бесплатный вебинар с Инной Фалолеевой. Ссылка на подключение придёт на вашу почту.",
+function googleCalendarLink(day: 1 | 2) {
+  const text = encodeURIComponent(
+    day === 1
+      ? "День 1. Интенсив «Сильная снаружи, сломанная внутри»"
+      : "День 2. Практика «Сильная снаружи, сломанная внутри»",
   );
-  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=20260922T160000Z/20260922T173000Z&details=${details}`;
+  const details = encodeURIComponent(
+    "Бесплатный интенсив с Инной Фалолеевой. Ссылка на подключение придёт на вашу почту.",
+  );
+  const dates = day === 1 ? "20260922T160000Z/20260922T173000Z" : "20260923T160000Z/20260923T173000Z";
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&details=${details}`;
 }
 
 /* ─── Placeholder for photo/video content ─── */
@@ -80,7 +86,7 @@ const PAIN_POINTS = [
   { icon: "🔹", text: "Не помните, когда в последний раз разрешали себе устать" },
 ];
 
-const PROGRAM_ITEMS = [
+const DAY1_ITEMS = [
   {
     icon: "Compass",
     title: "Откуда берётся роль «сильной»",
@@ -102,9 +108,27 @@ const PROGRAM_ITEMS = [
     text: "не теория, а то, что можно применить сразу",
   },
   {
+    icon: "MessageCircleQuestion",
+    title: "Живые ответы на вопросы",
+    text: "в чате в реальном времени",
+  },
+];
+
+const DAY2_ITEMS = [
+  {
+    icon: "Wand2",
+    title: "От теории к практике",
+    text: "разбираем ваш личный сценарий через архетип и «героя вашей сказки»",
+  },
+  {
+    icon: "Video",
+    title: "Живой формат в Zoom",
+    text: "более камерный и интерактивный, чем День 1",
+  },
+  {
     icon: "Sparkles",
-    title: "23 сентября — практика в Zoom",
-    text: "отдельная встреча для всех зарегистрированных, в дополнение к эфиру",
+    title: "Применяем сразу",
+    text: "то, что узнали накануне — а не просто слушаем ещё раз",
   },
 ];
 
@@ -113,28 +137,32 @@ const TESTIMONIALS = [1, 2, 3, 4];
 const FAQ = [
   {
     q: "А это точно бесплатно?",
-    a: "Да, сам эфир 22 сентября — бесплатный. Программы и консультации — отдельно, цены открыты, без «пишите в личку».",
+    a: "Да, оба дня интенсива — 22 и 23 сентября — бесплатные. Программы и консультации — отдельно, цены открыты, без «пишите в личку».",
   },
   {
     q: "А если мне не подойдёт метод?",
-    a: "На эфире Инна показывает метод в деле — можно оценить его до записи на консультацию.",
+    a: "На Дне 1 Инна показывает метод в деле — можно оценить его до записи на консультацию.",
+  },
+  {
+    q: "Нужно ли приходить на оба дня?",
+    a: "Интенсив рассчитан на два вечера — День 1 даёт теорию, День 2 переводит её в практику. Если не сможете быть на Дне 2 живьём — доступен повтор.",
   },
   {
     q: "У меня не будет времени/сил на 3 месяца работы",
-    a: "Эфир — не продажа программы, а самостоятельная ценность на 60–90 минут. Решение можно принять уже после него.",
+    a: "Интенсив — не продажа программы, а самостоятельная ценность на два вечера. Решение о дальнейшей работе можно принять уже после него.",
   },
   {
     q: "Будет запись, если не смогу быть онлайн?",
-    a: "Да, доступ к записи откроется для всех зарегистрированных.",
+    a: "Да, доступ к повтору обоих дней откроется для всех зарегистрированных.",
   },
 ];
 
 const Efir09 = () => {
   useEffect(() => {
-    document.title = "Бесплатный вебинар «Сильная снаружи, сломанная внутри» — 22 сентября";
+    document.title = "Бесплатный интенсив «Сильная снаружи, сломанная внутри» — 22–23 сентября";
   }, []);
 
-  const countdown = useCountdown(WEBINAR_DATE);
+  const countdown = useCountdown(DAY1_DATE);
 
   const [utm, setUtm] = useState<Record<string, string>>({});
   useEffect(() => {
@@ -215,19 +243,25 @@ const Efir09 = () => {
       <section id="hero" className="bg-gradient-to-b from-[#F3E6DA] to-[#FBF6F0] px-5 pb-14 pt-10 md:pb-24 md:pt-16">
         <div className="mx-auto max-w-3xl text-center">
           <span className="mb-5 inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-[#B5533C] shadow-sm md:text-sm">
-            Бесплатный онлайн-вебинар
+            Бесплатный 2-дневный интенсив
           </span>
           <h1 className="mb-4 font-['Montserrat',sans-serif] text-3xl font-extrabold leading-tight md:text-5xl">
             «Сильная снаружи, сломанная внутри»
           </h1>
           <p className="mx-auto mb-7 max-w-xl text-base text-[#6b5d52] md:text-xl">
-            Разберём 4 роли, в которые попадает каждая «сильная» женщина — и конкретные шаги, чтобы
-            выйти из сценария, не разваливаясь на части
+            Два вечера, 19:00 мск: разберём 4 роли, в которые попадает каждая «сильная» женщина, и на
+            практике найдём конкретные шаги, чтобы выйти из сценария, не разваливаясь на части
           </p>
 
-          <div className="mb-7 flex items-center justify-center gap-3 font-['Montserrat',sans-serif] text-lg font-bold md:text-2xl">
-            <Icon name="Calendar" size={22} className="text-[#B5533C]" />
-            <span>22 сентября · 19:00 мск</span>
+          <div className="mb-7 flex flex-wrap items-center justify-center gap-3">
+            <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-['Montserrat',sans-serif] text-sm font-bold shadow-sm md:text-base">
+              <Icon name="Calendar" size={18} className="text-[#B5533C]" />
+              <span>День 1 — 22 сентября, 19:00</span>
+            </div>
+            <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-['Montserrat',sans-serif] text-sm font-bold shadow-sm md:text-base">
+              <Icon name="Calendar" size={18} className="text-[#B5533C]" />
+              <span>День 2 — 23 сентября, 19:00</span>
+            </div>
           </div>
 
           <button
@@ -241,13 +275,13 @@ const Efir09 = () => {
             <Icon name="ArrowRight" size={20} />
           </button>
           <p className="mt-3 text-xs text-[#8A7864] md:text-sm">
-            Без спама. Ссылка на подключение придёт на почту
+            Без спама. Ссылки на подключение к обоим дням придут на почту
           </p>
 
-          <Placeholder
-            label="Фото Инны — живое, не студийное"
-            icon="Image"
-            className="mx-auto mt-10 aspect-square w-44 rounded-full md:w-56"
+          <img
+            src={EXPERT_PHOTO}
+            alt="Инна Фалолеева — клинический психолог"
+            className="mx-auto mt-10 aspect-square w-44 rounded-full object-cover shadow-lg md:w-56"
           />
         </div>
       </section>
@@ -278,28 +312,81 @@ const Efir09 = () => {
       {/* ── Program ── */}
       <section id="program" className="bg-white px-5 py-14 md:py-20">
         <div className="mx-auto max-w-3xl">
-          <h2 className="mb-10 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
-            Что будет на эфире
+          <h2 className="mb-3 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
+            Что будет на интенсиве
           </h2>
-          <div className="space-y-5">
-            {PROGRAM_ITEMS.map((item, i) => (
-              <div key={item.title} className="flex items-start gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#F3E6DA] text-[#B5533C]">
-                  <Icon name={item.icon} size={20} />
-                </div>
-                <div>
-                  <p className="font-['Montserrat',sans-serif] text-base font-bold md:text-lg">
-                    {i + 1}. {item.title}
-                  </p>
-                  <p className="text-sm text-[#6b5d52] md:text-base">{item.text}</p>
-                </div>
+          <p className="mb-10 text-center text-sm text-[#8A7864] md:text-base">
+            Два равноценных вечера — теория и практика, обе части важны одинаково
+          </p>
+
+          <div className="mb-10 rounded-2xl border-2 border-[#EEE0D2] p-6 md:p-8">
+            <div className="mb-6 flex items-center gap-3">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#B5533C] font-['Montserrat',sans-serif] text-sm font-extrabold text-white">
+                1
+              </span>
+              <div>
+                <p className="font-['Montserrat',sans-serif] text-lg font-bold md:text-xl">
+                  День 1 — 22 сентября, 19:00 мск
+                </p>
+                <p className="text-xs text-[#8A7864] md:text-sm">Лекционная часть · Бизон365</p>
               </div>
-            ))}
+            </div>
+            <div className="space-y-4">
+              {DAY1_ITEMS.map((item, i) => (
+                <div key={item.title} className="flex items-start gap-4">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F3E6DA] text-[#B5533C]">
+                    <Icon name={item.icon} size={18} />
+                  </div>
+                  <div>
+                    <p className="font-['Montserrat',sans-serif] text-sm font-bold md:text-base">
+                      {i + 1}. {item.title}
+                    </p>
+                    <p className="text-sm text-[#6b5d52] md:text-base">{item.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 rounded-xl bg-[#FBF6F0] p-4 text-center text-sm text-[#5b4d41] md:text-base">
+              <strong>Формат:</strong> без камер участников — только я, теория и ваши вопросы в чате
+            </div>
           </div>
-          <div className="mt-9 rounded-xl border border-[#EEE0D2] bg-[#FBF6F0] p-5 text-center text-sm text-[#5b4d41] md:text-base">
-            <strong>Формат:</strong> без камер участников — только я, теория и ваши вопросы в чате в
-            реальном времени
+
+          <div className="rounded-2xl border-2 border-[#EEE0D2] p-6 md:p-8">
+            <div className="mb-6 flex items-center gap-3">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#B5533C] font-['Montserrat',sans-serif] text-sm font-extrabold text-white">
+                2
+              </span>
+              <div>
+                <p className="font-['Montserrat',sans-serif] text-lg font-bold md:text-xl">
+                  День 2 — 23 сентября, 19:00 мск
+                </p>
+                <p className="text-xs text-[#8A7864] md:text-sm">Практический эфир · Zoom</p>
+              </div>
+            </div>
+            <div className="space-y-4">
+              {DAY2_ITEMS.map((item, i) => (
+                <div key={item.title} className="flex items-start gap-4">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F3E6DA] text-[#B5533C]">
+                    <Icon name={item.icon} size={18} />
+                  </div>
+                  <div>
+                    <p className="font-['Montserrat',sans-serif] text-sm font-bold md:text-base">
+                      {i + 1}. {item.title}
+                    </p>
+                    <p className="text-sm text-[#6b5d52] md:text-base">{item.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 rounded-xl bg-[#FBF6F0] p-4 text-center text-sm text-[#5b4d41] md:text-base">
+              Не бонус для избранных, а вторая половина интенсива — здесь то, что вы узнали в День 1,
+              становится вашим личным опытом
+            </div>
           </div>
+
+          <p className="mt-6 text-center text-sm text-[#8A7864] md:text-base">
+            Регистрация даёт доступ сразу к обоим дням — одной формой, без повторной записи
+          </p>
         </div>
       </section>
 
@@ -307,7 +394,11 @@ const Efir09 = () => {
       <section id="expert" className="px-5 py-14 md:py-20">
         <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-[1fr_1.3fr] md:items-center">
           <div className="grid grid-cols-2 gap-3">
-            <Placeholder label="Фото Инны №1" icon="Image" className="col-span-2 aspect-video" />
+            <img
+              src={EXPERT_PHOTO}
+              alt="Инна Фалолеева — клинический психолог"
+              className="col-span-2 aspect-video w-full rounded-2xl object-cover object-top shadow-sm"
+            />
             <Placeholder label="Фото №2" icon="Image" className="aspect-square" />
             <Placeholder label="Фото №3" icon="Image" className="aspect-square" />
           </div>
@@ -409,9 +500,9 @@ const Efir09 = () => {
       <section id="final-cta" className="bg-[#B5533C] px-5 py-14 text-white md:py-20">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="mb-6 font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
-            До эфира осталось
+            До начала Дня 1 осталось
           </h2>
-          <div className="mb-8 flex justify-center gap-3 md:gap-5">
+          <div className="mb-4 flex justify-center gap-3 md:gap-5">
             {[
               { label: "дн", value: countdown.days },
               { label: "ч", value: countdown.hours },
@@ -426,9 +517,12 @@ const Efir09 = () => {
               </div>
             ))}
           </div>
+          <p className="mb-8 text-xs text-white/70 md:text-sm">
+            Одна регистрация открывает доступ сразу к Дню 1 и Дню 2
+          </p>
           <p className="mx-auto mb-8 max-w-lg text-sm italic text-white/90 md:text-base">
             «22 сентября я расскажу то, что обычно говорю только на консультациях один на один. Буду
-            рада увидеть вас в эфире» — Инна
+            рада увидеть вас на интенсиве» — Инна
           </p>
           <button
             onClick={() => {
@@ -448,10 +542,10 @@ const Efir09 = () => {
           {!submitted ? (
             <>
               <h2 className="mb-2 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
-                Регистрация на вебинар
+                Регистрация на интенсив
               </h2>
               <p className="mb-6 text-center text-sm text-[#8A7864] md:text-base">
-                22 сентября · 19:00 мск · онлайн
+                22 и 23 сентября · 19:00 мск · онлайн · оба дня одной регистрацией
               </p>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -507,10 +601,10 @@ const Efir09 = () => {
                   disabled={loading}
                   className="w-full rounded-xl bg-[#B5533C] py-4 font-['Montserrat',sans-serif] text-base font-bold text-white transition hover:bg-[#98422E] disabled:opacity-60"
                 >
-                  {loading ? "Отправляем..." : "Забронировать место"}
+                  {loading ? "Отправляем..." : "Зарегистрироваться на интенсив"}
                 </button>
                 <p className="text-center text-xs text-[#8A7864]">
-                  Без спама. Ссылка на подключение придёт на почту
+                  Без спама. Ссылки на подключение к обоим дням придут на почту
                 </p>
               </form>
             </>
@@ -523,19 +617,31 @@ const Efir09 = () => {
                 Вы зарегистрированы!
               </h3>
               <p className="mb-6 text-sm text-[#6b5d52] md:text-base">
-                Проверьте почту — туда придёт ссылка на подключение к эфиру 22 сентября. А 23 сентября
-                вас ждёт практика в Zoom для всех зарегистрированных.
+                Проверьте почту — туда придут ссылки на подключение к Дню 1 (22 сентября) и Дню 2 (23
+                сентября).
               </p>
-              <a
-                href={googleCalendarLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => ymGoal("efir09_add_to_calendar")}
-                className="inline-flex items-center gap-2 rounded-xl border-2 border-[#B5533C] px-6 py-3 font-['Montserrat',sans-serif] text-sm font-bold text-[#B5533C] transition hover:bg-[#F3E6DA] md:text-base"
-              >
-                <Icon name="CalendarPlus" size={18} />
-                Добавить в календарь
-              </a>
+              <div className="flex flex-wrap justify-center gap-3">
+                <a
+                  href={googleCalendarLink(1)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => ymGoal("efir09_add_to_calendar_day1")}
+                  className="inline-flex items-center gap-2 rounded-xl border-2 border-[#B5533C] px-5 py-3 font-['Montserrat',sans-serif] text-sm font-bold text-[#B5533C] transition hover:bg-[#F3E6DA] md:text-base"
+                >
+                  <Icon name="CalendarPlus" size={18} />
+                  День 1 в календарь
+                </a>
+                <a
+                  href={googleCalendarLink(2)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => ymGoal("efir09_add_to_calendar_day2")}
+                  className="inline-flex items-center gap-2 rounded-xl border-2 border-[#B5533C] px-5 py-3 font-['Montserrat',sans-serif] text-sm font-bold text-[#B5533C] transition hover:bg-[#F3E6DA] md:text-base"
+                >
+                  <Icon name="CalendarPlus" size={18} />
+                  День 2 в календарь
+                </a>
+              </div>
             </div>
           )}
         </div>
