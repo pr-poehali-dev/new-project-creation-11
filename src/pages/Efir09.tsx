@@ -132,6 +132,29 @@ const DAY2_ITEMS = [
   },
 ];
 
+const EXPERT_FACTS = [
+  {
+    icon: "Stethoscope",
+    text: "Клинический психолог, работает в методе ЭОТ (эмоционально-образная терапия), ДПДГ и МАК-картах",
+  },
+  {
+    icon: "GraduationCap",
+    text: "3400+ часов профильного обучения",
+  },
+  {
+    icon: "Users",
+    text: "75+ клиентов и более 2400 часов практики",
+  },
+  {
+    icon: "Route",
+    text: "До психологии — 25 лет в финансах, потом инструктор, потом собственный магазин одежды",
+  },
+  {
+    icon: "HeartHandshake",
+    text: "Инна сама прошла путь «сильной», которая тащит всё сама — и знает эту роль изнутри, а не по учебникам",
+  },
+];
+
 const TESTIMONIALS = [1, 2, 3, 4];
 
 const FAQ = [
@@ -406,13 +429,16 @@ const Efir09 = () => {
             <h2 className="mb-4 font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
               Об эксперте
             </h2>
-            <p className="mb-4 text-sm leading-relaxed text-[#3d332b] md:text-base">
-              Инна Фалолеева — клинический психолог, работает в методе ЭОТ (эмоционально-образная
-              терапия), ДПДГ и МАК-картах. За плечами 3400+ часов профильного обучения, 75+ клиентов и
-              более 2400 часов практики. До психологии — 25 лет в финансах, потом инструктор, потом
-              собственный магазин одежды. Инна сама прошла путь «сильной», которая тащит всё сама — и
-              знает эту роль изнутри, а не по учебникам.
-            </p>
+            <ul className="mb-4 space-y-3">
+              {EXPERT_FACTS.map((f) => (
+                <li key={f.text} className="flex items-start gap-3">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F3E6DA] text-[#B5533C]">
+                    <Icon name={f.icon} size={16} />
+                  </div>
+                  <span className="text-sm leading-relaxed text-[#3d332b] md:text-base">{f.text}</span>
+                </li>
+              ))}
+            </ul>
             <div className="flex flex-wrap gap-2">
               {["ЭОТ", "ДПДГ", "МАК"].map((m) => (
                 <span
@@ -671,15 +697,20 @@ const Efir09 = () => {
             </a>
           </div>
           <p className="mx-auto mb-3 max-w-xl text-center text-xs leading-relaxed text-[#8A7864]">
-            Регистрируясь на вебинар, вы соглашаетесь на обработку персональных данных в целях
+            Регистрируясь на интенсив, вы соглашаетесь на обработку персональных данных в целях
             организации и проведения мероприятия. Данные не передаются третьим лицам и используются
             только для связи с вами.
           </p>
-          <p className="text-center text-xs text-[#8A7864]">
-            [Юридическая информация — заглушка, ИП/самозанятость уточняется] · Контакты: [заглушка]
-          </p>
+          <div className="mx-auto max-w-xl rounded-xl border border-[#EEE0D2] bg-[#FBF6F0] p-4 text-center text-xs leading-relaxed text-[#8A7864]">
+            <p className="font-semibold text-[#5b4d41]">ИП Фалолеева Инна Николаевна</p>
+            <p>ИНН 505003981273</p>
+            <p>ОКВЭД 62.01 «Разработка компьютерного программного обеспечения»</p>
+            <p>Расчётный счёт 40802810838000170465 в ПАО Сбербанк, г. Москва</p>
+            <p>БИК 044525225 · Корр. счёт 30101810400000000225</p>
+            <p className="mt-2">Контакты для связи: [заглушка]</p>
+          </div>
           <p className="mt-2 text-center text-xs text-[#8A7864]">
-            © {new Date().getFullYear()} Инна Фалолеева
+            © {new Date().getFullYear()} ИП Фалолеева Инна Николаевна
           </p>
         </div>
       </footer>
