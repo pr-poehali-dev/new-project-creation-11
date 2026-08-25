@@ -446,16 +446,12 @@ const Efir09 = () => {
       {/* ── About expert ── */}
       <section id="expert" className="px-5 py-14 md:py-20">
         <div className="mx-auto max-w-4xl">
-          <div className="grid gap-8 md:grid-cols-[1fr_1.3fr] md:items-center">
-            <div className="grid grid-cols-2 gap-3">
-              <img
-                src={EXPERT_PHOTO}
-                alt="Инна Фалолеева — клинический психолог"
-                className="col-span-2 aspect-video w-full rounded-2xl object-cover object-top shadow-sm"
-              />
-              <Placeholder label="Фото №2" icon="Image" className="aspect-square" />
-              <Placeholder label="Фото №3" icon="Image" className="aspect-square" />
-            </div>
+          <div className="grid gap-8 md:grid-cols-[1fr_1.3fr] md:items-stretch">
+            <img
+              src={EXPERT_PHOTO}
+              alt="Инна Фалолеева — клинический психолог"
+              className="h-full w-full rounded-2xl object-cover object-top shadow-sm"
+            />
             <div>
               <h2 className="mb-4 font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
                 Об эксперте
