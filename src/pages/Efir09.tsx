@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 /* ─── Constants ─── */
 const REGISTER_URL = "https://functions.poehali.dev/4af27964-7aa8-44d4-8e2d-9a5bfea7e8ff";
@@ -14,6 +15,34 @@ const DAY1_DATE = new Date("2026-09-22T19:00:00+03:00");
 const TG_LINK = "https://t.me/InnaFaloleevaPsy";
 const MAX_LINK = "https://max.ru/join/Um75KJ9X-7yhUGiL1A0c6GPOup5OBhMH_PkMiyEZDjk";
 const EXPERT_PHOTO = "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/eb35afcc-496d-44e9-9309-8c0483ba19cc.JPG";
+
+const DIPLOMAS = [
+  {
+    title: "Диплом ЭОТ",
+    subtitle: "Эмоционально-образная терапия, 650 ч.",
+    url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/8bc06beb-1ef8-4102-9ce0-5110d0fb8843.jpg",
+  },
+  {
+    title: "Диплом «Психолог в социальной сфере»",
+    subtitle: "Онлайн-институт Смарт, 450 ч.",
+    url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/d45dfbfb-ae24-4e6c-a9c9-70c7d47024a7.jpg",
+  },
+  {
+    title: "Диплом ЭОТ — работа с внутренним ребёнком",
+    subtitle: "Институт ЭОТ Н. Линде, 650 ч.",
+    url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/318629d0-c98b-4b12-b666-5de8c4b3be9f.jpg",
+  },
+  {
+    title: "Диплом ДПДГ",
+    subtitle: "Метод десенсибилизации и переработки движениями глаз, 340 ч.",
+    url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/c52f5658-aaa5-4fbf-88eb-6a3a1a94ff92.jpg",
+  },
+  {
+    title: "Удостоверение о повышении квалификации",
+    subtitle: "Психология РПП, 108 ч.",
+    url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/3e532753-4518-41ca-90ad-f7cfa27f7460.jpg",
+  },
+];
 
 const YM_IDS = [101026698, 109868001];
 type YmFn = (id: number, event: string, goal: string) => void;
@@ -206,6 +235,7 @@ const Efir09 = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [diplomaIndex, setDiplomaIndex] = useState<number | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -415,43 +445,92 @@ const Efir09 = () => {
 
       {/* ── About expert ── */}
       <section id="expert" className="px-5 py-14 md:py-20">
-        <div className="mx-auto grid max-w-4xl gap-8 md:grid-cols-[1fr_1.3fr] md:items-center">
-          <div className="grid grid-cols-2 gap-3">
-            <img
-              src={EXPERT_PHOTO}
-              alt="Инна Фалолеева — клинический психолог"
-              className="col-span-2 aspect-video w-full rounded-2xl object-cover object-top shadow-sm"
-            />
-            <Placeholder label="Фото №2" icon="Image" className="aspect-square" />
-            <Placeholder label="Фото №3" icon="Image" className="aspect-square" />
+        <div className="mx-auto max-w-4xl">
+          <div className="grid gap-8 md:grid-cols-[1fr_1.3fr] md:items-center">
+            <div className="grid grid-cols-2 gap-3">
+              <img
+                src={EXPERT_PHOTO}
+                alt="Инна Фалолеева — клинический психолог"
+                className="col-span-2 aspect-video w-full rounded-2xl object-cover object-top shadow-sm"
+              />
+              <Placeholder label="Фото №2" icon="Image" className="aspect-square" />
+              <Placeholder label="Фото №3" icon="Image" className="aspect-square" />
+            </div>
+            <div>
+              <h2 className="mb-4 font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
+                Об эксперте
+              </h2>
+              <ul className="mb-4 space-y-3">
+                {EXPERT_FACTS.map((f) => (
+                  <li key={f.text} className="flex items-start gap-3">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F3E6DA] text-[#B5533C]">
+                      <Icon name={f.icon} size={16} />
+                    </div>
+                    <span className="text-sm leading-relaxed text-[#3d332b] md:text-base">{f.text}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-wrap gap-2">
+                {["ЭОТ", "ДПДГ", "МАК"].map((m) => (
+                  <span
+                    key={m}
+                    className="rounded-full bg-[#F3E6DA] px-3 py-1 text-xs font-semibold text-[#B5533C]"
+                  >
+                    {m}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
-          <div>
-            <h2 className="mb-4 font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
-              Об эксперте
-            </h2>
-            <ul className="mb-4 space-y-3">
-              {EXPERT_FACTS.map((f) => (
-                <li key={f.text} className="flex items-start gap-3">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F3E6DA] text-[#B5533C]">
-                    <Icon name={f.icon} size={16} />
-                  </div>
-                  <span className="text-sm leading-relaxed text-[#3d332b] md:text-base">{f.text}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="flex flex-wrap gap-2">
-              {["ЭОТ", "ДПДГ", "МАК"].map((m) => (
-                <span
-                  key={m}
-                  className="rounded-full bg-[#F3E6DA] px-3 py-1 text-xs font-semibold text-[#B5533C]"
+
+          <div className="mt-10">
+            <h3 className="mb-4 font-['Montserrat',sans-serif] text-lg font-bold md:text-xl">
+              Дипломы и сертификаты
+            </h3>
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              {DIPLOMAS.map((d, i) => (
+                <button
+                  key={d.url}
+                  type="button"
+                  onClick={() => setDiplomaIndex(i)}
+                  className="group text-left"
                 >
-                  {m}
-                </span>
+                  <div className="aspect-[4/3] overflow-hidden rounded-xl border border-[#EEE0D2] bg-white shadow-sm">
+                    <img
+                      src={d.url}
+                      alt={d.title}
+                      className="h-full w-full object-cover transition group-hover:scale-105"
+                    />
+                  </div>
+                  <p className="mt-2 text-xs font-semibold text-[#3d332b] md:text-sm">{d.title}</p>
+                  <p className="text-xs text-[#8A7864]">{d.subtitle}</p>
+                </button>
               ))}
             </div>
           </div>
         </div>
       </section>
+
+      <Dialog open={diplomaIndex !== null} onOpenChange={(open) => !open && setDiplomaIndex(null)}>
+        <DialogContent className="max-w-3xl border-none bg-transparent p-0 shadow-none">
+          <DialogTitle className="sr-only">
+            {diplomaIndex !== null ? DIPLOMAS[diplomaIndex].title : "Диплом"}
+          </DialogTitle>
+          {diplomaIndex !== null && (
+            <div className="overflow-hidden rounded-2xl bg-white">
+              <img
+                src={DIPLOMAS[diplomaIndex].url}
+                alt={DIPLOMAS[diplomaIndex].title}
+                className="max-h-[80vh] w-full object-contain"
+              />
+              <div className="p-4 text-center">
+                <p className="font-semibold text-[#3d332b]">{DIPLOMAS[diplomaIndex].title}</p>
+                <p className="text-sm text-[#8A7864]">{DIPLOMAS[diplomaIndex].subtitle}</p>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* ── Case ── */}
       <section id="case" className="bg-[#2B2420] px-5 py-14 text-white md:py-20">
@@ -704,10 +783,6 @@ const Efir09 = () => {
           <div className="mx-auto max-w-xl rounded-xl border border-[#EEE0D2] bg-[#FBF6F0] p-4 text-center text-xs leading-relaxed text-[#8A7864]">
             <p className="font-semibold text-[#5b4d41]">ИП Фалолеева Инна Николаевна</p>
             <p>ИНН 505003981273</p>
-            <p>ОКВЭД 62.01 «Разработка компьютерного программного обеспечения»</p>
-            <p>Расчётный счёт 40802810838000170465 в ПАО Сбербанк, г. Москва</p>
-            <p>БИК 044525225 · Корр. счёт 30101810400000000225</p>
-            <p className="mt-2">Контакты для связи: [заглушка]</p>
           </div>
           <p className="mt-2 text-center text-xs text-[#8A7864]">
             © {new Date().getFullYear()} ИП Фалолеева Инна Николаевна
