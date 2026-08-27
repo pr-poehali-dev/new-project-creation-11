@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Icon from "@/components/ui/icon";
@@ -86,26 +86,6 @@ function googleCalendarLink(day: 1 | 2) {
   );
   const dates = day === 1 ? "20260922T160000Z/20260922T173000Z" : "20260923T160000Z/20260923T173000Z";
   return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&details=${details}`;
-}
-
-/* ─── Sticky card-stack section wrapper (overlap effect) ─── */
-function StickySection({
-  children,
-  index,
-  className = "",
-}: {
-  children: ReactNode;
-  index: number;
-  className?: string;
-}) {
-  return (
-    <div
-      className={`sticky top-0 rounded-t-[2rem] shadow-[0_-20px_50px_-20px_rgba(43,36,32,0.25)] md:rounded-t-[2.5rem] ${className}`}
-      style={{ zIndex: 10 + index }}
-    >
-      {children}
-    </div>
-  );
 }
 
 /* ─── Parallax image ─── */
@@ -393,8 +373,7 @@ const Efir09 = () => {
       </section>
 
       {/* ── Diagnostics ── */}
-      <StickySection index={1} className="bg-[#FBF6F0]">
-      <section id="diagnostics" className="px-5 py-14 md:py-20">
+      <section id="diagnostics" className="bg-[#FBF6F0] px-5 py-14 md:py-20">
         <div className="mx-auto max-w-2xl">
           <h2 className="mb-8 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
             Это про вас, если...
@@ -415,11 +394,9 @@ const Efir09 = () => {
           </p>
         </div>
       </section>
-      </StickySection>
 
       {/* ── Program ── */}
-      <StickySection index={2} className="bg-white">
-      <section id="program" className="px-5 py-14 md:py-20">
+      <section id="program" className="bg-white px-5 py-14 md:py-20">
         <div className="mx-auto max-w-3xl">
           <h2 className="mb-3 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
             Что будет на интенсиве
@@ -498,11 +475,9 @@ const Efir09 = () => {
           </p>
         </div>
       </section>
-      </StickySection>
 
       {/* ── About expert ── */}
-      <StickySection index={3} className="bg-[#FBF6F0]">
-      <section id="expert" className="px-5 py-14 md:py-20">
+      <section id="expert" className="bg-[#FBF6F0] px-5 py-14 md:py-20">
         <div className="mx-auto max-w-4xl">
           <div className="grid gap-8 md:grid-cols-[1fr_1.3fr] md:items-stretch">
             <ParallaxImage
@@ -565,7 +540,6 @@ const Efir09 = () => {
           </div>
         </div>
       </section>
-      </StickySection>
 
       <Dialog open={diplomaIndex !== null} onOpenChange={(open) => !open && setDiplomaIndex(null)}>
         <DialogContent className="max-w-3xl border-none bg-transparent p-0 shadow-none">
@@ -589,8 +563,7 @@ const Efir09 = () => {
       </Dialog>
 
       {/* ── Case ── */}
-      <StickySection index={4} className="bg-[#2B2420]">
-      <section id="case" className="px-5 py-14 text-white md:py-20">
+      <section id="case" className="bg-[#2B2420] px-5 py-14 text-white md:py-20">
         <div className="mx-auto max-w-2xl">
           <h2 className="mb-8 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
             Кейс Елены
@@ -614,11 +587,9 @@ const Efir09 = () => {
           </div>
         </div>
       </section>
-      </StickySection>
 
       {/* ── Testimonials ── */}
-      <StickySection index={5} className="bg-[#FBF6F0]">
-      <section id="testimonials" className="px-5 py-14 md:py-20">
+      <section id="testimonials" className="bg-[#FBF6F0] px-5 py-14 md:py-20">
         <div className="mx-auto max-w-4xl">
           <h2 className="mb-8 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
             Что говорят подписчицы
@@ -635,11 +606,9 @@ const Efir09 = () => {
           </div>
         </div>
       </section>
-      </StickySection>
 
       {/* ── FAQ ── */}
-      <StickySection index={6} className="bg-white">
-      <section id="faq" className="px-5 py-14 md:py-20">
+      <section id="faq" className="bg-white px-5 py-14 md:py-20">
         <div className="mx-auto max-w-2xl">
           <h2 className="mb-8 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
             Частые вопросы
@@ -661,11 +630,9 @@ const Efir09 = () => {
           </p>
         </div>
       </section>
-      </StickySection>
 
       {/* ── Final CTA / countdown ── */}
-      <StickySection index={7} className="bg-[#2F7A52]">
-      <section id="final-cta" className="px-5 py-14 text-white md:py-20">
+      <section id="final-cta" className="bg-[#2F7A52] px-5 py-14 text-white md:py-20">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="mb-6 font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
             До начала Дня 1 осталось
@@ -703,7 +670,6 @@ const Efir09 = () => {
           </button>
         </div>
       </section>
-      </StickySection>
 
       {/* ── Registration form ── */}
       <section id="register" className="bg-[#FBF6F0] px-5 py-14 md:py-20">
