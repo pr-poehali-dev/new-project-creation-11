@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import {
   Accordion,
@@ -84,6 +85,53 @@ function googleCalendarLink(day: 1 | 2) {
   );
   const dates = day === 1 ? "20260922T160000Z/20260922T173000Z" : "20260923T160000Z/20260923T173000Z";
   return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&details=${details}`;
+}
+
+/* ─── Sticky card-stack section wrapper (overlap effect) ─── */
+function StickySection({
+  children,
+  index,
+  className = "",
+}: {
+  children: ReactNode;
+  index: number;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`sticky top-0 rounded-t-[2rem] shadow-[0_-20px_50px_-20px_rgba(43,36,32,0.25)] md:rounded-t-[2.5rem] ${className}`}
+      style={{ zIndex: 10 + index }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* ─── Parallax image ─── */
+function ParallaxImage({
+  src,
+  alt,
+  className = "",
+  factor = 40,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  factor?: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], [-factor, factor]);
+  return (
+    <div ref={ref} className={`overflow-hidden ${className}`}>
+      <motion.img
+        src={src}
+        alt={alt}
+        style={{ y }}
+        className="h-[130%] w-full object-cover object-top"
+      />
+    </div>
+  );
 }
 
 /* ─── Placeholder for photo/video content ─── */
@@ -285,7 +333,7 @@ const Efir09 = () => {
               scrollTo("register");
               ymGoal("efir09_header_cta");
             }}
-            className="rounded-lg bg-[#B5533C] px-4 py-2 font-['Montserrat',sans-serif] text-xs font-bold text-white transition hover:bg-[#98422E] md:text-sm"
+            className="rounded-lg bg-[#2F7A52] px-4 py-2 font-['Montserrat',sans-serif] text-xs font-bold text-white transition hover:bg-[#1F5E3F] md:text-sm"
           >
             Записаться
           </button>
@@ -295,7 +343,7 @@ const Efir09 = () => {
       {/* ── Hero ── */}
       <section id="hero" className="bg-gradient-to-b from-[#F3E6DA] to-[#FBF6F0] px-5 pb-14 pt-10 md:pb-24 md:pt-16">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="mb-5 inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-[#B5533C] shadow-sm md:text-sm">
+          <span className="mb-5 inline-block rounded-full bg-white px-4 py-1.5 text-xs font-semibold text-[#2F7A52] shadow-sm md:text-sm">
             Бесплатный 2-дневный интенсив
           </span>
           <h1 className="mb-4 font-['Montserrat',sans-serif] text-3xl font-extrabold leading-tight md:text-5xl">
@@ -308,11 +356,11 @@ const Efir09 = () => {
 
           <div className="mb-7 flex flex-wrap items-center justify-center gap-3">
             <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-['Montserrat',sans-serif] text-sm font-bold shadow-sm md:text-base">
-              <Icon name="Calendar" size={18} className="text-[#B5533C]" />
+              <Icon name="Calendar" size={18} className="text-[#2F7A52]" />
               <span>День 1 — 22 сентября, 19:00</span>
             </div>
             <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-['Montserrat',sans-serif] text-sm font-bold shadow-sm md:text-base">
-              <Icon name="Calendar" size={18} className="text-[#B5533C]" />
+              <Icon name="Calendar" size={18} className="text-[#2F7A52]" />
               <span>День 2 — 23 сентября, 19:00</span>
             </div>
           </div>
@@ -322,13 +370,14 @@ const Efir09 = () => {
               scrollTo("register");
               ymGoal("efir09_hero_cta");
             }}
-            className="inline-flex items-center gap-2 rounded-xl bg-[#B5533C] px-8 py-4 font-['Montserrat',sans-serif] text-base font-bold text-white shadow-lg shadow-[#B5533C]/25 transition hover:-translate-y-0.5 hover:bg-[#98422E] md:text-lg"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#2F7A52] px-8 py-4 font-['Montserrat',sans-serif] text-base font-bold text-white shadow-lg shadow-[#2F7A52]/25 transition hover:-translate-y-0.5 hover:bg-[#1F5E3F] md:text-lg"
           >
             Забронировать место
             <Icon name="ArrowRight" size={20} />
           </button>
-          <p className="mt-3 text-xs text-[#8A7864] md:text-sm">
-            Без спама. Ссылки на подключение к обоим дням придут на почту
+          <p className="mt-3 text-xs font-medium text-[#2F7A52] md:text-sm">
+            🎁 Подарок за регистрацию: чек-лист «7 признаков, что вы давно тащите на себе чужую
+            ответственность»
           </p>
 
           <img
@@ -340,6 +389,7 @@ const Efir09 = () => {
       </section>
 
       {/* ── Diagnostics ── */}
+      <StickySection index={1} className="bg-[#FBF6F0]">
       <section id="diagnostics" className="px-5 py-14 md:py-20">
         <div className="mx-auto max-w-2xl">
           <h2 className="mb-8 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
@@ -361,9 +411,11 @@ const Efir09 = () => {
           </p>
         </div>
       </section>
+      </StickySection>
 
       {/* ── Program ── */}
-      <section id="program" className="bg-white px-5 py-14 md:py-20">
+      <StickySection index={2} className="bg-white">
+      <section id="program" className="px-5 py-14 md:py-20">
         <div className="mx-auto max-w-3xl">
           <h2 className="mb-3 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
             Что будет на интенсиве
@@ -374,7 +426,7 @@ const Efir09 = () => {
 
           <div className="mb-10 rounded-2xl border-2 border-[#EEE0D2] p-6 md:p-8">
             <div className="mb-6 flex items-center gap-3">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#B5533C] font-['Montserrat',sans-serif] text-sm font-extrabold text-white">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#2F7A52] font-['Montserrat',sans-serif] text-sm font-extrabold text-white">
                 1
               </span>
               <div>
@@ -387,7 +439,7 @@ const Efir09 = () => {
             <div className="space-y-4">
               {DAY1_ITEMS.map((item, i) => (
                 <div key={item.title} className="flex items-start gap-4">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F3E6DA] text-[#B5533C]">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E3EFE7] text-[#2F7A52]">
                     <Icon name={item.icon} size={18} />
                   </div>
                   <div>
@@ -406,7 +458,7 @@ const Efir09 = () => {
 
           <div className="rounded-2xl border-2 border-[#EEE0D2] p-6 md:p-8">
             <div className="mb-6 flex items-center gap-3">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#B5533C] font-['Montserrat',sans-serif] text-sm font-extrabold text-white">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#2F7A52] font-['Montserrat',sans-serif] text-sm font-extrabold text-white">
                 2
               </span>
               <div>
@@ -419,7 +471,7 @@ const Efir09 = () => {
             <div className="space-y-4">
               {DAY2_ITEMS.map((item, i) => (
                 <div key={item.title} className="flex items-start gap-4">
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F3E6DA] text-[#B5533C]">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E3EFE7] text-[#2F7A52]">
                     <Icon name={item.icon} size={18} />
                   </div>
                   <div>
@@ -442,15 +494,18 @@ const Efir09 = () => {
           </p>
         </div>
       </section>
+      </StickySection>
 
       {/* ── About expert ── */}
+      <StickySection index={3} className="bg-[#FBF6F0]">
       <section id="expert" className="px-5 py-14 md:py-20">
         <div className="mx-auto max-w-4xl">
           <div className="grid gap-8 md:grid-cols-[1fr_1.3fr] md:items-stretch">
-            <img
+            <ParallaxImage
               src={EXPERT_PHOTO}
               alt="Инна Фалолеева — клинический психолог"
-              className="h-full w-full rounded-2xl object-cover object-top shadow-sm"
+              className="min-h-[280px] w-full rounded-2xl shadow-sm"
+              factor={30}
             />
             <div>
               <h2 className="mb-4 font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
@@ -459,7 +514,7 @@ const Efir09 = () => {
               <ul className="mb-4 space-y-3">
                 {EXPERT_FACTS.map((f) => (
                   <li key={f.text} className="flex items-start gap-3">
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#F3E6DA] text-[#B5533C]">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E3EFE7] text-[#2F7A52]">
                       <Icon name={f.icon} size={16} />
                     </div>
                     <span className="text-sm leading-relaxed text-[#3d332b] md:text-base">{f.text}</span>
@@ -470,7 +525,7 @@ const Efir09 = () => {
                 {["ЭОТ", "ДПДГ", "МАК"].map((m) => (
                   <span
                     key={m}
-                    className="rounded-full bg-[#F3E6DA] px-3 py-1 text-xs font-semibold text-[#B5533C]"
+                    className="rounded-full bg-[#E3EFE7] px-3 py-1 text-xs font-semibold text-[#2F7A52]"
                   >
                     {m}
                   </span>
@@ -506,6 +561,7 @@ const Efir09 = () => {
           </div>
         </div>
       </section>
+      </StickySection>
 
       <Dialog open={diplomaIndex !== null} onOpenChange={(open) => !open && setDiplomaIndex(null)}>
         <DialogContent className="max-w-3xl border-none bg-transparent p-0 shadow-none">
@@ -529,7 +585,8 @@ const Efir09 = () => {
       </Dialog>
 
       {/* ── Case ── */}
-      <section id="case" className="bg-[#2B2420] px-5 py-14 text-white md:py-20">
+      <StickySection index={4} className="bg-[#2B2420]">
+      <section id="case" className="px-5 py-14 text-white md:py-20">
         <div className="mx-auto max-w-2xl">
           <h2 className="mb-8 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
             Кейс Елены
@@ -553,8 +610,10 @@ const Efir09 = () => {
           </div>
         </div>
       </section>
+      </StickySection>
 
       {/* ── Testimonials ── */}
+      <StickySection index={5} className="bg-[#FBF6F0]">
       <section id="testimonials" className="px-5 py-14 md:py-20">
         <div className="mx-auto max-w-4xl">
           <h2 className="mb-8 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
@@ -572,9 +631,11 @@ const Efir09 = () => {
           </div>
         </div>
       </section>
+      </StickySection>
 
       {/* ── FAQ ── */}
-      <section id="faq" className="bg-white px-5 py-14 md:py-20">
+      <StickySection index={6} className="bg-white">
+      <section id="faq" className="px-5 py-14 md:py-20">
         <div className="mx-auto max-w-2xl">
           <h2 className="mb-8 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
             Частые вопросы
@@ -596,9 +657,11 @@ const Efir09 = () => {
           </p>
         </div>
       </section>
+      </StickySection>
 
       {/* ── Final CTA / countdown ── */}
-      <section id="final-cta" className="bg-[#B5533C] px-5 py-14 text-white md:py-20">
+      <StickySection index={7} className="bg-[#2F7A52]">
+      <section id="final-cta" className="px-5 py-14 text-white md:py-20">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="mb-6 font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
             До начала Дня 1 осталось
@@ -630,14 +693,16 @@ const Efir09 = () => {
               scrollTo("register");
               ymGoal("efir09_final_cta");
             }}
-            className="rounded-xl bg-white px-8 py-4 font-['Montserrat',sans-serif] text-base font-bold text-[#B5533C] shadow-lg transition hover:-translate-y-0.5 md:text-lg"
+            className="rounded-xl bg-white px-8 py-4 font-['Montserrat',sans-serif] text-base font-bold text-[#2F7A52] shadow-lg transition hover:-translate-y-0.5 md:text-lg"
           >
             Забронировать место
           </button>
         </div>
       </section>
+      </StickySection>
 
       {/* ── Registration form ── */}
+      <StickySection index={8} className="bg-[#FBF6F0]">
       <section id="register" className="px-5 py-14 md:py-20">
         <div className="mx-auto max-w-xl rounded-2xl border border-[#EEE0D2] bg-white p-6 shadow-sm md:p-10">
           {!submitted ? (
@@ -656,7 +721,7 @@ const Efir09 = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Как к вам обращаться"
-                    className="w-full rounded-lg border border-[#E2D3C0] bg-[#FBF6F0] px-4 py-3 text-sm outline-none focus:border-[#B5533C] md:text-base"
+                    className="w-full rounded-lg border border-[#E2D3C0] bg-[#FBF6F0] px-4 py-3 text-sm outline-none focus:border-[#2F7A52] md:text-base"
                   />
                 </div>
                 <div>
@@ -666,7 +731,7 @@ const Efir09 = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Для доступа к трансляции"
-                    className="w-full rounded-lg border border-[#E2D3C0] bg-[#FBF6F0] px-4 py-3 text-sm outline-none focus:border-[#B5533C] md:text-base"
+                    className="w-full rounded-lg border border-[#E2D3C0] bg-[#FBF6F0] px-4 py-3 text-sm outline-none focus:border-[#2F7A52] md:text-base"
                   />
                 </div>
                 <div>
@@ -678,7 +743,7 @@ const Efir09 = () => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+7 ..."
-                    className="w-full rounded-lg border border-[#E2D3C0] bg-[#FBF6F0] px-4 py-3 text-sm outline-none focus:border-[#B5533C] md:text-base"
+                    className="w-full rounded-lg border border-[#E2D3C0] bg-[#FBF6F0] px-4 py-3 text-sm outline-none focus:border-[#2F7A52] md:text-base"
                   />
                 </div>
                 <label className="flex items-start gap-3 text-xs text-[#6b5d52] md:text-sm">
@@ -689,29 +754,30 @@ const Efir09 = () => {
                   />
                   <span>
                     Согласен(на) на обработку персональных данных согласно{" "}
-                    <a href="#privacy" className="underline hover:text-[#B5533C]">
+                    <a href="#privacy" className="underline hover:text-[#2F7A52]">
                       политике конфиденциальности
                     </a>
                   </span>
                 </label>
 
-                {error && <p className="text-sm font-medium text-[#B5533C]">{error}</p>}
+                {error && <p className="text-sm font-medium text-[#DC2626]">{error}</p>}
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full rounded-xl bg-[#B5533C] py-4 font-['Montserrat',sans-serif] text-base font-bold text-white transition hover:bg-[#98422E] disabled:opacity-60"
+                  className="w-full rounded-xl bg-[#2F7A52] py-4 font-['Montserrat',sans-serif] text-base font-bold text-white transition hover:bg-[#1F5E3F] disabled:opacity-60"
                 >
                   {loading ? "Отправляем..." : "Зарегистрироваться на интенсив"}
                 </button>
-                <p className="text-center text-xs text-[#8A7864]">
-                  Без спама. Ссылки на подключение к обоим дням придут на почту
+                <p className="text-center text-xs font-medium text-[#2F7A52]">
+                  🎁 Подарок за регистрацию: чек-лист «7 признаков, что вы давно тащите на себе
+                  чужую ответственность»
                 </p>
               </form>
             </>
           ) : (
             <div className="text-center">
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#F3E6DA] text-[#B5533C]">
+              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#E3EFE7] text-[#2F7A52]">
                 <Icon name="Check" size={28} />
               </div>
               <h3 className="mb-2 font-['Montserrat',sans-serif] text-xl font-bold md:text-2xl">
@@ -727,7 +793,7 @@ const Efir09 = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => ymGoal("efir09_add_to_calendar_day1")}
-                  className="inline-flex items-center gap-2 rounded-xl border-2 border-[#B5533C] px-5 py-3 font-['Montserrat',sans-serif] text-sm font-bold text-[#B5533C] transition hover:bg-[#F3E6DA] md:text-base"
+                  className="inline-flex items-center gap-2 rounded-xl border-2 border-[#2F7A52] px-5 py-3 font-['Montserrat',sans-serif] text-sm font-bold text-[#2F7A52] transition hover:bg-[#E3EFE7] md:text-base"
                 >
                   <Icon name="CalendarPlus" size={18} />
                   День 1 в календарь
@@ -737,7 +803,7 @@ const Efir09 = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => ymGoal("efir09_add_to_calendar_day2")}
-                  className="inline-flex items-center gap-2 rounded-xl border-2 border-[#B5533C] px-5 py-3 font-['Montserrat',sans-serif] text-sm font-bold text-[#B5533C] transition hover:bg-[#F3E6DA] md:text-base"
+                  className="inline-flex items-center gap-2 rounded-xl border-2 border-[#2F7A52] px-5 py-3 font-['Montserrat',sans-serif] text-sm font-bold text-[#2F7A52] transition hover:bg-[#E3EFE7] md:text-base"
                 >
                   <Icon name="CalendarPlus" size={18} />
                   День 2 в календарь
@@ -747,16 +813,17 @@ const Efir09 = () => {
           )}
         </div>
       </section>
+      </StickySection>
 
       {/* ── Footer ── */}
-      <footer id="privacy" className="border-t border-[#EEE0D2] bg-white px-5 py-10">
+      <footer id="privacy" className="relative z-20 border-t border-[#EEE0D2] bg-white px-5 py-10">
         <div className="mx-auto max-w-3xl">
           <div className="mb-6 flex justify-center gap-4">
             <a
               href={TG_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F3E6DA] text-[#B5533C] transition hover:bg-[#E8CFB4]"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E3EFE7] text-[#2F7A52] transition hover:bg-[#C9E0D2]"
               aria-label="Telegram"
             >
               <Icon name="Send" size={18} />
@@ -765,7 +832,7 @@ const Efir09 = () => {
               href={MAX_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F3E6DA] text-[#B5533C] transition hover:bg-[#E8CFB4]"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E3EFE7] text-[#2F7A52] transition hover:bg-[#C9E0D2]"
               aria-label="MAX"
             >
               <Icon name="MessageCircle" size={18} />
