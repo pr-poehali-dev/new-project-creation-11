@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import {
@@ -258,6 +259,8 @@ const FAQ = [
 ];
 
 const Efir09 = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     document.title = "Бесплатный интенсив «Сильная снаружи, сломанная внутри» — 22–23 сентября";
   }, []);
@@ -313,6 +316,7 @@ const Efir09 = () => {
       if (!res.ok) throw new Error(data.error || "Ошибка регистрации, попробуйте ещё раз");
       ymGoal("efir09_form_submit");
       setSubmitted(true);
+      navigate(`/thank-you?name=${encodeURIComponent(name.trim())}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Что-то пошло не так, попробуйте ещё раз");
     } finally {
@@ -702,8 +706,7 @@ const Efir09 = () => {
       </StickySection>
 
       {/* ── Registration form ── */}
-      <StickySection index={8} className="bg-[#FBF6F0]">
-      <section id="register" className="px-5 py-14 md:py-20">
+      <section id="register" className="bg-[#FBF6F0] px-5 py-14 md:py-20">
         <div className="mx-auto max-w-xl rounded-2xl border border-[#EEE0D2] bg-white p-6 shadow-sm md:p-10">
           {!submitted ? (
             <>
@@ -813,10 +816,9 @@ const Efir09 = () => {
           )}
         </div>
       </section>
-      </StickySection>
 
       {/* ── Footer ── */}
-      <footer id="privacy" className="relative z-20 border-t border-[#EEE0D2] bg-white px-5 py-10">
+      <footer id="privacy" className="border-t border-[#EEE0D2] bg-white px-5 py-10">
         <div className="mx-auto max-w-3xl">
           <div className="mb-6 flex justify-center gap-4">
             <a
