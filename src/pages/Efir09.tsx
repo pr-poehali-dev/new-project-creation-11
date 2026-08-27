@@ -271,8 +271,8 @@ const Efir09 = () => {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
-    if (!name.trim() || !email.trim()) {
-      setError("Заполните имя и email");
+    if (!name.trim() || !email.trim() || !phone.trim()) {
+      setError("Заполните имя, email и телефон");
       return;
     }
     if (!consent) {
@@ -705,10 +705,11 @@ const Efir09 = () => {
                 </div>
                 <div>
                   <label className="mb-1 block text-sm font-medium text-[#3d332b]">
-                    Телефон <span className="font-normal text-[#8A7864]">(необязательно)</span>
+                    Телефон
                   </label>
                   <input
                     type="tel"
+                    required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+7 ..."
