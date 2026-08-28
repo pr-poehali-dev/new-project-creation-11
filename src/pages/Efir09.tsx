@@ -10,6 +10,14 @@ import {
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 
 /* ─── Constants ─── */
 const REGISTER_URL = "https://functions.poehali.dev/4af27964-7aa8-44d4-8e2d-9a5bfea7e8ff";
@@ -213,7 +221,13 @@ const EXPERT_FACTS = [
   },
 ];
 
-const TESTIMONIALS = [1, 2, 3, 4];
+const TESTIMONIALS = [
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/68300928-00ce-4c12-b074-d6b77e74092e.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/472b6f92-b435-4df5-8444-ba3f9e058fd5.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/00dd76b7-b746-4836-983c-b17940fc6c1f.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/6ff0ef8d-5b93-4aa3-85b8-cf3224721b3f.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/7272d29a-eff0-452e-b057-865fb0cb9a6e.jpg",
+];
 
 const FAQ = [
   {
@@ -591,19 +605,32 @@ const Efir09 = () => {
       {/* ── Testimonials ── */}
       <section id="testimonials" className="bg-[#FBF6F0] px-5 py-14 md:py-20">
         <div className="mx-auto max-w-4xl">
-          <h2 className="mb-8 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
-            Что говорят подписчицы
+          <h2 className="mb-2 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
+            Что говорят клиенты о совместной работе
           </h2>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {TESTIMONIALS.map((n) => (
-              <Placeholder
-                key={n}
-                label={`Отзыв / скриншот №${n}`}
-                icon={n % 2 === 0 ? "MessageSquareText" : "Image"}
-                className="aspect-[3/4]"
-              />
-            ))}
-          </div>
+          <p className="mb-6 flex animate-pulse items-center justify-center gap-2 text-center text-sm font-medium text-[#8A7864] md:text-base">
+            <Icon name="ArrowLeft" size={16} />
+            Листайте
+            <Icon name="ArrowRight" size={16} />
+          </p>
+          <Carousel opts={{ align: "start", loop: true }} className="relative">
+            <CarouselContent>
+              {TESTIMONIALS.map((src, i) => (
+                <CarouselItem key={src} className="basis-4/5 sm:basis-1/2 md:basis-1/3">
+                  <div className="overflow-hidden rounded-2xl border border-[#E2D3C0] bg-white shadow-sm">
+                    <img
+                      src={src}
+                      alt={`Отзыв клиента №${i + 1}`}
+                      className="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-1 h-10 w-10 animate-pulse border-2 border-[#E8A288] bg-white text-[#E8A288] md:-left-4" />
+            <CarouselNext className="right-1 h-10 w-10 animate-pulse border-2 border-[#E8A288] bg-white text-[#E8A288] md:-right-4" />
+          </Carousel>
         </div>
       </section>
 
