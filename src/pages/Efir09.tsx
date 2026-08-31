@@ -283,6 +283,19 @@ const Efir09 = () => {
     });
   }, []);
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [diplomaIndex, setDiplomaIndex] = useState<number | null>(null);
+  const [testimonialIndex, setTestimonialIndex] = useState<number | null>(null);
+  const [mainApi, setMainApi] = useState<CarouselApi>();
+  const [lightboxApi, setLightboxApi] = useState<CarouselApi>();
+  const [activeSlide, setActiveSlide] = useState(0);
+
   useEffect(() => {
     if (!mainApi) return;
     setActiveSlide(mainApi.selectedScrollSnap());
@@ -301,19 +314,6 @@ const Efir09 = () => {
       lightboxApi.off("select", onSelect);
     };
   }, [lightboxApi]);
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [consent, setConsent] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
-  const [diplomaIndex, setDiplomaIndex] = useState<number | null>(null);
-  const [testimonialIndex, setTestimonialIndex] = useState<number | null>(null);
-  const [mainApi, setMainApi] = useState<CarouselApi>();
-  const [lightboxApi, setLightboxApi] = useState<CarouselApi>();
-  const [activeSlide, setActiveSlide] = useState(0);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
