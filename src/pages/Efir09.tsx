@@ -232,6 +232,11 @@ const TESTIMONIALS = [
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/95c3caaa-fa1e-4d8b-9a32-056e6743729f.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/ee9e4527-8c7d-475c-9d36-78ba987aeda1.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/2754b2ce-2497-406b-b932-0e84c0cb1330.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/9ee2b045-ffed-4bc9-a542-6e95b4c4c9ce.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/a7ad092f-e1e4-4891-a39b-f5578ce7910e.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/20a391d4-c27a-4d94-bcb8-35904a73edbd.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/1b7b05d6-33ec-49f3-9a62-04a83fcc2627.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/00b9a13e-24d6-406e-adaa-1e8b52ef835f.jpg",
 ];
 
 const FAQ = [
@@ -278,6 +283,25 @@ const Efir09 = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (!mainApi) return;
+    setActiveSlide(mainApi.selectedScrollSnap());
+    const onSelect = () => setActiveSlide(mainApi.selectedScrollSnap());
+    mainApi.on("select", onSelect);
+    return () => {
+      mainApi.off("select", onSelect);
+    };
+  }, [mainApi]);
+
+  useEffect(() => {
+    if (!lightboxApi) return;
+    const onSelect = () => setTestimonialIndex(lightboxApi.selectedScrollSnap());
+    lightboxApi.on("select", onSelect);
+    return () => {
+      lightboxApi.off("select", onSelect);
+    };
+  }, [lightboxApi]);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -286,6 +310,10 @@ const Efir09 = () => {
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [diplomaIndex, setDiplomaIndex] = useState<number | null>(null);
+  const [testimonialIndex, setTestimonialIndex] = useState<number | null>(null);
+  const [mainApi, setMainApi] = useState<CarouselApi>();
+  const [lightboxApi, setLightboxApi] = useState<CarouselApi>();
+  const [activeSlide, setActiveSlide] = useState(0);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -618,26 +646,78 @@ const Efir09 = () => {
             Листайте
             <Icon name="ArrowRight" size={16} />
           </p>
-          <Carousel opts={{ align: "start", loop: true }} className="relative">
+          <Carousel opts={{ align: "start", loop: true }} setApi={setMainApi} className="relative">
             <CarouselContent>
               {TESTIMONIALS.map((src, i) => (
                 <CarouselItem key={src} className="basis-4/5 sm:basis-1/2 md:basis-1/3">
-                  <div className="overflow-hidden rounded-2xl border border-[#E2D3C0] bg-white shadow-sm">
+                  <button
+                    type="button"
+                    onClick={() => setTestimonialIndex(i)}
+                    className="block w-full overflow-hidden rounded-2xl border border-[#E2D3C0] bg-white shadow-sm transition hover:shadow-md"
+                  >
                     <img
                       src={src}
                       alt={`Отзыв клиента №${i + 1}`}
                       className="h-full w-full object-cover"
                       loading="lazy"
                     />
-                  </div>
+                  </button>
                 </CarouselItem>
               ))}
             </CarouselContent>
             <CarouselPrevious className="left-1 h-10 w-10 animate-pulse border-2 border-[#E8A288] bg-white text-[#E8A288] md:-left-4" />
             <CarouselNext className="right-1 h-10 w-10 animate-pulse border-2 border-[#E8A288] bg-white text-[#E8A288] md:-right-4" />
           </Carousel>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            {TESTIMONIALS.map((src, i) => (
+              <button
+                key={src}
+                type="button"
+                aria-label={`Перейти к отзыву №${i + 1}`}
+                onClick={() => mainApi?.scrollTo(i)}
+                className={`h-2 rounded-full transition-all ${
+                  i === activeSlide ? "w-6 bg-[#E8A288]" : "w-2 bg-[#E2D3C0]"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </section>
+
+      <Dialog
+        open={testimonialIndex !== null}
+        onOpenChange={(open) => !open && setTestimonialIndex(null)}
+      >
+        <DialogContent className="max-w-2xl border-none bg-transparent p-0 shadow-none">
+          <DialogTitle className="sr-only">Отзыв клиента</DialogTitle>
+          {testimonialIndex !== null && (
+            <Carousel
+              opts={{ align: "start", loop: true, startIndex: testimonialIndex }}
+              setApi={setLightboxApi}
+              className="relative"
+            >
+              <CarouselContent>
+                {TESTIMONIALS.map((src, i) => (
+                  <CarouselItem key={src}>
+                    <div className="overflow-hidden rounded-2xl bg-white">
+                      <img
+                        src={src}
+                        alt={`Отзыв клиента №${i + 1}`}
+                        className="max-h-[80vh] w-full object-contain"
+                      />
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-1 h-10 w-10 border-2 border-[#E8A288] bg-white text-[#E8A288] md:-left-12" />
+              <CarouselNext className="right-1 h-10 w-10 border-2 border-[#E8A288] bg-white text-[#E8A288] md:-right-12" />
+            </Carousel>
+          )}
+          <p className="mt-3 text-center text-sm text-white/80">
+            {testimonialIndex !== null ? testimonialIndex + 1 : 0} / {TESTIMONIALS.length}
+          </p>
+        </DialogContent>
+      </Dialog>
 
       {/* ── FAQ ── */}
       <section id="faq" className="bg-white px-5 py-14 md:py-20">
