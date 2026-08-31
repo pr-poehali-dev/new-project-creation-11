@@ -52,6 +52,11 @@ const DIPLOMAS = [
     subtitle: "Психология РПП, 108 ч.",
     url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/3e532753-4518-41ca-90ad-f7cfa27f7460.jpg",
   },
+  {
+    title: "Благодарственное письмо #SEKTA",
+    subtitle: "Школа идеального тела, стажировка 5 консультаций",
+    url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/34402379-adda-4ae8-b8d7-b2b7a6db5073.jpg",
+  },
 ];
 
 const YM_IDS = [101026698, 109868001];
@@ -237,6 +242,9 @@ const TESTIMONIALS = [
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/20a391d4-c27a-4d94-bcb8-35904a73edbd.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/1b7b05d6-33ec-49f3-9a62-04a83fcc2627.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/00b9a13e-24d6-406e-adaa-1e8b52ef835f.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/14be2338-03b8-4251-8b17-7b8061ac8396.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/6d35a43d-6c7e-4c1f-8e43-2dba17b3e13a.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/645373f5-ee50-4093-9777-dbf7eab0afc5.jpg",
 ];
 
 const FAQ = [
