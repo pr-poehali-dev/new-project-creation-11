@@ -628,22 +628,52 @@ const Efir09 = () => {
           <h2 className="mb-8 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
             Кейс Елены
           </h2>
-          <div className="space-y-4 rounded-2xl bg-white/5 p-6 md:p-8">
+          <div className="space-y-5 rounded-2xl bg-white/5 p-6 md:p-8">
+            <div>
+              <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-[#E8A288]">Запрос</p>
+              <p className="text-sm text-white/80 md:text-base">
+                Елена пришла не лечить аллергию. Она пришла с непрожитыми эмоциями и напряжением
+                в отношениях с близким родственником — то, что давно сидело внутри и не отпускало.
+              </p>
+            </div>
+            <div>
+              <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-[#E8A288]">Метод</p>
+              <p className="text-sm text-white/80 md:text-base">
+                Эмоционально-образная терапия (ЭОТ) — чувства проявляются через образы, метафоры,
+                телесные ощущения. В глубокой точке работы, где чувство стало осязаемым, Елена
+                увидела свой образ злости в виде кружочка дыни, которая «жжёт, сжимает горло».
+              </p>
+            </div>
+
             <div className="rounded-xl border-2 border-dashed border-white/20 p-4">
               <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-white/50">До</p>
               <p className="text-sm italic text-white/70 md:text-base">
-                [Вставьте цитату Елены о состоянии «до» работы с Инной]
+                «Я уже несколько лет не могу есть дыню. Мою любимую. Горло жжёт, трудно дышать»
               </p>
             </div>
             <div className="rounded-xl border-2 border-dashed border-white/20 p-4">
               <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-white/50">После</p>
               <p className="text-sm italic text-white/70 md:text-base">
-                [Вставьте цитату Елены о состоянии «после»]
+                «Жизнь прекрасна. Я поела дыню!»
+              </p>
+              <p className="mt-2 text-xs text-white/50">
+                Через несколько дней после сессии Елена съела дыню — без боли, без жжения.
               </p>
             </div>
-            <p className="pt-2 text-center text-base font-semibold italic text-[#E8A288] md:text-lg">
-              «Мы не лечили аллергию. Мы возвращали способность быть в контакте с собой»
-            </p>
+
+            <div className="flex items-start gap-3 pt-2">
+              <img
+                src="https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/ef336b14-eb6d-418f-ad7d-80e871309823.jpg"
+                alt="Инна Фалолеева"
+                className="h-10 w-10 flex-shrink-0 rounded-full border-2 border-[#E8A288] object-cover md:h-12 md:w-12"
+              />
+              <div>
+                <p className="text-base font-semibold italic text-[#E8A288] md:text-lg">
+                  «Мы не «лечили аллергию». Мы возвращали способность быть в контакте с собой»
+                </p>
+                <p className="mt-1 text-xs text-white/50">— Инна Фалолеева</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
