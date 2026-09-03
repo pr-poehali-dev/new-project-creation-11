@@ -815,10 +815,17 @@ const Efir09 = () => {
           <p className="mb-8 text-xs text-white/70 md:text-sm">
             Одна регистрация открывает доступ сразу к двум дням интенсива
           </p>
-          <p className="mx-auto mb-8 max-w-lg text-sm italic text-white/90 md:text-base">
-            «22 сентября я расскажу то, что обычно говорю только на консультациях один на один. Буду
-            рада увидеть вас на интенсиве» — Инна
-          </p>
+          <div className="mx-auto mb-8 flex max-w-lg items-start justify-center gap-3">
+            <img
+              src="https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/84c86ce6-edda-4983-996c-e6f6a0e5d6bb.JPG"
+              alt="Инна"
+              className="h-10 w-10 flex-shrink-0 rounded-full border-2 border-white/40 object-cover md:h-12 md:w-12"
+            />
+            <p className="text-left text-sm italic text-white/90 md:text-base">
+              «22 сентября я расскажу то, что обычно говорю только на консультациях один на один.
+              Буду рада увидеть вас на интенсиве» — Инна
+            </p>
+          </div>
           <button
             onClick={() => {
               scrollTo("register");
