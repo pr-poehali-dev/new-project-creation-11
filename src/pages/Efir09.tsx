@@ -183,6 +183,11 @@ const DAY1_ITEMS = [
     title: "Живые ответы на вопросы",
     text: "в чате в реальном времени",
   },
+  {
+    icon: "ClipboardCheck",
+    title: "Практическая часть",
+    text: "экспресс-диагностика вашей роли",
+  },
 ];
 
 const DAY2_ITEMS = [
@@ -493,7 +498,7 @@ const Efir09 = () => {
               ))}
             </div>
             <div className="mt-6 rounded-xl bg-[#FBF6F0] p-4 text-center text-sm text-[#5b4d41] md:text-base">
-              <strong>Формат:</strong> без камер участников — только я, теория и ваши вопросы в чате
+              <strong>Формат:</strong> без камер участников — только я, теория, практика и ваши вопросы в чате
             </div>
           </div>
 
