@@ -52,11 +52,6 @@ const DIPLOMAS = [
     subtitle: "Психология РПП, 108 ч.",
     url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/3e532753-4518-41ca-90ad-f7cfa27f7460.jpg",
   },
-  {
-    title: "Благодарственное письмо #SEKTA",
-    subtitle: "Школа идеального тела, стажировка 5 консультаций",
-    url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/34402379-adda-4ae8-b8d7-b2b7a6db5073.jpg",
-  },
 ];
 
 const YM_IDS = [101026698, 109868001];
@@ -223,7 +218,7 @@ const EXPERT_FACTS = [
   },
   {
     icon: "Route",
-    text: "До психологии — 25 лет в финансах, потом инструктор, потом собственный магазин одежды",
+    text: "До психологии — 25 лет в финансах. Была инструктором по рукопашному бою, вела собственный бизнес",
   },
   {
     icon: "HeartHandshake",
@@ -255,6 +250,7 @@ const TESTIMONIALS = [
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/84505ed1-0129-49a9-9942-9b303f25038f.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/ce999923-3312-4c61-9773-73f34410d1dc.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/78e02385-3421-4ca2-b570-f17ebcf54501.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/34402379-adda-4ae8-b8d7-b2b7a6db5073.jpg",
 ];
 
 const FAQ = [
@@ -406,11 +402,11 @@ const Efir09 = () => {
           <div className="mb-7 flex flex-wrap items-center justify-center gap-3">
             <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-['Montserrat',sans-serif] text-sm font-bold shadow-sm md:text-base">
               <Icon name="Calendar" size={18} className="text-[#2F7A52]" />
-              <span>День 1 — 22 сентября, 19:00</span>
+              <span>День 1: 22 сентября, 19:00</span>
             </div>
             <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-['Montserrat',sans-serif] text-sm font-bold shadow-sm md:text-base">
               <Icon name="Calendar" size={18} className="text-[#2F7A52]" />
-              <span>День 2 — 23 сентября, 19:00</span>
+              <span>День 2: 23 сентября, 19:00</span>
             </div>
           </div>
 
@@ -477,7 +473,7 @@ const Efir09 = () => {
               </span>
               <div>
                 <p className="font-['Montserrat',sans-serif] text-lg font-bold md:text-xl">
-                  День 1 — 22 сентября, 19:00 мск
+                  День 1: 22 сентября, 19:00 мск
                 </p>
                 <p className="text-xs text-[#8A7864] md:text-sm">Лекционная часть · Бизон365</p>
               </div>
@@ -509,7 +505,7 @@ const Efir09 = () => {
               </span>
               <div>
                 <p className="font-['Montserrat',sans-serif] text-lg font-bold md:text-xl">
-                  День 2 — 23 сентября, 19:00 мск
+                  День 2: 23 сентября, 19:00 мск
                 </p>
                 <p className="text-xs text-[#8A7864] md:text-sm">Практический эфир · Zoom</p>
               </div>
