@@ -24,7 +24,7 @@ const REGISTER_URL = "https://functions.poehali.dev/4af27964-7aa8-44d4-8e2d-9a5b
 const DAY1_DATE = new Date("2026-09-22T19:00:00+03:00");
 const TG_LINK = "https://t.me/InnaFaloleevaPsy";
 const MAX_LINK = "https://max.ru/join/Um75KJ9X-7yhUGiL1A0c6GPOup5OBhMH_PkMiyEZDjk";
-const EXPERT_PHOTO = "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/eb35afcc-496d-44e9-9309-8c0483ba19cc.JPG";
+const EXPERT_PHOTO = "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/37160f38-a1d2-45fa-aeb1-540e07378b30.jpg";
 
 const DIPLOMAS = [
   {
@@ -152,9 +152,9 @@ function Placeholder({
 const PAIN_POINTS = [
   { icon: "🔹", text: "«Все вокруг говорят «ты справишься» — а вы уже не понимаете, откуда брать силы»" },
   { icon: "🔹", text: "Повышение или похвала вызывает не радость, а тревогу «теперь спрос ещё больше»" },
-  { icon: "🔹", text: "Вы тащите чужие проблемы быстрее, чем свои — и называете это заботой" },
+  { icon: "🔹", text: "Решаете чужие проблемы быстрее, чем свои — и называете это заботой" },
   { icon: "🔹", text: "Отказать кому-то до сих пор кажется почти преступлением" },
-  { icon: "🔹", text: "Не помните, когда в последний раз разрешали себе устать" },
+  { icon: "🔹", text: "Не помните, когда в последний раз отдыхали без чувства вины" },
 ];
 
 const DAY1_ITEMS = [
