@@ -29,7 +29,7 @@ const LINKS = {
   video1900: "https://vkvideo.ru/video-16115403_456239518",
 };
 
-const YM_ID = 109868001;
+const YM_ID = 112325163;
  
 type YmFn = (id: number, event: string, goal: string) => void;
 function ymGoal(goal: string) {
