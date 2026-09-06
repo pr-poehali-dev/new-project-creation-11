@@ -93,5 +93,41 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/112325163" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+
+<script src="//static.bizon365.ru/form/anyform.min.js"></script>
+<script>
+(function () {
+  function initBizonForm() {
+    var form = document.querySelector('form');
+    if (!form) return false;
+
+    $bizon_init_form({
+      selectors: {
+        form: 'form',
+        message: '.bizon-error'
+      },
+      form_fields: {
+        email: 'form input[type="email"]',
+        phone: 'form input[type="tel"]',
+        username: 'form input[type="text"]'
+      },
+      pageId: '209893:faloleeva_vebinar',
+      closestDateOnly: true,
+      redirectUrl: '',
+      successMessage: '',
+      allowFormAction: true
+    })();
+    return true;
+  }
+
+  if (!initBizonForm()) {
+    var attempts = 0;
+    var timer = setInterval(function () {
+      attempts++;
+      if (initBizonForm() || attempts > 50) clearInterval(timer);
+    }, 200);
+  }
+})();
+</script>
 </body>
 </html>
