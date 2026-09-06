@@ -583,7 +583,10 @@ const Efir09 = () => {
                 <button
                   key={d.url}
                   type="button"
-                  onClick={() => setDiplomaIndex(i)}
+                  onClick={() => {
+                    setDiplomaIndex(i);
+                    ymGoal("efir09_diploma_click");
+                  }}
                   className="group text-left"
                 >
                   <div className="aspect-[4/3] overflow-hidden rounded-xl border border-[#EEE0D2] bg-white shadow-sm">
@@ -696,7 +699,10 @@ const Efir09 = () => {
                 <CarouselItem key={src} className="basis-4/5 sm:basis-1/2 md:basis-1/3">
                   <button
                     type="button"
-                    onClick={() => setTestimonialIndex(i)}
+                    onClick={() => {
+                      setTestimonialIndex(i);
+                      ymGoal("efir09_testimonial_click");
+                    }}
                     className="block w-full overflow-hidden rounded-2xl border border-[#E2D3C0] bg-white shadow-sm transition hover:shadow-md"
                   >
                     <img
@@ -955,6 +961,7 @@ const Efir09 = () => {
               href={TG_LINK}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => ymGoal("efir09_footer_telegram_click")}
               className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E3EFE7] text-[#2F7A52] transition hover:bg-[#C9E0D2]"
               aria-label="Telegram"
             >
@@ -964,6 +971,7 @@ const Efir09 = () => {
               href={MAX_LINK}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => ymGoal("efir09_footer_max_click")}
               className="flex h-10 w-10 items-center justify-center rounded-full bg-[#E3EFE7] text-[#2F7A52] transition hover:bg-[#C9E0D2]"
               aria-label="MAX"
             >

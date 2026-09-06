@@ -5,7 +5,7 @@ import Icon from "@/components/ui/icon";
 const TG_LINK = "https://t.me/InnaFaloleevaPsy";
 const MAX_LINK = "https://max.ru/join/Um75KJ9X-7yhUGiL1A0c6GPOup5OBhMH_PkMiyEZDjk";
 
-const YM_IDS = [101026698, 109868001];
+const YM_IDS = [101026698, 109868001, 112325163];
 type YmFn = (id: number, event: string, goal: string) => void;
 function ymGoal(goal: string) {
   if (typeof window === "undefined") return;
