@@ -54,7 +54,7 @@ const DIPLOMAS = [
   },
 ];
 
-const YM_IDS = [101026698, 109868001];
+const YM_IDS = [101026698, 109868001, 112325163];
 type YmFn = (id: number, event: string, goal: string) => void;
 function ymGoal(goal: string) {
   if (typeof window === "undefined") return;
