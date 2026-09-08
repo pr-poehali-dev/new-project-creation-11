@@ -214,7 +214,7 @@ const EXPERT_FACTS = [
   },
   {
     icon: "Users",
-    text: "75+ клиентов и более 2400 часов практики",
+    text: "175+ клиентов и более 2400 часов практики",
   },
   {
     icon: "Route",
@@ -240,6 +240,11 @@ const TESTIMONIALS = [
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/ce999923-3312-4c61-9773-73f34410d1dc.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/78e02385-3421-4ca2-b570-f17ebcf54501.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/34402379-adda-4ae8-b8d7-b2b7a6db5073.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/b5261e94-8d90-4118-8cbb-2201fb5ef4c9.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/e8c60e11-6708-416a-ba1a-d65466af4dc8.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/32a339fe-71cd-4bc1-b639-c13c1d01aeef.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/d049db61-66f7-490d-a8fb-152422da597f.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/45fc08a8-454d-422a-96f9-99ba300132d9.jpg",
 ];
 
 const FAQ = [
