@@ -250,6 +250,8 @@ const TESTIMONIALS = [
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/36edd80e-9a5f-4e9f-a3fc-ee8d459841c3.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/42f81f0e-43e1-4f6e-93a8-0e4f78551e78.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/208186b3-d460-49c1-94aa-9de09879ee4a.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/449f3d56-533e-4fb1-aeac-0998e1f89035.jpg",
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/21299676-09cc-4e49-bf00-5444bf5a4488.jpg",
 ];
 
 const FAQ = [
