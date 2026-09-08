@@ -53,14 +53,17 @@
 <script src="//static.bizon365.ru/form/anyform.min.js"></script>
 <script>
 (function () {
+  if (window.__bizonFormInited) return; // защита от повторной инициализации
+
   function initBizonForm() {
+    if (window.__bizonFormInited) return true;
     var form = document.querySelector('form');
     if (!form) return false;
 
     $bizon_init_form({
       selectors: {
         form: 'form',
-        message: '.bizon-error'
+        message: '.bizon-error' // необязательно; если такого блока нет на странице, ошибки покажутся через alert()
       },
       form_fields: {
         email: 'form input[type="email"]',
@@ -71,11 +74,15 @@
       closestDateOnly: true,
       redirectUrl: '',
       successMessage: '',
-      allowFormAction: true
-    })();
+      allowFormAction: true // не блокируем текущую логику сайта — Bizon работает параллельно
+    });
+
+    window.__bizonFormInited = true;
     return true;
   }
 
+  // Форма на этом сайте рендерится React'ом асинхронно,
+  // поэтому ждём её появления в DOM (проверяем каждые 200мс, максимум 10с)
   if (!initBizonForm()) {
     var attempts = 0;
     var timer = setInterval(function () {
