@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
-const TG_LINK = "https://t.me/InnaFaloleevaPsy";
-const MAX_LINK = "https://max.ru/join/Um75KJ9X-7yhUGiL1A0c6GPOup5OBhMH_PkMiyEZDjk";
+const TG_LINK = "https://t.me/FaloleevaPsybot?start=dl-1788885417801";
+const MAX_LINK = "https://max.ru/id505003981273_bot?start=dl-17889736833afaa9562bfc";
 
 const YM_IDS = [112325163];
 type YmFn = (id: number, event: string, goal: string) => void;
