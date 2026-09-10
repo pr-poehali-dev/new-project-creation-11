@@ -51,6 +51,88 @@
 <noscript><div><img src="https://mc.yandex.ru/watch/112325163" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 
+<script>
+(function () {
+  var UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+  var STORAGE_KEY = 'bh_utm_params';
+
+  // 1) На любой странице: если в адресе есть utm-метки — сохраняем их в sessionStorage.
+  // Ничего не делаем, если меток в адресе нет (чтобы не затереть уже сохранённые)
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var found = {};
+    var hasAny = false;
+    UTM_KEYS.forEach(function (k) {
+      var v = params.get(k);
+      if (v) { found[k] = v; hasAny = true; }
+    });
+    if (hasAny) sessionStorage.setItem(STORAGE_KEY, JSON.stringify(found));
+  } catch (e) {}
+
+  // Дальше — только логика для страницы "Спасибо"
+  if (window.location.pathname.indexOf('/thank-you') === -1) return;
+  if (window.__bhLinksUpdated) return;
+
+  // 2) Достаём сохранённые utm-метки
+  var utm = {};
+  try { utm = JSON.parse(sessionStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) {}
+  var utmSuffix = Object.keys(utm)
+    .map(function (k) { return k + '=' + encodeURIComponent(utm[k]); })
+    .join('&');
+
+  // 3) БАЗОВЫЕ UTM-ССЫЛКИ ИЗ БОТHELP (уже ваши реальные, ничего менять не нужно)
+  var BOT_LINKS = {
+    telegram: 'https://r.bothelp.io/tg?domain=FaloleevaPsybot&start=c1788885417198-ds',
+    max: 'https://r.bothelp.io/max?domain=id505003981273_bot&start=c1788973683396-ds'
+  };
+
+  function buildUrl(base) {
+    if (!base) return null;
+    if (!utmSuffix) return base;
+    return base + (base.indexOf('?') > -1 ? '&' : '?') + utmSuffix;
+  }
+
+  // Узнаём кнопку и по старой ссылке-диплинку (t.me/..., max.ru/...),
+  // и по уже проставленной вручную UTM-ссылке (r.bothelp.io/tg..., r.bothelp.io/max...)
+  // — так скрипт работает, что бы ни стояло в href на момент вставки кода.
+  function detectTarget(href) {
+    if (href.indexOf('t.me/FaloleevaPsybot') > -1 || href.indexOf('/tg?domain=FaloleevaPsybot') > -1) {
+      return 'telegram';
+    }
+    if (href.indexOf('max.ru/id505003981273_bot') > -1 || href.indexOf('/max?domain=id505003981273_bot') > -1) {
+      return 'max';
+    }
+    return null;
+  }
+
+  function updateLinks() {
+    var links = document.querySelectorAll('a[href]');
+    var updated = false;
+    links.forEach(function (a) {
+      var target = detectTarget(a.href);
+      if (!target) return;
+      var url = buildUrl(BOT_LINKS[target]);
+      if (url && a.href !== url) { a.href = url; updated = true; }
+    });
+    return updated;
+  }
+
+  // Кнопки на React-странице рендерятся асинхронно — ждём их появления
+  if (updateLinks()) {
+    window.__bhLinksUpdated = true;
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function () {
+      attempts++;
+      if (updateLinks() || attempts > 50) {
+        clearInterval(timer);
+        window.__bhLinksUpdated = true;
+      }
+    }, 200);
+  }
+})();
+</script>
+
 <script src="//static.bizon365.ru/form/anyform.min.js"></script>
 <script>
 (function () {
