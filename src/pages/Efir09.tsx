@@ -301,7 +301,8 @@ const Efir09 = () => {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("+7");
+  const [phoneTouched, setPhoneTouched] = useState(false);
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -331,11 +332,36 @@ const Efir09 = () => {
     };
   }, [lightboxApi]);
 
+  function formatPhoneInput(value: string): string {
+    let digits = value.replace(/\D/g, "");
+    if (digits.startsWith("8")) digits = "7" + digits.slice(1);
+    if (!digits.startsWith("7")) digits = "7" + digits;
+    digits = digits.slice(0, 11);
+    const rest = digits.slice(1);
+    let result = "+7";
+    if (rest.length > 0) result += " (" + rest.slice(0, 3);
+    if (rest.length >= 3) result += ")";
+    if (rest.length > 3) result += " " + rest.slice(3, 6);
+    if (rest.length > 6) result += "-" + rest.slice(6, 8);
+    if (rest.length > 8) result += "-" + rest.slice(8, 10);
+    return result;
+  }
+
+  function isPhoneValid(value: string): boolean {
+    const digits = value.replace(/\D/g, "");
+    return /^7\d{10}$/.test(digits);
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     if (!name.trim() || !email.trim() || !phone.trim()) {
       setError("Заполните имя, email и телефон");
+      return;
+    }
+    if (!isPhoneValid(phone)) {
+      setPhoneTouched(true);
+      setError("Пожалуйста, проверьте корректность введённого телефона");
       return;
     }
     if (!consent) {
@@ -882,10 +908,18 @@ const Efir09 = () => {
                     type="tel"
                     required
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+7 ..."
-                    className="w-full rounded-lg border border-[#E2D3C0] bg-[#FBF6F0] px-4 py-3 text-sm outline-none focus:border-[#2F7A52] md:text-base"
+                    onChange={(e) => setPhone(formatPhoneInput(e.target.value))}
+                    onBlur={() => setPhoneTouched(true)}
+                    placeholder="+7 (___) ___-__-__"
+                    className={`w-full rounded-lg border bg-[#FBF6F0] px-4 py-3 text-sm outline-none focus:border-[#2F7A52] md:text-base ${
+                      phoneTouched && !isPhoneValid(phone) ? "border-red-500" : "border-[#E2D3C0]"
+                    }`}
                   />
+                  {phoneTouched && !isPhoneValid(phone) && (
+                    <p className="mt-1 text-xs text-red-500">
+                      Пожалуйста, проверьте корректность введённого телефона
+                    </p>
+                  )}
                 </div>
                 <label className="flex items-start gap-3 text-xs text-[#6b5d52] md:text-sm">
                   <Checkbox
