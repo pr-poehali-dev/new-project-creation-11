@@ -352,6 +352,58 @@ const Efir09 = () => {
     return /^7\d{10}$/.test(digits);
   }
 
+  function handlePhoneKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key !== "Backspace" && e.key !== "Delete") return;
+    const input = e.currentTarget;
+    const pos = input.selectionStart ?? 0;
+    const end = input.selectionEnd ?? 0;
+    if (pos !== end) return;
+    const value = input.value;
+    // Индекс 1 — это фиксированная цифра "7" в "+7", её удалять нельзя
+    let idx = -1;
+    if (e.key === "Backspace") {
+      if (pos <= 2) {
+        e.preventDefault();
+        return;
+      }
+      idx = pos - 1;
+      while (idx > 1 && !/\d/.test(value[idx])) idx--;
+      if (idx <= 1) {
+        e.preventDefault();
+        return;
+      }
+    } else {
+      if (pos >= value.length) return;
+      idx = pos;
+      while (idx < value.length && !/\d/.test(value[idx])) idx++;
+      if (idx <= 1 || idx >= value.length) {
+        e.preventDefault();
+        return;
+      }
+    }
+    e.preventDefault();
+    const digitsBefore = value.slice(0, idx).replace(/\D/g, "").length;
+    const newRaw = value.slice(0, idx) + value.slice(idx + 1);
+    const formatted = formatPhoneInput(newRaw);
+    setPhone(formatted);
+    requestAnimationFrame(() => {
+      // Ставим курсор прямо перед (digitsBefore+1)-й цифрой,
+      // чтобы он не "перепрыгивал" через скобки/пробелы/дефисы
+      let count = 0;
+      let newPos = formatted.length;
+      for (let i = 0; i < formatted.length; i++) {
+        if (/\d/.test(formatted[i])) {
+          count++;
+          if (count === digitsBefore + 1) {
+            newPos = i;
+            break;
+          }
+        }
+      }
+      input.setSelectionRange(newPos, newPos);
+    });
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
@@ -909,6 +961,7 @@ const Efir09 = () => {
                     required
                     value={phone}
                     onChange={(e) => setPhone(formatPhoneInput(e.target.value))}
+                    onKeyDown={handlePhoneKeyDown}
                     onBlur={() => setPhoneTouched(true)}
                     placeholder="+7 (___) ___-__-__"
                     className={`w-full rounded-lg border bg-[#FBF6F0] px-4 py-3 text-sm outline-none focus:border-[#2F7A52] md:text-base ${
