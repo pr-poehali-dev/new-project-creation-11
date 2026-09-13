@@ -460,19 +460,35 @@ const Efir09 = () => {
     <div className="min-h-screen w-full bg-[#FBF6F0] font-['Inter',sans-serif] text-[#2B2420]">
       {/* ── Sticky header ── */}
       <header className="sticky top-0 z-40 border-b border-[#EFE0CE] bg-[#FBF6F0]/90 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-3">
+        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-5 py-2.5">
           <span className="font-['Montserrat',sans-serif] text-sm font-bold md:text-base">
             Инна Фалолеева <span className="font-normal text-[#8A7864]">· психолог</span>
           </span>
-          <button
-            onClick={() => {
-              scrollTo("register");
-              ymGoal("efir09_header_cta");
-            }}
-            className="rounded-lg bg-[#2F7A52] px-4 py-2 font-['Montserrat',sans-serif] text-xs font-bold text-white transition hover:bg-[#1F5E3F] md:text-sm"
-          >
-            Записаться
-          </button>
+          <div className="ml-auto flex items-center gap-2 md:gap-3">
+            <div className="flex items-center gap-2 rounded-xl bg-[#E8503A] px-3 py-2 text-white shadow-md md:px-4">
+              <Icon name="Timer" size={18} className="hidden shrink-0 animate-pulse sm:block" />
+              <div className="leading-tight">
+                <div className="text-[9px] font-bold uppercase tracking-wide text-white/85 md:text-[10px]">
+                  До старта интенсива
+                </div>
+                <div className="font-['Montserrat',sans-serif] text-base font-extrabold tabular-nums md:text-lg">
+                  {countdown.days > 0 && `${countdown.days}д `}
+                  {String(countdown.hours).padStart(2, "0")}:
+                  {String(countdown.minutes).padStart(2, "0")}:
+                  {String(countdown.seconds).padStart(2, "0")}
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                scrollTo("register");
+                ymGoal("efir09_header_cta");
+              }}
+              className="rounded-lg bg-[#2F7A52] px-4 py-2 font-['Montserrat',sans-serif] text-xs font-bold text-white transition hover:bg-[#1F5E3F] md:text-sm"
+            >
+              Записаться
+            </button>
+          </div>
         </div>
       </header>
 
