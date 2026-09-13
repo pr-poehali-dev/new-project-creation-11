@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Icon from "@/components/ui/icon";
 import {
@@ -992,10 +992,24 @@ const Efir09 = () => {
                     className="mt-0.5"
                   />
                   <span>
-                    Согласен(на) на обработку персональных данных согласно{" "}
-                    <a href="#privacy" className="underline hover:text-[#2F7A52]">
+                    Согласен(на) на{" "}
+                    <Link
+                      to="/personal-data-policy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-[#2F7A52]"
+                    >
+                      обработку персональных данных
+                    </Link>{" "}
+                    согласно{" "}
+                    <Link
+                      to="/privacy-policy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-[#2F7A52]"
+                    >
                       политике конфиденциальности
-                    </a>
+                    </Link>
                   </span>
                 </label>
 
@@ -1079,9 +1093,17 @@ const Efir09 = () => {
             </a>
           </div>
           <p className="mx-auto mb-3 max-w-xl text-center text-xs leading-relaxed text-[#8A7864]">
-            Регистрируясь на интенсив, вы соглашаетесь на обработку персональных данных в целях
-            организации и проведения мероприятия. Данные не передаются третьим лицам и используются
-            только для связи с вами.
+            Регистрируясь на интенсив, вы соглашаетесь на{" "}
+            <Link
+              to="/personal-data-policy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-[#2F7A52]"
+            >
+              обработку персональных данных
+            </Link>{" "}
+            в целях организации и проведения мероприятия. Данные не передаются третьим лицам и
+            используются только для связи с вами.
           </p>
           <div className="mx-auto max-w-xl rounded-xl border border-[#EEE0D2] bg-[#FBF6F0] p-4 text-center text-xs leading-relaxed text-[#8A7864]">
             <p className="font-semibold text-[#5b4d41]">ИП Фалолеева Инна Николаевна</p>
