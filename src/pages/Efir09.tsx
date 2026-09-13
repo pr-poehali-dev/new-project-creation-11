@@ -28,6 +28,16 @@ const EXPERT_PHOTO = "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8
 
 const DIPLOMAS = [
   {
+    title: "Удостоверение о повышении квалификации",
+    subtitle: "Психотерапия пограничного расстройства личности, 72 ч.",
+    url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/d4432b6c-b0eb-4c7e-8b3b-b92068bb2b28.jpg",
+  },
+  {
+    title: "Удостоверение о повышении квалификации",
+    subtitle: "Нарциссическое расстройство личности. Диагностика и методы психотерапии, 72 ч.",
+    url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/10701ac9-d450-4c01-aa0a-f34839a61410.jpg",
+  },
+  {
     title: "Диплом ЭОТ",
     subtitle: "Эмоционально-образная терапия, 650 ч.",
     url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/8bc06beb-1ef8-4102-9ce0-5110d0fb8843.jpg",
@@ -227,6 +237,7 @@ const EXPERT_FACTS = [
 ];
 
 const TESTIMONIALS = [
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/8df6a075-38de-402a-af80-3c30a50e8a88.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/68300928-00ce-4c12-b074-d6b77e74092e.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/472b6f92-b435-4df5-8444-ba3f9e058fd5.jpg",
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/00dd76b7-b746-4836-983c-b17940fc6c1f.jpg",
