@@ -100,6 +100,33 @@ const ThankYou = () => {
             Мы также отправили доступ и ссылки на подключение на вашу почту — на случай, если вы
             решите вернуться к письму позже
           </p>
+
+          {/* ── Block 4: email confirmation ── */}
+          <div className="mt-8 rounded-2xl border border-[#EEE0D2] bg-white p-6 shadow-sm md:p-8">
+            <div className="mb-4 flex items-center justify-center gap-2 text-[#2F7A52]">
+              <Icon name="Mail" size={22} />
+              <h2 className="font-['Montserrat',sans-serif] text-lg font-bold text-[#2B2420] md:text-xl">
+                Подтвердите участие по почте
+              </h2>
+            </div>
+            <p className="text-center text-sm leading-relaxed text-[#6b5d52] md:text-base">
+              Вам на указанный при регистрации email придёт письмо с темой:{" "}
+              <span className="font-semibold text-[#2B2420]">
+                «[Подтвердите участие] "Сильная снаружи, сломанная внутри". Онлайн-эфир с психологом
+                Инной Фалолеевой»
+              </span>
+              . Пожалуйста, нажмите синюю кнопку в письме, чтобы подтвердить участие в эфире.
+            </p>
+            <p className="mt-3 text-center text-sm text-[#6b5d52] md:text-base">Письмо выглядит вот так:</p>
+            <img
+              src="https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/ec485e34-6936-4575-9bc0-e4cdfb29ad12.png"
+              alt="Пример письма для подтверждения регистрации на эфир"
+              className="mx-auto mt-4 w-full max-w-md rounded-xl border border-[#EEE0D2] shadow-sm"
+            />
+            <p className="mt-4 text-center text-sm font-bold text-[#2F7A52] md:text-base">
+              Пожалуйста, проверьте почту
+            </p>
+          </div>
         </div>
       </main>
 
