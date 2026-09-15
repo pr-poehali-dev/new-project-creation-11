@@ -21,6 +21,22 @@ const ThankYou = () => {
   useEffect(() => {
     document.title = "Регистрация почти завершена — интенсив «Сильная снаружи, сломанная внутри»";
     ymGoal("efir09_thankyou_view");
+
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", "https://faloleeva.ru/thank-you");
+
+    let robots = document.querySelector('meta[name="robots"]');
+    if (!robots) {
+      robots = document.createElement("meta");
+      robots.setAttribute("name", "robots");
+      document.head.appendChild(robots);
+    }
+    robots.setAttribute("content", "noindex, nofollow");
   }, []);
 
   return (

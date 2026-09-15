@@ -293,7 +293,62 @@ const Efir09 = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Бесплатный интенсив «Сильная снаружи, сломанная внутри» — 22–23 сентября";
+    document.title = "Психолог онлайн: бесплатный интенсив 22–23.09 — Инна Фалолеева";
+
+    const setMeta = (attr: "name" | "property", key: string, content: string) => {
+      let tag = document.querySelector(`meta[${attr}="${key}"]`);
+      if (!tag) {
+        tag = document.createElement("meta");
+        tag.setAttribute(attr, key);
+        document.head.appendChild(tag);
+      }
+      tag.setAttribute("content", content);
+    };
+
+    setMeta(
+      "name",
+      "description",
+      "Бесплатный интенсив с психологом Инной Фалолеевой, 22–23.09. Роли «спасателя» и «хорошей девочки», методы ЭОТ и МАК. Регистрация открыта."
+    );
+    setMeta(
+      "property",
+      "og:title",
+      "«Сильная снаружи, сломанная внутри» — бесплатный интенсив 22–23.09"
+    );
+    setMeta(
+      "property",
+      "og:description",
+      "Бесплатный онлайн-интенсив с психологом Инной Фалолеевой. Роли «спасателя» и «хорошей девочки», методы ЭОТ и МАК. 22–23 сентября."
+    );
+    setMeta("property", "og:image", "https://faloleeva.ru/og-efir09.jpg");
+    setMeta("property", "og:url", "https://faloleeva.ru/efir09");
+    setMeta(
+      "name",
+      "twitter:title",
+      "«Сильная снаружи, сломанная внутри» — бесплатный интенсив 22–23.09"
+    );
+    setMeta(
+      "name",
+      "twitter:description",
+      "Бесплатный онлайн-интенсив с психологом Инной Фалолеевой, 22–23 сентября."
+    );
+    setMeta("name", "twitter:image", "https://faloleeva.ru/og-efir09.jpg");
+
+    let canonical = document.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", "https://faloleeva.ru/efir09");
+
+    let robots = document.querySelector('meta[name="robots"]');
+    if (!robots) {
+      robots = document.createElement("meta");
+      robots.setAttribute("name", "robots");
+      document.head.appendChild(robots);
+    }
+    robots.setAttribute("content", "index, follow");
   }, []);
 
   const countdown = useCountdown(DAY1_DATE);
