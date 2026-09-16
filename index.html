@@ -179,64 +179,6 @@
 })();
 </script>
 
-<script>
-(function () {
-  if (window.location.pathname.indexOf('/thank-you') === -1) return;
-  if (window.__smartMailBtnInited) return;
-
-  var PROVIDERS = [
-    { domains: ['gmail.com', 'googlemail.com'], url: 'https://mail.google.com/mail/u/0/#inbox', name: 'Gmail' },
-    { domains: ['yandex.ru', 'yandex.com', 'ya.ru', 'yandex.by', 'yandex.kz', 'yandex.ua'], url: 'https://mail.yandex.ru/', name: 'Яндекс Почту' },
-    { domains: ['mail.ru', 'inbox.ru', 'list.ru', 'bk.ru'], url: 'https://e.mail.ru/inbox/', name: 'Почту Mail.ru' },
-    { domains: ['rambler.ru'], url: 'https://mail.rambler.ru/', name: 'Рамблер Почту' },
-    { domains: ['outlook.com', 'hotmail.com', 'live.com', 'msn.com'], url: 'https://outlook.live.com/mail/', name: 'Outlook' },
-    { domains: ['icloud.com', 'me.com'], url: 'https://www.icloud.com/mail', name: 'iCloud Почту' },
-    { domains: ['yahoo.com'], url: 'https://mail.yahoo.com/', name: 'Yahoo Почту' }
-  ];
-
-  function findProvider(email) {
-    var domain = (email.split('@')[1] || '').toLowerCase().trim();
-    if (!domain) return null;
-    for (var i = 0; i < PROVIDERS.length; i++) {
-      if (PROVIDERS[i].domains.indexOf(domain) !== -1) return PROVIDERS[i];
-    }
-    return null;
-  }
-
-  function init() {
-    var btn = document.getElementById('open-mail-btn');
-    if (!btn) return false;
-
-    var email = null;
-    try { email = localStorage.getItem('faloleeva_efir09_email'); } catch (err) {}
-
-    var provider = email ? findProvider(email) : null;
-
-    if (provider) {
-      btn.textContent = 'Перейти в ' + provider.name;
-      btn.addEventListener('click', function () {
-        window.open(provider.url, '_blank', 'noopener');
-      });
-    } else {
-      // Email не сохранился (другой браузер/устройство, приватный режим, localStorage заблокирован)
-      // или почтовый сервис не из списка — честно прячем "умную" кнопку, а не гадаем
-      btn.style.display = 'none';
-    }
-    window.__smartMailBtnInited = true;
-    return true;
-  }
-
-  // Кнопка рендерится React'ом асинхронно — ждём её появления
-  if (!init()) {
-    var attempts = 0;
-    var timer = setInterval(function () {
-      attempts++;
-      if (init() || attempts > 50) clearInterval(timer);
-    }, 200);
-  }
-})();
-</script>
-
 <script src="//static.bizon365.ru/form/anyform.min.js"></script>
 <script>
 (function () {

@@ -1,9 +1,33 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
 const TG_LINK = "https://t.me/FaloleevaPsybot?start=dl-1788885417801";
 const MAX_LINK = "https://max.ru/id505003981273_bot?start=dl-17889736833afaa9562bfc";
+
+const EMAIL_PROVIDERS: { domains: string[]; url: string; name: string }[] = [
+  { domains: ["gmail.com", "googlemail.com"], url: "https://mail.google.com/mail/u/0/#inbox", name: "Gmail" },
+  {
+    domains: ["yandex.ru", "yandex.com", "ya.ru", "yandex.by", "yandex.kz", "yandex.ua"],
+    url: "https://mail.yandex.ru/",
+    name: "Яндекс Почту",
+  },
+  { domains: ["mail.ru", "inbox.ru", "list.ru", "bk.ru"], url: "https://e.mail.ru/inbox/", name: "Почту Mail.ru" },
+  { domains: ["rambler.ru"], url: "https://mail.rambler.ru/", name: "Рамблер Почту" },
+  {
+    domains: ["outlook.com", "hotmail.com", "live.com", "msn.com"],
+    url: "https://outlook.live.com/mail/",
+    name: "Outlook",
+  },
+  { domains: ["icloud.com", "me.com"], url: "https://www.icloud.com/mail", name: "iCloud Почту" },
+  { domains: ["yahoo.com"], url: "https://mail.yahoo.com/", name: "Yahoo Почту" },
+];
+
+function findMailProvider(email: string) {
+  const domain = (email.split("@")[1] || "").toLowerCase().trim();
+  if (!domain) return null;
+  return EMAIL_PROVIDERS.find((p) => p.domains.includes(domain)) || null;
+}
 
 const YM_IDS = [112325163];
 type YmFn = (id: number, event: string, goal: string) => void;
@@ -17,6 +41,19 @@ function ymGoal(goal: string) {
 const ThankYou = () => {
   const [params] = useSearchParams();
   const name = params.get("name");
+  const [mailProvider, setMailProvider] = useState<{ url: string; name: string } | null>(null);
+  const [mailChecked, setMailChecked] = useState(false);
+
+  useEffect(() => {
+    let email: string | null = null;
+    try {
+      email = localStorage.getItem("faloleeva_efir09_email");
+    } catch {
+      email = null;
+    }
+    setMailProvider(email ? findMailProvider(email) : null);
+    setMailChecked(true);
+  }, []);
 
   useEffect(() => {
     document.title = "Регистрация почти завершена — интенсив «Сильная снаружи, сломанная внутри»";
@@ -143,14 +180,20 @@ const ThankYou = () => {
               Пожалуйста, проверьте почту
             </p>
             <div className="mt-5 flex flex-col items-center gap-2">
-              <button
-                id="open-mail-btn"
-                type="button"
-                className="inline-flex items-center gap-2 rounded-xl bg-[#2F7A52] px-6 py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#1F5E3F] md:text-base"
-              >
-                Перейти в почту
-              </button>
-              <p id="open-mail-hint" className="text-center text-xs leading-relaxed text-[#8A7864]">
+              {(!mailChecked || mailProvider) && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!mailProvider) return;
+                    ymGoal("efir09_thankyou_open_mail_click");
+                    window.open(mailProvider.url, "_blank", "noopener");
+                  }}
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#2F7A52] px-6 py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#1F5E3F] md:text-base"
+                >
+                  {mailProvider ? `Перейти в ${mailProvider.name}` : "Перейти в почту"}
+                </button>
+              )}
+              <p className="text-center text-xs leading-relaxed text-[#8A7864]">
                 Письмо пришло от <b>inka_f@mail.ru</b>. Если не видите его во «Входящих» —
                 проверьте папку «Спам».
               </p>
