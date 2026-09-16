@@ -16,9 +16,9 @@ import {
   CarouselNext,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import InnaPhoto from "@/assets/inna-photo-cutout.png";
-
 /* ─── Constants ─── */
+const INNA_PHOTO =
+  "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/b6f09e6b-cb1f-4dc5-8be7-c3bb6a44ab98.jpg";
 const TG_LINK = "https://t.me/InnaFaloleevaPsy";
 const MAX_LINK = "https://max.ru/join/Um75KJ9X-7yhUGiL1A0c6GPOup5OBhMH_PkMiyEZDjk";
 const CONTACT_EMAIL = "Inka_f@mail.ru";
@@ -390,9 +390,9 @@ const Home = () => {
               className="absolute inset-x-6 top-4 aspect-square rounded-full bg-[#E3EFE7]"
             />
             <img
-              src={InnaPhoto}
+              src={INNA_PHOTO}
               alt="Инна Фалолеева — клинический психолог"
-              className="relative w-full max-w-[360px] object-contain drop-shadow-xl"
+              className="relative aspect-[4/5] w-full max-w-[360px] rounded-[2rem] object-cover shadow-xl"
             />
           </div>
         </div>
@@ -426,9 +426,9 @@ const Home = () => {
         <div className="mx-auto max-w-4xl">
           <div className="grid gap-8 md:grid-cols-[1fr_1.3fr] md:items-center">
             <img
-              src={InnaPhoto}
+              src={INNA_PHOTO}
               alt="Инна Фалолеева"
-              className="mx-auto w-full max-w-[260px] rounded-2xl object-contain md:max-w-none"
+              className="mx-auto aspect-[4/5] w-full max-w-[260px] rounded-2xl object-cover shadow-sm md:max-w-none"
             />
             <div>
               <h2 className="mb-4 font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
