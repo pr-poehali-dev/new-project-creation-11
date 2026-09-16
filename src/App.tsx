@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Home from "./pages/Home";
 import Efir09 from "./pages/Efir09";
 import ThankYou from "./pages/ThankYou";
+import OrderStatus from "./pages/OrderStatus";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import PersonalDataPolicy from "./pages/PersonalDataPolicy";
 import NotFound from "./pages/NotFound";
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/sven" element={<Index />} />
           <Route path="/efir09" element={<Efir09 />} />
           <Route path="/thank-you" element={<ThankYou />} />
+          <Route path="/order-status" element={<OrderStatus />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/personal-data-policy" element={<PersonalDataPolicy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

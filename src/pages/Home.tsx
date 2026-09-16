@@ -16,16 +16,13 @@ import {
   CarouselNext,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import PaymentDialog, { type PaymentTariff } from "@/components/PaymentDialog";
 /* ─── Constants ─── */
 const INNA_PHOTO =
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/b6f09e6b-cb1f-4dc5-8be7-c3bb6a44ab98.jpg";
 const TG_LINK = "https://t.me/InnaFaloleevaPsy";
 const MAX_LINK = "https://max.ru/join/Um75KJ9X-7yhUGiL1A0c6GPOup5OBhMH_PkMiyEZDjk";
 const CONTACT_EMAIL = "Inka_f@mail.ru";
-
-// TODO: заменить на реальные ссылки записи YClients под каждую услугу,
-// когда они будут готовы — сейчас общая ссылка-заглушка на все тарифы
-const BOOKING_LINK = TG_LINK;
 
 const YM_IDS = [112325163];
 type YmFn = (id: number, event: string, goal: string) => void;
@@ -298,6 +295,13 @@ const Home = () => {
   const [mainApi, setMainApi] = useState<CarouselApi>();
   const [lightboxApi, setLightboxApi] = useState<CarouselApi>();
   const [activeSlide, setActiveSlide] = useState(0);
+  const [paymentTariff, setPaymentTariff] = useState<PaymentTariff | null>(null);
+
+  function openPayment(t: Tariff) {
+    const amount = t.priceFull ?? t.price ?? 0;
+    setPaymentTariff({ id: t.id, title: t.title, amount });
+    ymGoal(t.goal);
+  }
 
   useEffect(() => {
     if (!mainApi) return;
@@ -657,16 +661,14 @@ const Home = () => {
                     </div>
                   )}
 
-                  <a
-                    href={BOOKING_LINK}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => ymGoal(t.goal)}
+                  <button
+                    type="button"
+                    onClick={() => openPayment(t)}
                     className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#2F7A52] py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-white transition hover:bg-[#1F5E3F] md:text-base"
                   >
-                    Записаться
+                    Записаться и оплатить
                     <Icon name="ArrowRight" size={18} />
-                  </a>
+                  </button>
                 </div>
               </div>
             ))}
@@ -900,6 +902,8 @@ const Home = () => {
           </p>
         </div>
       </footer>
+
+      <PaymentDialog tariff={paymentTariff} onClose={() => setPaymentTariff(null)} />
     </div>
   );
 };

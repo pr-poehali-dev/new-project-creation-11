@@ -1,0 +1,22 @@
+{
+  "tests": [
+    {
+      "name": "CORS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200
+    },
+    {
+      "name": "Missing order_number returns 400",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 400
+    },
+    {
+      "name": "Unknown order returns 404",
+      "method": "GET",
+      "path": "/?order_number=YK-NOT-EXIST",
+      "expectedStatus": 404
+    }
+  ]
+}
