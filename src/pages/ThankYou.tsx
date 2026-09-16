@@ -142,6 +142,19 @@ const ThankYou = () => {
             <p className="mt-4 text-center text-sm font-bold text-[#2F7A52] md:text-base">
               Пожалуйста, проверьте почту
             </p>
+            <div className="mt-5 flex flex-col items-center gap-2">
+              <button
+                id="open-mail-btn"
+                type="button"
+                className="inline-flex items-center gap-2 rounded-xl bg-[#2F7A52] px-6 py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#1F5E3F] md:text-base"
+              >
+                Перейти в почту
+              </button>
+              <p id="open-mail-hint" className="text-center text-xs leading-relaxed text-[#8A7864]">
+                Письмо пришло от <b>inka_f@mail.ru</b>. Если не видите его во «Входящих» —
+                проверьте папку «Спам».
+              </p>
+            </div>
           </div>
         </div>
       </main>
