@@ -17,6 +17,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import PaymentDialog, { type PaymentTariff } from "@/components/PaymentDialog";
+import InstallmentDialog, { type InstallmentTariff } from "@/components/InstallmentDialog";
 /* ─── Constants ─── */
 const INNA_PHOTO =
   "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/b6f09e6b-cb1f-4dc5-8be7-c3bb6a44ab98.jpg";
@@ -306,11 +307,17 @@ const Home = () => {
   const [lightboxApi, setLightboxApi] = useState<CarouselApi>();
   const [activeSlide, setActiveSlide] = useState(0);
   const [paymentTariff, setPaymentTariff] = useState<PaymentTariff | null>(null);
+  const [installmentTariff, setInstallmentTariff] = useState<InstallmentTariff | null>(null);
 
   function openPayment(t: Tariff) {
     const amount = t.priceFull ?? t.price ?? 0;
     setPaymentTariff({ id: t.id, title: t.title, amount });
     ymGoal(t.goal);
+  }
+
+  function openInstallment(t: Tariff) {
+    setInstallmentTariff({ id: t.id, title: t.title });
+    ymGoal(`${t.goal}_installment`);
   }
 
   useEffect(() => {
@@ -679,6 +686,16 @@ const Home = () => {
                     Записаться и оплатить
                     <Icon name="ArrowRight" size={18} />
                   </button>
+
+                  {t.installmentAvailable && (
+                    <button
+                      type="button"
+                      onClick={() => openInstallment(t)}
+                      className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[#2F7A52] py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-[#2F7A52] transition hover:bg-[#E3EFE7] md:text-base"
+                    >
+                      Оставить заявку на рассрочку
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
@@ -914,6 +931,7 @@ const Home = () => {
       </footer>
 
       <PaymentDialog tariff={paymentTariff} onClose={() => setPaymentTariff(null)} />
+      <InstallmentDialog tariff={installmentTariff} onClose={() => setInstallmentTariff(null)} />
     </div>
   );
 };

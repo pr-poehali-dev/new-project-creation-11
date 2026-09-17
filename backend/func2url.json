@@ -1,4 +1,5 @@
 {
+  "installment-request": "https://functions.poehali.dev/105583ec-94ba-4c0d-aea6-ec429a1a024d",
   "order-status": "https://functions.poehali.dev/a486ecf1-980e-45b7-9577-881e81649895",
   "yookassa-yookassa": "https://functions.poehali.dev/8395f2e6-34d8-44b8-b606-b2409920abd1",
   "yookassa-yookassa-webhook": "https://functions.poehali.dev/d9a16145-c04b-417d-9bac-8ed1038d237e",
