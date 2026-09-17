@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
-const ORDER_STATUS_API_URL = "https://functions.poehali.dev/REPLACE_ME";
+const ORDER_STATUS_API_URL = "https://functions.poehali.dev/a486ecf1-980e-45b7-9577-881e81649895";
 
 type OrderStatus = "pending" | "paid" | "canceled";
 
