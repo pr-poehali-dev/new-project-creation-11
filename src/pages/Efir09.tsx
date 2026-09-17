@@ -368,6 +368,7 @@ const Efir09 = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("+7");
+  const [phoneIntl, setPhoneIntl] = useState(false);
   const [phoneTouched, setPhoneTouched] = useState(false);
   const [consent, setConsent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -413,29 +414,97 @@ const Efir09 = () => {
     return result;
   }
 
+  // Свободный ввод для зарубежных номеров: разрешаем только +, цифры, пробелы, скобки и дефисы,
+  // ограничиваем 15 цифрами (максимум по стандарту E.164)
+  function sanitizeIntlPhone(value: string): string {
+    const hasPlus = value.trim().startsWith("+");
+    const cleaned = value.replace(/[^\d\-\s()]/g, "");
+    let digitCount = 0;
+    let result = hasPlus ? "+" : "";
+    for (const ch of cleaned) {
+      if (/\d/.test(ch)) {
+        digitCount++;
+        if (digitCount > 15) break;
+      }
+      result += ch;
+    }
+    return result;
+  }
+
   function isPhoneValid(value: string): boolean {
     const digits = value.replace(/\D/g, "");
+    if (phoneIntl) {
+      // Защита от мусора вроде "111" продолжает работать и для зарубежных номеров —
+      // требуем от 7 до 15 цифр (минимальная и максимальная длина реальных номеров в мире)
+      return digits.length >= 7 && digits.length <= 15;
+    }
     return /^7\d{10}$/.test(digits);
   }
 
+  function handlePhoneChange(rawValue: string) {
+    if (phoneIntl) {
+      setPhone(sanitizeIntlPhone(rawValue));
+      return;
+    }
+    // Если вставили номер с явным зарубежным кодом страны (не +7/8) — сразу переключаемся
+    // в свободный режим, чтобы не портить вставленный номер российской маской
+    const plusMatch = rawValue.trim().match(/^\+(\d+)/);
+    if (plusMatch && !plusMatch[1].startsWith("7") && !plusMatch[1].startsWith("8")) {
+      setPhoneIntl(true);
+      setPhone(sanitizeIntlPhone(rawValue));
+      return;
+    }
+    setPhone(formatPhoneInput(rawValue));
+  }
+
+  function switchToIntlPhone(remainingDigits: string) {
+    setPhoneIntl(true);
+    setPhone(remainingDigits ? "+" + remainingDigits : "+");
+  }
+
+  function switchToRuPhone() {
+    setPhoneIntl(false);
+    setPhone("+7");
+    setPhoneTouched(false);
+  }
+
   function handlePhoneKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (phoneIntl) return; // в свободном режиме маска не применяется
     if (e.key !== "Backspace" && e.key !== "Delete") return;
     const input = e.currentTarget;
     const pos = input.selectionStart ?? 0;
     const end = input.selectionEnd ?? 0;
-    if (pos !== end) return;
     const value = input.value;
-    // Индекс 1 — это фиксированная цифра "7" в "+7", её удалять нельзя
+
+    // Стирание выделенного диапазона, захватывающего "+7", — тоже переключает в свободный режим
+    if (pos !== end) {
+      if (pos < 2) {
+        e.preventDefault();
+        const digits = value.replace(/\D/g, "");
+        const rest = digits.startsWith("7") ? digits.slice(1) : digits;
+        switchToIntlPhone(rest);
+      }
+      return;
+    }
+
+    // Индекс 1 — это фиксированная цифра "7" в "+7". Раньше её удаление блокировалось,
+    // теперь оно переключает поле в свободный ввод зарубежного номера
     let idx = -1;
     if (e.key === "Backspace") {
       if (pos <= 2) {
         e.preventDefault();
+        const digits = value.replace(/\D/g, "");
+        const rest = digits.startsWith("7") ? digits.slice(1) : digits;
+        switchToIntlPhone(rest);
         return;
       }
       idx = pos - 1;
       while (idx > 1 && !/\d/.test(value[idx])) idx--;
       if (idx <= 1) {
         e.preventDefault();
+        const digits = value.replace(/\D/g, "");
+        const rest = digits.startsWith("7") ? digits.slice(1) : digits;
+        switchToIntlPhone(rest);
         return;
       }
     } else {
@@ -444,6 +513,9 @@ const Efir09 = () => {
       while (idx < value.length && !/\d/.test(value[idx])) idx++;
       if (idx <= 1 || idx >= value.length) {
         e.preventDefault();
+        const digits = value.replace(/\D/g, "");
+        const rest = digits.startsWith("7") ? digits.slice(1) : digits;
+        switchToIntlPhone(rest);
         return;
       }
     }
@@ -1035,21 +1107,33 @@ const Efir09 = () => {
                   />
                 </div>
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-[#3d332b]">
-                    Телефон
-                  </label>
+                  <div className="mb-1 flex items-center justify-between">
+                    <label className="block text-sm font-medium text-[#3d332b]">Телефон</label>
+                    {phoneIntl && (
+                      <button
+                        type="button"
+                        onClick={switchToRuPhone}
+                        className="text-xs font-medium text-[#2F7A52] underline-offset-2 hover:underline"
+                      >
+                        Ввести российский номер
+                      </button>
+                    )}
+                  </div>
                   <input
                     type="tel"
                     required
                     value={phone}
-                    onChange={(e) => setPhone(formatPhoneInput(e.target.value))}
+                    onChange={(e) => handlePhoneChange(e.target.value)}
                     onKeyDown={handlePhoneKeyDown}
                     onBlur={() => setPhoneTouched(true)}
-                    placeholder="+7 (___) ___-__-__"
+                    placeholder={phoneIntl ? "+___________" : "+7 (___) ___-__-__"}
                     className={`w-full rounded-lg border bg-[#FBF6F0] px-4 py-3 text-sm outline-none focus:border-[#2F7A52] md:text-base ${
                       phoneTouched && !isPhoneValid(phone) ? "border-red-500" : "border-[#E2D3C0]"
                     }`}
                   />
+                  {phoneIntl && !(phoneTouched && !isPhoneValid(phone)) && (
+                    <p className="mt-1 text-xs text-[#8A7864]">Зарубежный номер</p>
+                  )}
                   {phoneTouched && !isPhoneValid(phone) && (
                     <p className="mt-1 text-xs text-red-500">
                       Пожалуйста, проверьте корректность введённого телефона
