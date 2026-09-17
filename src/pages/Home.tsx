@@ -100,6 +100,16 @@ const DIPLOMAS = [
     subtitle: "Психология РПП, 108 ч.",
     url: "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/3e532753-4518-41ca-90ad-f7cfa27f7460.jpg",
   },
+  {
+    title: "Удостоверение о повышении квалификации",
+    subtitle: "Психологическая работа с жизненным сценарием, 72 ч.",
+    url: "/certs/zhiznenny-scenariy.jpg",
+  },
+  {
+    title: "Сертификат",
+    subtitle: "Психологическая работа с состоянием «взрослого», 72 ч.",
+    url: "/certs/vzrosliy-sostoyanie.jpg",
+  },
 ];
 
 const METHODS = [
