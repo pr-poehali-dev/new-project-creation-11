@@ -1095,7 +1095,7 @@ const Efir09 = () => {
               <p className="mb-6 text-center text-sm text-[#8A7864] md:text-base">
                 22 и 23 сентября · 19:00 мск · онлайн · оба дня одной регистрацией
               </p>
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form id="efir09-register-form" onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label className="mb-1 block text-sm font-medium text-[#3d332b]">Имя</label>
                   <input

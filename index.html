@@ -186,18 +186,18 @@
 
   function initBizonForm() {
     if (window.__bizonFormInited) return true;
-    var form = document.querySelector('form');
+    var form = document.querySelector('#efir09-register-form');
     if (!form) return false;
 
     $bizon_init_form({
       selectors: {
-        form: 'form',
+        form: '#efir09-register-form',
         message: '.bizon-error' // необязательно; если такого блока нет на странице, ошибки покажутся через alert()
       },
       form_fields: {
-        email: 'form input[type="email"]',
-        phone: 'form input[type="tel"]',
-        username: 'form input[type="text"]'
+        email: '#efir09-register-form input[type="email"]',
+        phone: '#efir09-register-form input[type="tel"]',
+        username: '#efir09-register-form input[type="text"]'
       },
       pageId: '209893:faloleeva_vebinar',
       closestDateOnly: true,

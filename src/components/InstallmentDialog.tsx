@@ -9,6 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Icon from "@/components/ui/icon";
+import { usePhoneInput } from "@/hooks/usePhoneInput";
 
 const INSTALLMENT_API_URL = "https://functions.poehali.dev/105583ec-94ba-4c0d-aea6-ec429a1a024d";
 
@@ -29,17 +30,29 @@ function isValidEmail(email: string): boolean {
 const InstallmentDialog = ({ tariff, onClose }: InstallmentDialogProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [done, setDone] = useState(false);
+
+  const {
+    phone,
+    setPhone,
+    phoneIntl,
+    phoneTouched,
+    setPhoneTouched,
+    isPhoneValid,
+    handlePhoneChange,
+    handlePhoneKeyDown,
+    switchToRuPhone,
+    placeholder: phonePlaceholder,
+  } = usePhoneInput();
 
   if (!tariff) return null;
 
   function handleClose() {
     setName("");
     setEmail("");
-    setPhone("");
+    setPhone("+7");
     setError(null);
     setDone(false);
     onClose();
@@ -55,6 +68,11 @@ const InstallmentDialog = ({ tariff, onClose }: InstallmentDialogProps) => {
     }
     if (!email.trim() || !isValidEmail(email)) {
       setError("Укажите корректный email");
+      return;
+    }
+    if (!phone.trim() || !isPhoneValid(phone)) {
+      setPhoneTouched(true);
+      setError("Укажите корректный номер телефона");
       return;
     }
 
@@ -132,17 +150,40 @@ const InstallmentDialog = ({ tariff, onClose }: InstallmentDialogProps) => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="id-phone" className="mb-1 block text-[#3d332b]">
-                    Телефон <span className="font-normal text-[#8A7864]">(необязательно)</span>
-                  </Label>
+                  <div className="mb-1 flex items-center justify-between">
+                    <Label htmlFor="id-phone" className="block text-[#3d332b]">
+                      Телефон
+                    </Label>
+                    {phoneIntl && (
+                      <button
+                        type="button"
+                        onClick={switchToRuPhone}
+                        className="text-xs font-medium text-[#2F7A52] underline-offset-2 hover:underline"
+                      >
+                        Ввести российский номер
+                      </button>
+                    )}
+                  </div>
                   <Input
                     id="id-phone"
                     type="tel"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+7 ..."
-                    className="border-[#E2D3C0] bg-white"
+                    onChange={(e) => handlePhoneChange(e.target.value)}
+                    onKeyDown={handlePhoneKeyDown}
+                    onBlur={() => setPhoneTouched(true)}
+                    placeholder={phonePlaceholder}
+                    className={`bg-white ${
+                      phoneTouched && !isPhoneValid(phone) ? "border-red-500" : "border-[#E2D3C0]"
+                    }`}
                   />
+                  {phoneIntl && !(phoneTouched && !isPhoneValid(phone)) && (
+                    <p className="mt-1 text-xs text-[#8A7864]">Зарубежный номер</p>
+                  )}
+                  {phoneTouched && !isPhoneValid(phone) && (
+                    <p className="mt-1 text-xs text-red-500">
+                      Пожалуйста, проверьте корректность введённого телефона
+                    </p>
+                  )}
                 </div>
 
                 {error && <p className="text-sm font-medium text-[#DC2626]">{error}</p>}

@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import Icon from "@/components/ui/icon";
 import { useYookassa } from "@/components/extensions/yookassa/useYookassa";
+import { usePhoneInput } from "@/hooks/usePhoneInput";
 
 const PAYMENT_API_URL = "https://functions.poehali.dev/8395f2e6-34d8-44b8-b606-b2409920abd1";
 
@@ -33,9 +34,20 @@ function isValidEmail(email: string): boolean {
 const PaymentDialog = ({ tariff, onClose }: PaymentDialogProps) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
   const [consent, setConsent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const {
+    phone,
+    phoneIntl,
+    phoneTouched,
+    setPhoneTouched,
+    isPhoneValid,
+    handlePhoneChange,
+    handlePhoneKeyDown,
+    switchToRuPhone,
+    placeholder: phonePlaceholder,
+  } = usePhoneInput();
 
   const { createPayment, isLoading } = useYookassa({ apiUrl: PAYMENT_API_URL });
 
@@ -51,6 +63,11 @@ const PaymentDialog = ({ tariff, onClose }: PaymentDialogProps) => {
     }
     if (!email.trim() || !isValidEmail(email)) {
       setError("Укажите корректный email — на него придёт чек об оплате");
+      return;
+    }
+    if (!phone.trim() || !isPhoneValid(phone)) {
+      setPhoneTouched(true);
+      setError("Укажите корректный номер телефона");
       return;
     }
     if (!consent) {
@@ -122,17 +139,40 @@ const PaymentDialog = ({ tariff, onClose }: PaymentDialogProps) => {
               />
             </div>
             <div>
-              <Label htmlFor="pd-phone" className="mb-1 block text-[#3d332b]">
-                Телефон <span className="font-normal text-[#8A7864]">(необязательно)</span>
-              </Label>
+              <div className="mb-1 flex items-center justify-between">
+                <Label htmlFor="pd-phone" className="block text-[#3d332b]">
+                  Телефон
+                </Label>
+                {phoneIntl && (
+                  <button
+                    type="button"
+                    onClick={switchToRuPhone}
+                    className="text-xs font-medium text-[#2F7A52] underline-offset-2 hover:underline"
+                  >
+                    Ввести российский номер
+                  </button>
+                )}
+              </div>
               <Input
                 id="pd-phone"
                 type="tel"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="+7 ..."
-                className="border-[#E2D3C0] bg-white"
+                onChange={(e) => handlePhoneChange(e.target.value)}
+                onKeyDown={handlePhoneKeyDown}
+                onBlur={() => setPhoneTouched(true)}
+                placeholder={phonePlaceholder}
+                className={`bg-white ${
+                  phoneTouched && !isPhoneValid(phone) ? "border-red-500" : "border-[#E2D3C0]"
+                }`}
               />
+              {phoneIntl && !(phoneTouched && !isPhoneValid(phone)) && (
+                <p className="mt-1 text-xs text-[#8A7864]">Зарубежный номер</p>
+              )}
+              {phoneTouched && !isPhoneValid(phone) && (
+                <p className="mt-1 text-xs text-red-500">
+                  Пожалуйста, проверьте корректность введённого телефона
+                </p>
+              )}
             </div>
 
             <label className="flex items-start gap-3 text-xs text-[#6b5d52]">
