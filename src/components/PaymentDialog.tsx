@@ -101,7 +101,7 @@ const PaymentDialog = ({ tariff, onClose }: PaymentDialogProps) => {
 
   return (
     <Dialog open={!!tariff} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-md border-none bg-[#FBF6F0] p-0">
+      <DialogContent className="max-w-md border-none bg-[#FBF6F0] p-0 text-[#2B2420]">
         <div className="p-6 md:p-7">
           <DialogHeader>
             <DialogTitle className="font-['Montserrat',sans-serif] text-xl font-bold text-[#2B2420]">

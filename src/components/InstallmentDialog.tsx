@@ -100,7 +100,7 @@ const InstallmentDialog = ({ tariff, onClose }: InstallmentDialogProps) => {
 
   return (
     <Dialog open={!!tariff} onOpenChange={(open) => !open && handleClose()}>
-      <DialogContent className="max-w-md border-none bg-[#FBF6F0] p-0">
+      <DialogContent className="max-w-md border-none bg-[#FBF6F0] p-0 text-[#2B2420]">
         <div className="p-6 md:p-7">
           {done ? (
             <div className="py-4 text-center">
