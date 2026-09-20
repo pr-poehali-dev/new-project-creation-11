@@ -229,7 +229,7 @@ const TESTIMONIALS = [
 const FAQ = [
   {
     q: "А если мне не подойдёт метод?",
-    a: "На бесплатном интенсиве можно увидеть метод в деле до того, как платить за консультацию.",
+    a: "Индивидуальная консультация — это разовая встреча без обязательств, на ней вы сразу увидите метод в деле.",
   },
   {
     q: "Дорого?",
@@ -266,13 +266,13 @@ const Home = () => {
     setMeta(
       "name",
       "description",
-      "Инна Фалолеева — клинический психолог. Индивидуальные консультации, терапевтическая группа, программа «Я — целая» и бесплатный интенсив. Цены открыты."
+      "Инна Фалолеева — клинический психолог. Индивидуальные консультации, терапевтическая группа, программа «Я — целая». Цены открыты."
     );
     setMeta("property", "og:title", "Инна Фалолеева — психолог, с которым становится легче жить");
     setMeta(
       "property",
       "og:description",
-      "Индивидуально, в группе или на бесплатном интенсиве — разберёмся, откуда привычка тащить всё на себе, и что с этим делать."
+      "Индивидуально или в группе — разберёмся, откуда привычка тащить всё на себе, и что с этим делать."
     );
     setMeta("property", "og:image", "https://faloleeva.ru/og-home.jpg");
     setMeta("property", "og:url", "https://faloleeva.ru/");
@@ -280,7 +280,7 @@ const Home = () => {
     setMeta(
       "name",
       "twitter:description",
-      "Индивидуально, в группе или на бесплатном интенсиве — разберёмся, откуда привычка тащить всё на себе."
+      "Индивидуально или в группе — разберёмся, откуда привычка тащить всё на себе."
     );
     setMeta("name", "twitter:image", "https://faloleeva.ru/og-home.jpg");
 
@@ -355,13 +355,6 @@ const Home = () => {
             Инна Фалолеева <span className="font-normal text-[#8A7864]">· психолог</span>
           </span>
           <div className="ml-auto flex items-center gap-2 md:gap-3">
-            <Link
-              to="/efir09"
-              onClick={() => ymGoal("home_header_efir_click")}
-              className="hidden rounded-lg border border-[#2F7A52] px-3 py-2 font-['Montserrat',sans-serif] text-xs font-bold text-[#2F7A52] transition hover:bg-[#E3EFE7] sm:block md:text-sm"
-            >
-              Бесплатный интенсив
-            </Link>
             <button
               onClick={() => {
                 scrollTo("pricing");
@@ -384,7 +377,7 @@ const Home = () => {
             </h1>
             <p className="mx-auto mb-7 max-w-xl text-base text-[#6b5d52] md:mx-0 md:text-xl">
               Если вы привыкли тащить всё на себе — разберёмся, откуда это, и что с этим делать.
-              Индивидуально, в группе или на бесплатном интенсиве
+              Индивидуально или в группе
             </p>
 
             <div className="mb-6 flex flex-wrap items-center justify-center gap-3 md:justify-start">
@@ -398,13 +391,6 @@ const Home = () => {
                 Выбрать формат работы
                 <Icon name="ArrowRight" size={20} />
               </button>
-              <Link
-                to="/efir09"
-                onClick={() => ymGoal("home_hero_cta_secondary")}
-                className="inline-flex items-center gap-2 rounded-xl border-2 border-[#2F7A52] px-6 py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-[#2F7A52] transition hover:bg-[#E3EFE7] md:text-base"
-              >
-                Бесплатный интенсив 22–23
-              </Link>
             </div>
 
             <p className="text-xs font-medium leading-relaxed text-[#8A7864] md:text-sm">
@@ -797,31 +783,6 @@ const Home = () => {
         </DialogContent>
       </Dialog>
 
-      {/* ── Free entry ── */}
-      <section id="free-entry" className="bg-[#F3E6DA] px-5 py-14 md:py-20">
-        <div className="mx-auto max-w-2xl rounded-2xl border border-[#E2D3C0] bg-white p-6 text-center shadow-sm md:p-10">
-          <span className="mb-4 inline-block rounded-full bg-[#E3EFE7] px-4 py-1.5 text-xs font-semibold text-[#2F7A52] md:text-sm">
-            Не готовы платить сразу?
-          </span>
-          <h2 className="mb-4 font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
-            Начните с бесплатного интенсива
-          </h2>
-          <p className="mx-auto mb-7 max-w-lg text-sm leading-relaxed text-[#6b5d52] md:text-base">
-            «Сильная снаружи, сломанная внутри» — 22 и 23 сентября, 19:00 мск. Разберём 4 роли, в
-            которые попадает каждая «сильная» женщина, и конкретные шаги, чтобы начать выходить из
-            сценария.
-          </p>
-          <Link
-            to="/efir09"
-            onClick={() => ymGoal("home_free_entry_cta")}
-            className="inline-flex items-center gap-2 rounded-xl bg-[#2F7A52] px-7 py-4 font-['Montserrat',sans-serif] text-base font-bold text-white shadow-lg shadow-[#2F7A52]/25 transition hover:-translate-y-0.5 hover:bg-[#1F5E3F]"
-          >
-            Записаться на интенсив
-            <Icon name="ArrowRight" size={20} />
-          </Link>
-        </div>
-      </section>
-
       {/* ── FAQ ── */}
       <section id="faq" className="bg-[#FBF6F0] px-5 py-14 md:py-20">
         <div className="mx-auto max-w-2xl">
@@ -856,8 +817,7 @@ const Home = () => {
               className="h-10 w-10 flex-shrink-0 rounded-full border-2 border-white/40 object-cover md:h-12 md:w-12"
             />
             <p className="text-left text-sm italic text-white/90 md:text-base">
-              «Буду рада разобраться в этом вместе с вами — неважно, с чего начнёте: с бесплатного
-              эфира или сразу с консультации» — Инна
+              «Буду рада разобраться в этом вместе с вами, с чего бы вы ни начали» — Инна
             </p>
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3">
@@ -870,13 +830,6 @@ const Home = () => {
             >
               Выбрать формат работы
             </button>
-            <Link
-              to="/efir09"
-              onClick={() => ymGoal("home_final_cta_secondary")}
-              className="rounded-xl border-2 border-white px-6 py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-white transition hover:bg-white/10 md:text-base"
-            >
-              Бесплатный интенсив 22–23
-            </Link>
           </div>
         </div>
       </section>
