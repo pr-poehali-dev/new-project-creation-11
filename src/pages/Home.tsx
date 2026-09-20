@@ -301,6 +301,13 @@ const Home = () => {
     robots.setAttribute("content", "index, follow");
   }, []);
 
+  useEffect(() => {
+    const hash = window.location.hash.replace("#", "");
+    if (!hash) return;
+    const timer = setTimeout(() => scrollTo(hash), 300);
+    return () => clearTimeout(timer);
+  }, []);
+
   const [diplomaIndex, setDiplomaIndex] = useState<number | null>(null);
   const [testimonialIndex, setTestimonialIndex] = useState<number | null>(null);
   const [mainApi, setMainApi] = useState<CarouselApi>();
