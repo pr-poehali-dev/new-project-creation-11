@@ -472,7 +472,7 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="mt-10">
+          <div id="certificates" className="mt-10 scroll-mt-20">
             <h3 className="mb-4 font-['Montserrat',sans-serif] text-lg font-bold md:text-xl">
               Все дипломы и сертификаты
             </h3>
