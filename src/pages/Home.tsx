@@ -163,10 +163,10 @@ const TARIFFS: Tariff[] = [
     id: "group",
     title: "Терапевтическая группа «Опора»",
     subtitle: "До 10 участников, 12 встреч (3 месяца) по 1,5–2 часа",
-    price: 93800,
-    priceOld: 134400,
+    price: 35700,
+    priceOld: 51000,
     discountPercent: 30,
-    priceInstallment: 134400,
+    priceInstallment: 51000,
     installmentAvailable: true,
     goal: "home_pricing_group_click",
   },
@@ -183,10 +183,10 @@ const TARIFFS: Tariff[] = [
       { text: "Поддержка в личном чате между сессиями" },
       { text: "Дополнительный созвон 1 раз в неделю, 15–20 мин" },
     ],
-    price: 35700,
-    priceOld: 51000,
+    price: 93800,
+    priceOld: 134400,
     discountPercent: 30,
-    priceInstallment: 51000,
+    priceInstallment: 134400,
     installmentAvailable: true,
     goal: "home_pricing_program_click",
   },
@@ -667,11 +667,9 @@ const Home = () => {
                         </span>
                       )}
                     </div>
-                    <p className="mt-1 text-sm text-[#8A7864]">
-                      {t.installmentAvailable
-                        ? `${t.priceInstallment ? priceLabel(t.priceInstallment) : ""} при оплате частями`
-                        : "Рассрочка не предусмотрена"}
-                    </p>
+                    {!t.installmentAvailable && (
+                      <p className="mt-1 text-sm text-[#8A7864]">Рассрочка не предусмотрена</p>
+                    )}
                   </div>
 
                   <button
