@@ -91,11 +91,12 @@ def send_email_notification(subject: str, text: str) -> None:
 
 
 def send_telegram_notification(text: str) -> None:
-    """Send a message to all configured Telegram chats. Fails silently if not configured."""
+    """Send a message to all configured Telegram chats. Logs errors instead of failing silently."""
     bot_token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
     chat_ids_raw = os.environ.get('TELEGRAM_CHAT_IDS', '')
 
     if not (bot_token and chat_ids_raw):
+        print(f"TELEGRAM SKIP: bot_token_set={bool(bot_token)} chat_ids_set={bool(chat_ids_raw)}")
         return
 
     chat_ids = [c.strip() for c in chat_ids_raw.split(',') if c.strip()]
@@ -113,9 +114,13 @@ def send_telegram_notification(text: str) -> None:
                 headers={'Content-Type': 'application/json'},
                 method='POST'
             )
-            urlopen(request, timeout=10)
-        except Exception:
-            pass
+            resp = urlopen(request, timeout=10)
+            print(f"TELEGRAM OK: chat_id={chat_id} status={resp.status}")
+        except HTTPError as e:
+            error_body = e.read().decode() if e.fp else str(e)
+            print(f"TELEGRAM HTTP ERROR: chat_id={chat_id} code={e.code} body={error_body}")
+        except Exception as e:
+            print(f"TELEGRAM ERROR: chat_id={chat_id} error={e}")
 
 
 def notify_new_order(order_number: str, tariff_title: str, amount: float, user_name: str, status: str) -> None:
