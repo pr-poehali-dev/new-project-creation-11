@@ -1,6 +1,9 @@
 import json
 import os
 import re
+import smtplib
+from email.mime.text import MIMEText
+from urllib.request import Request, urlopen
 from typing import Dict, Any
 
 import psycopg2
@@ -13,6 +16,78 @@ HEADERS = {
     'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Type': 'application/json',
 }
+
+NOTIFY_EMAIL = "inka_f@mail.ru"
+
+
+def send_email_notification(subject: str, text: str) -> None:
+    """Send a plain-text email notification. Fails silently if not configured."""
+    host = os.environ.get('SMTP_HOST', '')
+    port = os.environ.get('SMTP_PORT', '')
+    user = os.environ.get('SMTP_USER', '')
+    password = os.environ.get('SMTP_PASSWORD', '')
+
+    if not (host and port and user and password):
+        return
+
+    try:
+        msg = MIMEText(text, _charset='utf-8')
+        msg['Subject'] = subject
+        msg['From'] = user
+        msg['To'] = NOTIFY_EMAIL
+
+        with smtplib.SMTP_SSL(host, int(port), timeout=15) as server:
+            server.login(user, password)
+            server.sendmail(user, [NOTIFY_EMAIL], msg.as_string())
+    except Exception:
+        pass
+
+
+def send_telegram_notification(text: str) -> None:
+    """Send a message to all configured Telegram chats. Fails silently if not configured."""
+    bot_token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
+    chat_ids_raw = os.environ.get('TELEGRAM_CHAT_IDS', '')
+
+    if not (bot_token and chat_ids_raw):
+        return
+
+    chat_ids = [c.strip() for c in chat_ids_raw.split(',') if c.strip()]
+
+    for chat_id in chat_ids:
+        try:
+            payload = json.dumps({
+                'chat_id': chat_id,
+                'text': text,
+                'parse_mode': 'HTML'
+            }).encode('utf-8')
+            request = Request(
+                f"https://api.telegram.org/bot{bot_token}/sendMessage",
+                data=payload,
+                headers={'Content-Type': 'application/json'},
+                method='POST'
+            )
+            urlopen(request, timeout=10)
+        except Exception:
+            pass
+
+
+def notify_installment_request(tariff_title: str, user_name: str) -> None:
+    """Notify about a new installment (payment-by-parts) request."""
+    text = (
+        f"📋 Новая заявка на рассрочку\n"
+        f"Формат сотрудничества: {tariff_title}\n"
+        f"Тип заявки: рассрочка\n"
+        f"Клиент: {user_name}"
+    )
+    tg_text = (
+        f"📋 <b>Новая заявка на рассрочку</b>\n"
+        f"Формат сотрудничества: {tariff_title}\n"
+        f"Тип заявки: рассрочка\n"
+        f"Клиент: {user_name}"
+    )
+
+    send_email_notification(f"Заявка на рассрочку — {tariff_title}", text)
+    send_telegram_notification(tg_text)
 
 
 def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
@@ -86,6 +161,8 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
         cur.close()
     finally:
         conn.close()
+
+    notify_installment_request(tariff_title, user_name)
 
     return {
         'statusCode': 200,

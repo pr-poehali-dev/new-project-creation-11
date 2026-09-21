@@ -4,6 +4,8 @@ import os
 import re
 import uuid
 import base64
+import smtplib
+from email.mime.text import MIMEText
 from datetime import datetime
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
@@ -56,6 +58,92 @@ def get_schema() -> str:
     """Get database schema prefix."""
     schema = os.environ.get('MAIN_DB_SCHEMA', 'public')
     return f"{schema}." if schema else ""
+
+
+# =============================================================================
+# NOTIFICATIONS (email + telegram)
+# =============================================================================
+
+NOTIFY_EMAIL = "inka_f@mail.ru"
+
+
+def send_email_notification(subject: str, text: str) -> None:
+    """Send a plain-text email notification. Fails silently if not configured."""
+    host = os.environ.get('SMTP_HOST', '')
+    port = os.environ.get('SMTP_PORT', '')
+    user = os.environ.get('SMTP_USER', '')
+    password = os.environ.get('SMTP_PASSWORD', '')
+
+    if not (host and port and user and password):
+        return
+
+    try:
+        msg = MIMEText(text, _charset='utf-8')
+        msg['Subject'] = subject
+        msg['From'] = user
+        msg['To'] = NOTIFY_EMAIL
+
+        with smtplib.SMTP_SSL(host, int(port), timeout=15) as server:
+            server.login(user, password)
+            server.sendmail(user, [NOTIFY_EMAIL], msg.as_string())
+    except Exception:
+        pass
+
+
+def send_telegram_notification(text: str) -> None:
+    """Send a message to all configured Telegram chats. Fails silently if not configured."""
+    bot_token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
+    chat_ids_raw = os.environ.get('TELEGRAM_CHAT_IDS', '')
+
+    if not (bot_token and chat_ids_raw):
+        return
+
+    chat_ids = [c.strip() for c in chat_ids_raw.split(',') if c.strip()]
+
+    for chat_id in chat_ids:
+        try:
+            payload = json.dumps({
+                'chat_id': chat_id,
+                'text': text,
+                'parse_mode': 'HTML'
+            }).encode('utf-8')
+            request = Request(
+                f"https://api.telegram.org/bot{bot_token}/sendMessage",
+                data=payload,
+                headers={'Content-Type': 'application/json'},
+                method='POST'
+            )
+            urlopen(request, timeout=10)
+        except Exception:
+            pass
+
+
+def notify_new_order(order_number: str, tariff_title: str, amount: float, user_name: str, status: str) -> None:
+    """Notify about a newly created order (payment request)."""
+    status_label = "Оплачено ✅" if status == 'paid' else "Не оплачено ⏳"
+    amount_label = f"{amount:,.0f} ₽".replace(',', ' ')
+
+    text = (
+        f"💳 Новая заявка на оплату\n"
+        f"Формат сотрудничества: {tariff_title}\n"
+        f"Тип заявки: оплата\n"
+        f"Сумма: {amount_label}\n"
+        f"Статус: {status_label}\n"
+        f"Клиент: {user_name}\n"
+        f"Номер заказа: {order_number}"
+    )
+    tg_text = (
+        f"💳 <b>Новая заявка на оплату</b>\n"
+        f"Формат сотрудничества: {tariff_title}\n"
+        f"Тип заявки: оплата\n"
+        f"Сумма: {amount_label}\n"
+        f"Статус: {status_label}\n"
+        f"Клиент: {user_name}\n"
+        f"Номер заказа: {order_number}"
+    )
+
+    send_email_notification(f"Новая заявка на оплату — {tariff_title}", text)
+    send_telegram_notification(tg_text)
 
 
 # =============================================================================
@@ -227,10 +315,10 @@ def handler(event, context):
         # Create order in DB
         cur.execute(f"""
             INSERT INTO {S}orders
-            (order_number, tariff_id, user_name, user_email, user_phone, amount, status, created_at, updated_at)
-            VALUES (%s, %s, %s, %s, %s, %s, 'pending', %s, %s)
+            (order_number, tariff_id, tariff_title, user_name, user_email, user_phone, amount, status, created_at, updated_at)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, 'pending', %s, %s)
             RETURNING id
-        """, (order_number, tariff_id or None, user_name, user_email, user_phone, amount, now, now))
+        """, (order_number, tariff_id or None, description, user_name, user_email, user_phone, amount, now, now))
 
         order_id = cur.fetchone()[0]
 
@@ -277,6 +365,8 @@ def handler(event, context):
         """, (payment_id, confirmation_url, now, order_id))
 
         conn.commit()
+
+        notify_new_order(order_number, description, amount, user_name or user_email, 'pending')
 
         return {
             'statusCode': 200,

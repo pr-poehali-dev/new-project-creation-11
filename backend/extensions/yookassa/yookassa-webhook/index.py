@@ -2,6 +2,8 @@
 import json
 import os
 import base64
+import smtplib
+from email.mime.text import MIMEText
 from datetime import datetime
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
@@ -61,6 +63,91 @@ def get_schema() -> str:
     """Get database schema prefix."""
     schema = os.environ.get('MAIN_DB_SCHEMA', 'public')
     return f"{schema}." if schema else ""
+
+
+# =============================================================================
+# NOTIFICATIONS (email + telegram)
+# =============================================================================
+
+NOTIFY_EMAIL = "inka_f@mail.ru"
+
+
+def send_email_notification(subject: str, text: str) -> None:
+    """Send a plain-text email notification. Fails silently if not configured."""
+    host = os.environ.get('SMTP_HOST', '')
+    port = os.environ.get('SMTP_PORT', '')
+    user = os.environ.get('SMTP_USER', '')
+    password = os.environ.get('SMTP_PASSWORD', '')
+
+    if not (host and port and user and password):
+        return
+
+    try:
+        msg = MIMEText(text, _charset='utf-8')
+        msg['Subject'] = subject
+        msg['From'] = user
+        msg['To'] = NOTIFY_EMAIL
+
+        with smtplib.SMTP_SSL(host, int(port), timeout=15) as server:
+            server.login(user, password)
+            server.sendmail(user, [NOTIFY_EMAIL], msg.as_string())
+    except Exception:
+        pass
+
+
+def send_telegram_notification(text: str) -> None:
+    """Send a message to all configured Telegram chats. Fails silently if not configured."""
+    bot_token = os.environ.get('TELEGRAM_BOT_TOKEN', '')
+    chat_ids_raw = os.environ.get('TELEGRAM_CHAT_IDS', '')
+
+    if not (bot_token and chat_ids_raw):
+        return
+
+    chat_ids = [c.strip() for c in chat_ids_raw.split(',') if c.strip()]
+
+    for chat_id in chat_ids:
+        try:
+            payload = json.dumps({
+                'chat_id': chat_id,
+                'text': text,
+                'parse_mode': 'HTML'
+            }).encode('utf-8')
+            request = Request(
+                f"https://api.telegram.org/bot{bot_token}/sendMessage",
+                data=payload,
+                headers={'Content-Type': 'application/json'},
+                method='POST'
+            )
+            urlopen(request, timeout=10)
+        except Exception:
+            pass
+
+
+def notify_order_paid(order_number: str, tariff_title: str, amount: float, user_name: str) -> None:
+    """Notify that a previously pending order has been paid."""
+    amount_label = f"{amount:,.0f} ₽".replace(',', ' ')
+
+    text = (
+        f"✅ Заявка оплачена\n"
+        f"Формат сотрудничества: {tariff_title}\n"
+        f"Тип заявки: оплата\n"
+        f"Сумма: {amount_label}\n"
+        f"Статус: Оплачено ✅\n"
+        f"Клиент: {user_name}\n"
+        f"Номер заказа: {order_number}"
+    )
+    tg_text = (
+        f"✅ <b>Заявка оплачена</b>\n"
+        f"Формат сотрудничества: {tariff_title}\n"
+        f"Тип заявки: оплата\n"
+        f"Сумма: {amount_label}\n"
+        f"Статус: Оплачено ✅\n"
+        f"Клиент: {user_name}\n"
+        f"Номер заказа: {order_number}"
+    )
+
+    send_email_notification(f"Заявка оплачена — {tariff_title}", text)
+    send_telegram_notification(tg_text)
 
 
 # =============================================================================
@@ -130,7 +217,8 @@ def handler(event, context):
 
         # Find order by payment_id
         cur.execute(f"""
-            SELECT id, status FROM {S}orders
+            SELECT id, status, order_number, tariff_title, amount, user_name, user_email
+            FROM {S}orders
             WHERE yookassa_payment_id = %s
         """, (payment_id,))
 
@@ -141,7 +229,8 @@ def handler(event, context):
             order_id_meta = metadata.get('order_id')
             if order_id_meta:
                 cur.execute(f"""
-                    SELECT id, status FROM {S}orders WHERE id = %s
+                    SELECT id, status, order_number, tariff_title, amount, user_name, user_email
+                    FROM {S}orders WHERE id = %s
                 """, (int(order_id_meta),))
                 row = cur.fetchone()
 
@@ -152,7 +241,7 @@ def handler(event, context):
                 'body': json.dumps({'error': 'Order not found'})
             }
 
-        order_id, current_status = row
+        order_id, current_status, order_number, tariff_title, amount, user_name, user_email = row
 
         # Update based on verified payment status
         if payment_status == 'succeeded':
@@ -163,6 +252,13 @@ def handler(event, context):
                     WHERE id = %s
                 """, (now, now, order_id))
                 conn.commit()
+
+                notify_order_paid(
+                    order_number,
+                    tariff_title or 'Оплата',
+                    float(amount),
+                    user_name or user_email
+                )
 
         elif payment_status == 'canceled':
             if current_status not in ('paid', 'canceled'):
