@@ -140,8 +140,8 @@ type Tariff = {
   subtitle: string;
   intro?: string;
   features?: { text: string; note?: string }[];
-  price?: number;
-  priceFull?: number;
+  price: number;
+  priceOld?: number;
   discountPercent?: number;
   priceInstallment?: number;
   installmentAvailable: boolean;
@@ -153,7 +153,9 @@ const TARIFFS: Tariff[] = [
     id: "consultation",
     title: "Индивидуальная консультация",
     subtitle: "1 час, разовая встреча",
-    price: 5000,
+    price: 3250,
+    priceOld: 7500,
+    discountPercent: 50,
     installmentAvailable: false,
     goal: "home_pricing_consultation_click",
   },
@@ -161,18 +163,19 @@ const TARIFFS: Tariff[] = [
     id: "group",
     title: "Терапевтическая группа «Опора»",
     subtitle: "До 10 участников, 12 встреч (3 месяца) по 1,5–2 часа",
-    priceFull: 30000,
-    discountPercent: 17,
-    priceInstallment: 36000,
+    price: 93800,
+    priceOld: 134400,
+    discountPercent: 30,
+    priceInstallment: 134400,
     installmentAvailable: true,
     goal: "home_pricing_group_click",
   },
   {
     id: "program",
-    title: "«Я — целая»",
+    title: "10 шагов к себе настоящей",
     subtitle: "Индивидуальная трансформационная программа, 3 месяца",
     intro:
-      "«Я — целая» — про то, чтобы собрать себя из ролей, в которых давно потеряли себя, а не отдельные разовые встречи без общей линии.",
+      "«10 шагов к себе настоящей» — про то, чтобы собрать себя из ролей, в которых давно потеряли себя, а не отдельные разовые встречи без общей линии.",
     features: [
       { text: "1 сессия в неделю, 1,5 ч, 10 сессий всего" },
       { text: "Приоритетное время записи" },
@@ -180,9 +183,10 @@ const TARIFFS: Tariff[] = [
       { text: "Поддержка в личном чате между сессиями" },
       { text: "Дополнительный созвон 1 раз в неделю, 15–20 мин" },
     ],
-    priceFull: 80000,
-    discountPercent: 15,
-    priceInstallment: 94000,
+    price: 35700,
+    priceOld: 51000,
+    discountPercent: 30,
+    priceInstallment: 51000,
     installmentAvailable: true,
     goal: "home_pricing_program_click",
   },
@@ -190,7 +194,9 @@ const TARIFFS: Tariff[] = [
     id: "retreat",
     title: "Ретрит «Я – НАЧАЛО»",
     subtitle: "Пт–Вс, 16–18 октября, Подмосковье",
-    price: 45000,
+    price: 45500,
+    priceOld: 65000,
+    discountPercent: 30,
     installmentAvailable: false,
     goal: "home_pricing_retreat_click",
   },
@@ -266,7 +272,7 @@ const Home = () => {
     setMeta(
       "name",
       "description",
-      "Инна Фалолеева — клинический психолог. Индивидуальные консультации, терапевтическая группа, программа «Я — целая». Цены открыты."
+      "Инна Фалолеева — клинический психолог. Индивидуальные консультации, терапевтическая группа, программа «10 шагов к себе настоящей». Цены открыты."
     );
     setMeta("property", "og:title", "Инна Фалолеева — психолог, с которым становится легче жить");
     setMeta(
@@ -317,8 +323,7 @@ const Home = () => {
   const [installmentTariff, setInstallmentTariff] = useState<InstallmentTariff | null>(null);
 
   function openPayment(t: Tariff) {
-    const amount = t.priceFull ?? t.price ?? 0;
-    setPaymentTariff({ id: t.id, title: t.title, amount });
+    setPaymentTariff({ id: t.id, title: t.title, amount: t.price });
     ymGoal(t.goal);
   }
 
@@ -646,30 +651,28 @@ const Home = () => {
                 )}
 
                 <div className="mt-auto">
-                  {t.priceFull !== undefined ? (
-                    <div className="mb-4">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-['Montserrat',sans-serif] text-3xl font-extrabold">
-                          {priceLabel(t.priceFull)}
+                  <div className="mb-4">
+                    <div className="flex flex-wrap items-baseline gap-2">
+                      {t.priceOld !== undefined && (
+                        <span className="text-base font-medium text-[#8A7864] line-through">
+                          {priceLabel(t.priceOld)}
                         </span>
+                      )}
+                      <span className="font-['Montserrat',sans-serif] text-3xl font-extrabold">
+                        {priceLabel(t.price)}
+                      </span>
+                      {t.discountPercent !== undefined && (
                         <span className="inline-flex items-center gap-1 rounded-full bg-[#FBEAE3] px-2.5 py-1 text-xs font-bold text-[#C2542E]">
                           🏷️ −{t.discountPercent}%
                         </span>
-                      </div>
-                      <p className="mt-1 text-sm text-[#8A7864]">
-                        {t.priceInstallment && priceLabel(t.priceInstallment)} при оплате частями
-                      </p>
+                      )}
                     </div>
-                  ) : (
-                    <div className="mb-4">
-                      <span className="font-['Montserrat',sans-serif] text-3xl font-extrabold">
-                        {t.price !== undefined && priceLabel(t.price)}
-                      </span>
-                      <p className="mt-1 text-sm text-[#8A7864]">
-                        {t.installmentAvailable ? "Рассрочка предусмотрена" : "Рассрочка не предусмотрена"}
-                      </p>
-                    </div>
-                  )}
+                    <p className="mt-1 text-sm text-[#8A7864]">
+                      {t.installmentAvailable
+                        ? `${t.priceInstallment ? priceLabel(t.priceInstallment) : ""} при оплате частями`
+                        : "Рассрочка не предусмотрена"}
+                    </p>
+                  </div>
 
                   <button
                     type="button"
