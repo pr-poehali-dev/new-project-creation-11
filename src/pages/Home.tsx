@@ -164,14 +164,6 @@ const TARIFFS: Tariff[] = [
     goal: "home_pricing_consultation_click",
   },
   {
-    id: "test_payment",
-    title: "Тестовый платёж (для проверки оплаты)",
-    subtitle: "1 час, разовая встреча",
-    price: 11,
-    installmentAvailable: false,
-    goal: "home_pricing_test_payment_click",
-  },
-  {
     id: "group",
     title: "Терапевтическая группа «Опора»",
     subtitle: "До 10 участников, 12 встреч (3 месяца) по 2–2,5 часа",
