@@ -122,7 +122,7 @@ const PaymentDialog = ({ tariff, onClose }: PaymentDialogProps) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Как к вам обращаться"
-                className="border-[#E2D3C0] bg-white"
+                className="border-[#E2D3C0] bg-white text-[#2B2420]"
               />
             </div>
             <div>
@@ -135,7 +135,7 @@ const PaymentDialog = ({ tariff, onClose }: PaymentDialogProps) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Для чека об оплате"
-                className="border-[#E2D3C0] bg-white"
+                className="border-[#E2D3C0] bg-white text-[#2B2420]"
               />
             </div>
             <div>
@@ -161,7 +161,7 @@ const PaymentDialog = ({ tariff, onClose }: PaymentDialogProps) => {
                 onKeyDown={handlePhoneKeyDown}
                 onBlur={() => setPhoneTouched(true)}
                 placeholder={phonePlaceholder}
-                className={`bg-white ${
+                className={`bg-white text-[#2B2420] ${
                   phoneTouched && !isPhoneValid(phone) ? "border-red-500" : "border-[#E2D3C0]"
                 }`}
               />

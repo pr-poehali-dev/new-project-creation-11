@@ -162,7 +162,7 @@ const TARIFFS: Tariff[] = [
   {
     id: "group",
     title: "Терапевтическая группа «Опора»",
-    subtitle: "До 10 участников, 12 встреч (3 месяца) по 1,5–2 часа",
+    subtitle: "До 10 участников, 12 встреч (3 месяца) по 2–2,5 часа",
     price: 35700,
     priceOld: 51000,
     discountPercent: 30,
@@ -181,7 +181,7 @@ const TARIFFS: Tariff[] = [
       { text: "Приоритетное время записи" },
       { text: "Резюме каждой сессии (голос/текст на выбор)", note: "чтобы инсайты не терялись между встречами" },
       { text: "Поддержка в личном чате между сессиями" },
-      { text: "Дополнительный созвон 1 раз в неделю, 15–20 мин" },
+      { text: "Дополнительный созвон 1 раз в неделю, до 30 мин" },
     ],
     price: 93800,
     priceOld: 134400,
@@ -197,7 +197,8 @@ const TARIFFS: Tariff[] = [
     price: 45500,
     priceOld: 65000,
     discountPercent: 30,
-    installmentAvailable: false,
+    priceInstallment: 65000,
+    installmentAvailable: true,
     goal: "home_pricing_retreat_click",
   },
 ];
