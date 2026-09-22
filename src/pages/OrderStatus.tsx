@@ -190,7 +190,7 @@ const OrderStatus = () => {
                   Написать в Telegram
                 </a>
               </div>
-              <p className="mt-3 text-xs text-[#8A7864]">Для запуска потребуется VPN</p>
+              <p className="mt-3 text-xs text-[#8A7864]">Чтобы связаться в Telegram потребуется VPN</p>
             </>
           )}
 
@@ -249,7 +249,7 @@ const OrderStatus = () => {
                   На главную
                 </Link>
               </div>
-              <p className="mt-3 text-xs text-[#8A7864]">Для запуска потребуется VPN</p>
+              <p className="mt-3 text-xs text-[#8A7864]">Чтобы связаться в Telegram потребуется VPN</p>
             </>
           )}
         </div>
