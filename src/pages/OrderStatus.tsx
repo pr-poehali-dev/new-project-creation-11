@@ -172,14 +172,25 @@ const OrderStatus = () => {
                 вопросы — напишите нам, и мы всё проверим вручную.
               </p>
               <p className="mb-6 text-xs text-[#8A7864]">Номер заказа: {order.order_number}</p>
-              <a
-                href="https://t.me/InnaFaloleevaPsy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-xl border-2 border-[#2F7A52] px-6 py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-[#2F7A52] transition hover:bg-[#E3EFE7] md:text-base"
-              >
-                Написать в Telegram
-              </a>
+              <div className="flex flex-wrap justify-center gap-3">
+                <a
+                  href="https://max.ru/id505003981273_bot?start=dl-17889736833afaa9562bfc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border-2 border-[#2F7A52] px-6 py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-[#2F7A52] transition hover:bg-[#E3EFE7] md:text-base"
+                >
+                  Написать в MAX
+                </a>
+                <a
+                  href="https://t.me/FaloleevaPsybot?start=dl-1788885417801"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border-2 border-[#2F7A52] px-6 py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-[#2F7A52] transition hover:bg-[#E3EFE7] md:text-base"
+                >
+                  Написать в Telegram
+                </a>
+              </div>
+              <p className="mt-3 text-xs text-[#8A7864]">Для запуска потребуется VPN</p>
             </>
           )}
 
@@ -216,7 +227,15 @@ const OrderStatus = () => {
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 <a
-                  href="https://t.me/InnaFaloleevaPsy"
+                  href="https://max.ru/id505003981273_bot?start=dl-17889736833afaa9562bfc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl border-2 border-[#2F7A52] px-6 py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-[#2F7A52] transition hover:bg-[#E3EFE7] md:text-base"
+                >
+                  Написать в MAX
+                </a>
+                <a
+                  href="https://t.me/FaloleevaPsybot?start=dl-1788885417801"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-xl border-2 border-[#2F7A52] px-6 py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-[#2F7A52] transition hover:bg-[#E3EFE7] md:text-base"
@@ -230,6 +249,7 @@ const OrderStatus = () => {
                   На главную
                 </Link>
               </div>
+              <p className="mt-3 text-xs text-[#8A7864]">Для запуска потребуется VPN</p>
             </>
           )}
         </div>
