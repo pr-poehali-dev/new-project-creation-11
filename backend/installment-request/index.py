@@ -8,7 +8,7 @@ from typing import Dict, Any
 
 import psycopg2
 
-from google_sheets import append_row, format_msk_datetime
+from google_sheets import append_row
 
 EMAIL_REGEX = re.compile(r'^[^\s@]+@[^\s@]+\.[^\s@]+$')
 
@@ -154,11 +154,11 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
             INSERT INTO installment_requests
             (tariff_id, tariff_title, user_name, user_email, user_phone)
             VALUES (%s, %s, %s, %s, %s)
-            RETURNING id
+            RETURNING id, status, created_at
             """,
             (tariff_id, tariff_title, user_name, user_email, user_phone or None),
         )
-        request_id = cur.fetchone()[0]
+        request_id, request_status, request_created_at = cur.fetchone()
         conn.commit()
         cur.close()
     finally:
@@ -166,12 +166,27 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
 
     notify_installment_request(tariff_title, user_name)
 
+    # Column order matches the "orders" table / CSV export layout (see
+    # backend/extensions/yookassa/yookassa/index.py) with a leading "Источник"
+    # column, so both lead sources share one sheet structure. Fields not
+    # tracked for installment requests (order_number, amount, payment_url,
+    # yookassa_payment_id, updated_at, paid_at) are left blank.
     append_row('Лиды', [
-        format_msk_datetime(),
+        'Рассрочка',
+        request_id,
+        '',
+        tariff_id,
         user_name,
         user_email,
         user_phone,
-        f"{tariff_title} (рассрочка)",
+        '',
+        '',
+        request_status,
+        '',
+        str(request_created_at),
+        '',
+        '',
+        tariff_title,
     ])
 
     return {

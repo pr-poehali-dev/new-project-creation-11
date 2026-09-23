@@ -10,7 +10,7 @@ from urllib.error import HTTPError
 
 import psycopg2
 
-from google_sheets import append_row, format_msk_datetime
+from google_sheets import append_row
 
 # =============================================================================
 # CONSTANTS
@@ -219,7 +219,8 @@ def handler(event, context):
 
         # Find order by payment_id
         cur.execute(f"""
-            SELECT id, status, order_number, tariff_title, amount, user_name, user_email
+            SELECT id, status, order_number, tariff_id, tariff_title, amount,
+                   user_name, user_email, user_phone, payment_url, created_at
             FROM {S}orders
             WHERE yookassa_payment_id = %s
         """, (payment_id,))
@@ -231,7 +232,8 @@ def handler(event, context):
             order_id_meta = metadata.get('order_id')
             if order_id_meta:
                 cur.execute(f"""
-                    SELECT id, status, order_number, tariff_title, amount, user_name, user_email
+                    SELECT id, status, order_number, tariff_id, tariff_title, amount,
+                           user_name, user_email, user_phone, payment_url, created_at
                     FROM {S}orders WHERE id = %s
                 """, (int(order_id_meta),))
                 row = cur.fetchone()
@@ -243,7 +245,8 @@ def handler(event, context):
                 'body': json.dumps({'error': 'Order not found'})
             }
 
-        order_id, current_status, order_number, tariff_title, amount, user_name, user_email = row
+        (order_id, current_status, order_number, tariff_id, tariff_title, amount,
+         user_name, user_email, user_phone, payment_url, created_at) = row
 
         # Update based on verified payment status
         if payment_status == 'succeeded':
@@ -262,13 +265,22 @@ def handler(event, context):
                     user_name or user_email
                 )
 
+                # Column order matches the "orders" table / CSV export layout.
                 append_row('Оплаты', [
-                    format_msk_datetime(),
+                    order_id,
+                    order_number,
+                    tariff_id or '',
+                    user_name,
                     user_email,
-                    tariff_title or 'Оплата',
+                    user_phone,
                     float(amount),
-                    'Оплачено',
                     payment_id,
+                    'paid',
+                    payment_url,
+                    str(created_at),
+                    now,
+                    now,
+                    tariff_title,
                 ])
 
         elif payment_status == 'canceled':

@@ -12,7 +12,7 @@ from urllib.error import HTTPError
 
 import psycopg2
 
-from google_sheets import append_row, format_msk_datetime
+from google_sheets import append_row
 
 
 # =============================================================================
@@ -375,12 +375,24 @@ def handler(event, context):
 
         notify_new_order(order_number, description, amount, user_name or user_email, 'pending')
 
+        # Column order matches the "orders" table / CSV export layout, with a
+        # leading "Источник" column shared with installment-request leads.
         append_row('Лиды', [
-            format_msk_datetime(),
+            'Оплата (ЮKassa)',
+            order_id,
+            order_number,
+            tariff_id or '',
             user_name,
             user_email,
             user_phone,
-            f"{description} ({order_number})",
+            amount,
+            payment_id or '',
+            'pending',
+            confirmation_url,
+            now,
+            now,
+            '',
+            description,
         ])
 
         return {
