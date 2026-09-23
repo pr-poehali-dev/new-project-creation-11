@@ -10,6 +10,8 @@ from urllib.error import HTTPError
 
 import psycopg2
 
+from google_sheets import append_row, format_msk_datetime
+
 # =============================================================================
 # CONSTANTS
 # =============================================================================
@@ -88,7 +90,7 @@ def send_email_notification(subject: str, text: str) -> None:
         msg['From'] = user
         msg['To'] = NOTIFY_EMAIL
 
-        with smtplib.SMTP_SSL(host, int(port), timeout=15) as server:
+        with smtplib.SMTP_SSL(host, int(port), timeout=4) as server:
             server.login(user, password)
             server.sendmail(user, [NOTIFY_EMAIL], msg.as_string())
     except Exception:
@@ -118,7 +120,7 @@ def send_telegram_notification(text: str) -> None:
                 headers={'Content-Type': 'application/json'},
                 method='POST'
             )
-            urlopen(request, timeout=10)
+            urlopen(request, timeout=4)
         except Exception:
             pass
 
@@ -259,6 +261,15 @@ def handler(event, context):
                     float(amount),
                     user_name or user_email
                 )
+
+                append_row('Оплаты', [
+                    format_msk_datetime(),
+                    user_email,
+                    tariff_title or 'Оплата',
+                    float(amount),
+                    'Оплачено',
+                    payment_id,
+                ])
 
         elif payment_status == 'canceled':
             if current_status not in ('paid', 'canceled'):

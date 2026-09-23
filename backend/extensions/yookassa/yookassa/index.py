@@ -12,6 +12,8 @@ from urllib.error import HTTPError
 
 import psycopg2
 
+from google_sheets import append_row, format_msk_datetime
+
 
 # =============================================================================
 # VALIDATION
@@ -83,7 +85,7 @@ def send_email_notification(subject: str, text: str) -> None:
         msg['From'] = user
         msg['To'] = NOTIFY_EMAIL
 
-        with smtplib.SMTP_SSL(host, int(port), timeout=15) as server:
+        with smtplib.SMTP_SSL(host, int(port), timeout=4) as server:
             server.login(user, password)
             server.sendmail(user, [NOTIFY_EMAIL], msg.as_string())
     except Exception:
@@ -114,7 +116,7 @@ def send_telegram_notification(text: str) -> None:
                 headers={'Content-Type': 'application/json'},
                 method='POST'
             )
-            resp = urlopen(request, timeout=10)
+            resp = urlopen(request, timeout=4)
             print(f"TELEGRAM OK: chat_id={chat_id} status={resp.status}")
         except HTTPError as e:
             error_body = e.read().decode() if e.fp else str(e)
@@ -372,6 +374,14 @@ def handler(event, context):
         conn.commit()
 
         notify_new_order(order_number, description, amount, user_name or user_email, 'pending')
+
+        append_row('Лиды', [
+            format_msk_datetime(),
+            user_name,
+            user_email,
+            user_phone,
+            f"{description} ({order_number})",
+        ])
 
         return {
             'statusCode': 200,

@@ -8,6 +8,8 @@ from typing import Dict, Any
 
 import psycopg2
 
+from google_sheets import append_row, format_msk_datetime
+
 EMAIL_REGEX = re.compile(r'^[^\s@]+@[^\s@]+\.[^\s@]+$')
 
 HEADERS = {
@@ -36,7 +38,7 @@ def send_email_notification(subject: str, text: str) -> None:
         msg['From'] = user
         msg['To'] = NOTIFY_EMAIL
 
-        with smtplib.SMTP_SSL(host, int(port), timeout=15) as server:
+        with smtplib.SMTP_SSL(host, int(port), timeout=4) as server:
             server.login(user, password)
             server.sendmail(user, [NOTIFY_EMAIL], msg.as_string())
     except Exception:
@@ -66,7 +68,7 @@ def send_telegram_notification(text: str) -> None:
                 headers={'Content-Type': 'application/json'},
                 method='POST'
             )
-            urlopen(request, timeout=10)
+            urlopen(request, timeout=4)
         except Exception:
             pass
 
@@ -163,6 +165,14 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
         conn.close()
 
     notify_installment_request(tariff_title, user_name)
+
+    append_row('Лиды', [
+        format_msk_datetime(),
+        user_name,
+        user_email,
+        user_phone,
+        f"{tariff_title} (рассрочка)",
+    ])
 
     return {
         'statusCode': 200,
