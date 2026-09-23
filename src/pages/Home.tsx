@@ -709,7 +709,7 @@ const Home = () => {
                       onClick={() => openInstallment(t)}
                       className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[#2F7A52] py-3.5 font-['Montserrat',sans-serif] text-sm font-bold text-[#2F7A52] transition hover:bg-[#E3EFE7] md:text-base"
                     >
-                      Оставить заявку на рассрочку
+                      Оставить заявку
                     </button>
                   )}
                 </div>

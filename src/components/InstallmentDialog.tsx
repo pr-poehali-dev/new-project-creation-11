@@ -118,7 +118,7 @@ const InstallmentDialog = ({ tariff, onClose }: InstallmentDialogProps) => {
             <>
               <DialogHeader>
                 <DialogTitle className="font-['Montserrat',sans-serif] text-xl font-bold text-[#2B2420]">
-                  Заявка на рассрочку
+                  Заявка для связи
                 </DialogTitle>
                 <DialogDescription className="text-[#8A7864]">{tariff.title}</DialogDescription>
               </DialogHeader>
