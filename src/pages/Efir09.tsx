@@ -722,7 +722,7 @@ const Efir09 = () => {
                 <p className="font-['Montserrat',sans-serif] text-lg font-bold md:text-xl">
                   День 1: {day1Label}, 19:00 мск
                 </p>
-                <p className="text-xs text-[#8A7864] md:text-sm">Лекционная часть · Бизон365</p>
+                <p className="text-xs text-[#8A7864] md:text-sm">Онлайн-эфир · Ответы на вопросы</p>
               </div>
             </div>
             <div className="space-y-4">
