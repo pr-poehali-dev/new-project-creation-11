@@ -18,10 +18,10 @@ import {
   CarouselNext,
   type CarouselApi,
 } from "@/components/ui/carousel";
+import { useEfir09Schedule, formatEfir09Dates, toGCalTimestamp } from "@/lib/efir09-dates";
 
 /* ─── Constants ─── */
 const REGISTER_URL = "https://functions.poehali.dev/4af27964-7aa8-44d4-8e2d-9a5bfea7e8ff";
-const DAY1_DATE = new Date("2026-09-22T19:00:00+03:00");
 const TG_LINK = "https://t.me/InnaFaloleevaPsy";
 const MAX_LINK = "https://max.ru/join/Um75KJ9X-7yhUGiL1A0c6GPOup5OBhMH_PkMiyEZDjk";
 const EXPERT_PHOTO = "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/37160f38-a1d2-45fa-aeb1-540e07378b30.jpg";
@@ -103,7 +103,7 @@ function useCountdown(target: Date) {
   };
 }
 
-function googleCalendarLink(day: 1 | 2) {
+function googleCalendarLink(day: 1 | 2, day1Date: Date, day2Date: Date) {
   const text = encodeURIComponent(
     day === 1
       ? "День 1. Интенсив «Сильная снаружи, сломанная внутри»"
@@ -112,7 +112,9 @@ function googleCalendarLink(day: 1 | 2) {
   const details = encodeURIComponent(
     "Бесплатный интенсив с Инной Фалолеевой. Ссылка на подключение придёт на вашу почту.",
   );
-  const dates = day === 1 ? "20260922T160000Z/20260922T173000Z" : "20260923T160000Z/20260923T173000Z";
+  const start = day === 1 ? day1Date : day2Date;
+  const end = new Date(start.getTime() + 90 * 60000);
+  const dates = `${toGCalTimestamp(start)}/${toGCalTimestamp(end)}`;
   return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&details=${details}`;
 }
 
@@ -301,9 +303,12 @@ const FAQ = [
 
 const Efir09 = () => {
   const navigate = useNavigate();
+  const { day1Date, day2Date } = useEfir09Schedule();
+  const countdown = useCountdown(day1Date);
+  const { day1Label, day2Label, rangeLabel, rangeShortLabel } = formatEfir09Dates(day1Date, day2Date);
 
   useEffect(() => {
-    document.title = "Психолог онлайн: бесплатный интенсив 22–23.09 — Инна Фалолеева";
+    document.title = `Психолог онлайн: бесплатный интенсив ${rangeShortLabel} — Инна Фалолеева`;
 
     const setMeta = (attr: "name" | "property", key: string, content: string) => {
       let tag = document.querySelector(`meta[${attr}="${key}"]`);
@@ -318,29 +323,29 @@ const Efir09 = () => {
     setMeta(
       "name",
       "description",
-      "Бесплатный интенсив с психологом Инной Фалолеевой, 22–23.09. Роли «спасателя» и «хорошей девочки», методы ЭОТ и МАК. Регистрация открыта."
+      `Бесплатный интенсив с психологом Инной Фалолеевой, ${rangeShortLabel}. Роли «спасателя» и «хорошей девочки», методы ЭОТ и МАК. Регистрация открыта.`
     );
     setMeta(
       "property",
       "og:title",
-      "«Сильная снаружи, сломанная внутри» — бесплатный интенсив 22–23.09"
+      `«Сильная снаружи, сломанная внутри» — бесплатный интенсив ${rangeShortLabel}`
     );
     setMeta(
       "property",
       "og:description",
-      "Бесплатный онлайн-интенсив с психологом Инной Фалолеевой. Роли «спасателя» и «хорошей девочки», методы ЭОТ и МАК. 22–23 сентября."
+      `Бесплатный онлайн-интенсив с психологом Инной Фалолеевой. Роли «спасателя» и «хорошей девочки», методы ЭОТ и МАК. ${rangeLabel}.`
     );
     setMeta("property", "og:image", "https://faloleeva.ru/og-efir09.jpg");
     setMeta("property", "og:url", "https://faloleeva.ru/efir09");
     setMeta(
       "name",
       "twitter:title",
-      "«Сильная снаружи, сломанная внутри» — бесплатный интенсив 22–23.09"
+      `«Сильная снаружи, сломанная внутри» — бесплатный интенсив ${rangeShortLabel}`
     );
     setMeta(
       "name",
       "twitter:description",
-      "Бесплатный онлайн-интенсив с психологом Инной Фалолеевой, 22–23 сентября."
+      `Бесплатный онлайн-интенсив с психологом Инной Фалолеевой, ${rangeLabel}.`
     );
     setMeta("name", "twitter:image", "https://faloleeva.ru/og-efir09.jpg");
 
@@ -359,9 +364,7 @@ const Efir09 = () => {
       document.head.appendChild(robots);
     }
     robots.setAttribute("content", "index, follow");
-  }, []);
-
-  const countdown = useCountdown(DAY1_DATE);
+  }, [rangeShortLabel, rangeLabel]);
 
   const [utm, setUtm] = useState<Record<string, string>>({});
   useEffect(() => {
@@ -646,11 +649,11 @@ const Efir09 = () => {
           <div className="mb-7 flex flex-wrap items-center justify-center gap-3">
             <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-['Montserrat',sans-serif] text-sm font-bold shadow-sm md:text-base">
               <Icon name="Calendar" size={18} className="text-[#2F7A52]" />
-              <span>День 1: 22 сентября, 19:00</span>
+              <span>День 1: {day1Label}, 19:00</span>
             </div>
             <div className="flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-['Montserrat',sans-serif] text-sm font-bold shadow-sm md:text-base">
               <Icon name="Calendar" size={18} className="text-[#2F7A52]" />
-              <span>День 2: 23 сентября, 19:00</span>
+              <span>День 2: {day2Label}, 19:00</span>
             </div>
           </div>
 
@@ -717,7 +720,7 @@ const Efir09 = () => {
               </span>
               <div>
                 <p className="font-['Montserrat',sans-serif] text-lg font-bold md:text-xl">
-                  День 1: 22 сентября, 19:00 мск
+                  День 1: {day1Label}, 19:00 мск
                 </p>
                 <p className="text-xs text-[#8A7864] md:text-sm">Лекционная часть · Бизон365</p>
               </div>
@@ -749,7 +752,7 @@ const Efir09 = () => {
               </span>
               <div>
                 <p className="font-['Montserrat',sans-serif] text-lg font-bold md:text-xl">
-                  День 2: 23 сентября, 19:00 мск
+                  День 2: {day2Label}, 19:00 мск
                 </p>
                 <p className="text-xs text-[#8A7864] md:text-sm">Практический эфир · Zoom</p>
               </div>
@@ -1026,7 +1029,7 @@ const Efir09 = () => {
                   {item.q}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-[#6b5d52] md:text-base">
-                  {item.a}
+                  {i === 0 ? item.a.replace("22 и 23 сентября", rangeLabel) : item.a}
                 </AccordionContent>
               </AccordionItem>
             ))}
@@ -1068,7 +1071,7 @@ const Efir09 = () => {
               className="h-10 w-10 flex-shrink-0 rounded-full border-2 border-white/40 object-cover md:h-12 md:w-12"
             />
             <p className="text-left text-sm italic text-white/90 md:text-base">
-              «22 сентября я расскажу то, что обычно говорю только на консультациях один на один.
+              «{day1Label} я расскажу то, что обычно говорю только на консультациях один на один.
               Буду рада увидеть вас на интенсиве» — Инна
             </p>
           </div>
@@ -1093,7 +1096,7 @@ const Efir09 = () => {
                 Регистрация на интенсив
               </h2>
               <p className="mb-6 text-center text-sm text-[#8A7864] md:text-base">
-                22 и 23 сентября · 19:00 мск · онлайн · оба дня одной регистрацией
+                {rangeLabel} · 19:00 мск · онлайн · оба дня одной регистрацией
               </p>
               <form id="efir09-register-form" onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -1202,12 +1205,12 @@ const Efir09 = () => {
                 Вы зарегистрированы!
               </h3>
               <p className="mb-6 text-sm text-[#6b5d52] md:text-base">
-                Проверьте почту — туда придут ссылки на подключение к Дню 1 (22 сентября) и Дню 2 (23
-                сентября).
+                Проверьте почту — туда придут ссылки на подключение к Дню 1 ({day1Label}) и Дню 2 (
+                {day2Label}).
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 <a
-                  href={googleCalendarLink(1)}
+                  href={googleCalendarLink(1, day1Date, day2Date)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => ymGoal("efir09_add_to_calendar_day1")}
@@ -1217,7 +1220,7 @@ const Efir09 = () => {
                   День 1 в календарь
                 </a>
                 <a
-                  href={googleCalendarLink(2)}
+                  href={googleCalendarLink(2, day1Date, day2Date)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => ymGoal("efir09_add_to_calendar_day2")}

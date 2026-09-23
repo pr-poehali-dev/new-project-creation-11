@@ -7,7 +7,7 @@ import psycopg2
 
 
 def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
-    """Регистрация участников на вебинар «Сильная снаружи, сломанная внутри» (22.09).
+    """Регистрация участников на вебинар «Сильная снаружи, сломанная внутри».
     Принимает POST с полями name, email, phone (опц.), consent и UTM-метками, сохраняет в БД.
     """
     method = event.get('httpMethod', 'GET')

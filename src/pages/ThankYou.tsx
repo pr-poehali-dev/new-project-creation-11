@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
+import { useEfir09Schedule, formatEfir09Dates } from "@/lib/efir09-dates";
 
 const TG_LINK = "https://t.me/FaloleevaPsybot?start=dl-1788885417801";
 const MAX_LINK = "https://max.ru/id505003981273_bot?start=dl-17889736833afaa9562bfc";
@@ -41,6 +42,8 @@ function ymGoal(goal: string) {
 const ThankYou = () => {
   const [params] = useSearchParams();
   const name = params.get("name");
+  const { day1Date, day2Date } = useEfir09Schedule();
+  const { rangeLabel } = formatEfir09Dates(day1Date, day2Date);
   const [mailProvider, setMailProvider] = useState<{ url: string; name: string } | null>(null);
   const [mailChecked, setMailChecked] = useState(false);
 
@@ -104,7 +107,7 @@ const ThankYou = () => {
             </h1>
             <p className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 font-['Montserrat',sans-serif] text-sm font-bold shadow-sm md:text-base">
               <Icon name="Calendar" size={18} className="text-[#2F7A52]" />
-              22 и 23 сентября, 19:00 мск
+              {rangeLabel}, 19:00 мск
             </p>
           </div>
 
