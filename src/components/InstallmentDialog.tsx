@@ -111,7 +111,7 @@ const InstallmentDialog = ({ tariff, onClose }: InstallmentDialogProps) => {
                 Заявка отправлена
               </p>
               <p className="text-sm text-[#6b5d52]">
-                Инна свяжется с вами, чтобы согласовать оплату частями
+                Инна свяжется с вами, чтобы согласовать оплату частями и ответить на все вопросы
               </p>
             </div>
           ) : (
