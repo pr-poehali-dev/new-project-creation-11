@@ -5,6 +5,7 @@ import PaymentDialog, { type PaymentTariff } from "@/components/PaymentDialog";
 import InstallmentDialog, { type InstallmentTariff } from "@/components/InstallmentDialog";
 
 const TG_LINK = "https://t.me/InnaFaloleevaPsy";
+const MAX_LINK = "https://max.ru/u/f9LHodD0cOJIgWOUouYOS4DRLnxCzZ6q0hBRUtxF5_x1OBiH8_wn5BE6qS4";
 const IMG = "/opora";
 
 const YM_IDS = [112325163];
@@ -304,16 +305,28 @@ const OporaGroup = () => {
               .
             </p>
             <p className="mt-3 text-sm text-[#6F8A8B]">Ваш психолог Фалолеева Инна.</p>
-            <a
-              href={TG_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => ymGoal("opora_page_tg_click")}
-              className="mt-5 inline-flex items-center gap-2 rounded-xl border-2 border-[#3E8587] px-5 py-2.5 font-['Montserrat',sans-serif] text-sm font-bold text-[#3E8587] transition hover:bg-[#E3F0F0]"
-            >
-              <Icon name="Send" size={16} />
-              Написать в Telegram
-            </a>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <a
+                href={TG_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => ymGoal("opora_page_tg_click")}
+                className="inline-flex items-center gap-2 rounded-xl border-2 border-[#3E8587] px-5 py-2.5 font-['Montserrat',sans-serif] text-sm font-bold text-[#3E8587] transition hover:bg-[#E3F0F0]"
+              >
+                <Icon name="Send" size={16} />
+                Написать в Telegram
+              </a>
+              <a
+                href={MAX_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => ymGoal("opora_page_max_click")}
+                className="inline-flex items-center gap-2 rounded-xl border-2 border-[#3E8587] px-5 py-2.5 font-['Montserrat',sans-serif] text-sm font-bold text-[#3E8587] transition hover:bg-[#E3F0F0]"
+              >
+                <Icon name="MessageCircle" size={16} />
+                Написать в MAX
+              </a>
+            </div>
           </div>
         </div>
       </section>
