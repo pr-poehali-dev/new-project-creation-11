@@ -107,7 +107,7 @@ const OporaGroup = () => {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#FBF7F1] font-['Inter',sans-serif] text-[#2B3A3B]">
+    <div className="min-h-screen w-full overflow-x-hidden break-words bg-[#FBF7F1] font-['Inter',sans-serif] text-[#2B3A3B]">
       <header className="sticky top-0 z-40 border-b border-[#E5D9BE] bg-[#FBF7F1]/90 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-5 py-3">
           <Link to="/" className="font-['Montserrat',sans-serif] text-sm font-bold md:text-base">
@@ -130,10 +130,10 @@ const OporaGroup = () => {
         <div className="absolute inset-0 -z-10 bg-[#2F6B6D]/55" />
         <div className="mx-auto grid max-w-5xl items-center gap-8 px-5 py-14 md:grid-cols-[1.2fr_0.8fr] md:py-24">
           <div>
-            <h1 className="font-['Montserrat',sans-serif] text-4xl font-extrabold leading-tight text-white md:text-6xl">
+            <h1 className="font-['Montserrat',sans-serif] text-3xl font-extrabold leading-tight text-white sm:text-4xl md:text-6xl">
               Терапевтическая группа <span className="text-[#E5D9BE]">«Опора»</span>
             </h1>
-            <div className="mt-8 inline-block rounded-[2rem] bg-[#E5D9BE]/90 px-6 py-4 text-[#2B3A3B]">
+            <div className="mt-8 inline-block rounded-[2rem] bg-[#E5D9BE]/90 px-5 py-3 text-[#2B3A3B] md:px-6 md:py-4">
               <p className="font-['Montserrat',sans-serif] text-base font-bold md:text-lg">Интегративный психолог</p>
               <p className="font-['Montserrat',sans-serif] text-base md:text-lg">Фалолеева Инна</p>
             </div>
@@ -149,7 +149,7 @@ const OporaGroup = () => {
         <div className="absolute inset-0 -z-10 bg-[#5B3A22]/30" />
         <div className="mx-auto flex min-h-[420px] max-w-5xl flex-col items-center justify-center gap-6 px-5 py-14 text-center md:min-h-[520px]">
           <p className="font-['Montserrat',sans-serif] text-2xl font-bold text-white md:text-3xl">Терапевтическая группа</p>
-          <p className="max-w-lg rounded-[2.5rem] bg-[#3E8587]/85 px-8 py-6 font-['Montserrat',sans-serif] text-lg font-bold leading-snug text-white md:text-xl">
+          <p className="max-w-lg rounded-[2.5rem] bg-[#3E8587]/85 px-6 py-5 font-['Montserrat',sans-serif] text-base font-bold leading-snug text-white sm:px-8 sm:py-6 sm:text-lg md:text-xl">
             Для женщин, которые снаружи выглядят сильными и собранными, а внутри — на пределе
           </p>
           <p className="font-['Montserrat',sans-serif] text-3xl font-semibold text-white md:text-4xl">12 недель</p>
@@ -162,7 +162,7 @@ const OporaGroup = () => {
             <img src={`${IMG}/compass.jpg`} alt="Компас на дороге" className="h-full w-full object-cover" />
           </div>
           <div>
-            <h2 className="mb-5 font-['Montserrat',sans-serif] text-2xl font-bold text-[#E8734A] md:text-3xl">
+            <h2 className="mb-5 font-['Montserrat',sans-serif] text-xl font-bold text-[#E8734A] sm:text-2xl md:text-3xl">
               Пройдя терапию в группе, ты:
             </h2>
             <ul className="space-y-3">
@@ -173,7 +173,7 @@ const OporaGroup = () => {
                 </li>
               ))}
             </ul>
-            <p className="mt-6 font-['Montserrat',sans-serif] text-xl font-bold text-[#E8734A]">
+            <p className="mt-6 font-['Montserrat',sans-serif] text-lg font-bold text-[#E8734A] md:text-xl">
               Не ищи опору — стань ею для себя!
             </p>
           </div>
@@ -183,7 +183,7 @@ const OporaGroup = () => {
       <section className="bg-[#F1E9D6] px-5 py-14 md:py-20">
         <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[1.2fr_0.8fr]">
           <div>
-            <p className="mb-6 inline-block rounded-[2rem] bg-[#E5D9BE] px-6 py-4 font-['Montserrat',sans-serif] text-lg font-bold text-[#3E8587] shadow-sm md:text-xl">
+            <p className="mb-6 inline-block rounded-[2rem] bg-[#E5D9BE] px-5 py-3 font-['Montserrat',sans-serif] text-base font-bold text-[#3E8587] shadow-sm md:px-6 md:py-4 md:text-xl">
               Терапевтическая группа на 12 недель
             </p>
             <ul className="space-y-5">
@@ -268,10 +268,10 @@ const OporaGroup = () => {
             <img src={`${IMG}/hug.jpg`} alt="Поддержка группы" className="h-full w-full object-cover" />
           </div>
           <div>
-            <p className="font-['Montserrat',sans-serif] text-xl font-semibold leading-snug text-[#E8734A] md:text-2xl">
+            <p className="font-['Montserrat',sans-serif] text-lg font-semibold leading-snug text-[#E8734A] sm:text-xl md:text-2xl">
               В группу можно прийти с одной темой, а самое важное открытие сделать совсем в другой!
             </p>
-            <p className="mt-6 font-['Montserrat',sans-serif] text-2xl font-medium leading-snug text-[#3E8587] md:text-4xl">
+            <p className="mt-6 font-['Montserrat',sans-serif] text-xl font-medium leading-snug text-[#3E8587] sm:text-2xl md:text-4xl">
               Почувствуй поддержку группы, стань опорой для себя самой.
             </p>
           </div>
@@ -283,7 +283,7 @@ const OporaGroup = () => {
           <div className="mx-auto w-full max-w-xs overflow-hidden rounded-[3rem] rounded-tr-[8rem] shadow-xl">
             <img src={`${IMG}/inna.jpg`} alt="Инна Фалолеева" className="h-full w-full object-cover" />
           </div>
-          <div className="rounded-[3rem] bg-white p-7 md:p-9">
+          <div className="rounded-[2rem] bg-white p-5 sm:p-7 md:rounded-[3rem] md:p-9">
             <p className="font-['Montserrat',sans-serif] text-xl font-bold text-[#3E8587] md:text-2xl">
               Ведущая группы Инна Фалолеева
             </p>
