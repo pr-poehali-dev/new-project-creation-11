@@ -299,7 +299,7 @@ const OporaGroup = () => {
               Чтобы задать вопрос или узнать актуальную стоимость программы, напиши слово{" "}
               <span className="font-bold text-[#E8734A]">ГРУППА</span> или{" "}
               <span className="font-bold text-[#E8734A]">ОПОРА</span> в личные сообщения ТГ{" "}
-              <a href={TG_LINK} target="_blank" rel="noopener noreferrer" className="font-semibold text-[#3E8587] underline">
+              <a href="https://t.me/FaloleevaPsy" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#3E8587] underline">
                 @InnaFaloleevaPsy
               </a>
               .
