@@ -337,7 +337,6 @@ const OporaGroup = () => {
             Записаться в группу
           </h2>
           <p className="mb-8 text-center text-sm font-medium text-[#E8734A] md:text-base">
-            Все цены — сразу и без вопросов в директ
           </p>
 
           <div className="flex flex-col rounded-[2rem] border border-[#E5D9BE] bg-white p-6 shadow-sm md:p-8">
