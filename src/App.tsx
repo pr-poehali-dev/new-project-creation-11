@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Home from "./pages/Home";
 import Efir09 from "./pages/Efir09";
+import OporaGroup from "./pages/OporaGroup";
 import ThankYou from "./pages/ThankYou";
 import OrderStatus from "./pages/OrderStatus";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/" element={<Home />} />
           <Route path="/sven" element={<Index />} />
           <Route path="/efir09" element={<Efir09 />} />
+          <Route path="/opora_group" element={<OporaGroup />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/order-status" element={<OrderStatus />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
