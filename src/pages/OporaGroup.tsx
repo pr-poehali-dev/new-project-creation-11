@@ -307,7 +307,7 @@ const OporaGroup = () => {
             <p className="mt-3 text-sm text-[#6F8A8B]">Ваш психолог Фалолеева Инна.</p>
             <div className="mt-5 flex flex-wrap gap-3">
               <a
-                href={TG_LINK}
+                href="https://t.me/FaloleevaPsy"
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => ymGoal("opora_page_tg_click")}
