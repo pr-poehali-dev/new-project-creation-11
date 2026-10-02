@@ -298,11 +298,7 @@ const OporaGroup = () => {
             <p className="mt-6 text-sm leading-relaxed text-[#2B3A3B] md:text-base">
               Чтобы задать вопрос или уточнить детали программы, напиши слово{" "}
               <span className="font-bold text-[#E8734A]">ГРУППА</span> или{" "}
-              <span className="font-bold text-[#E8734A]">ОПОРА</span> в личные сообщения{" "}
-              <a href="https://t.me/FaloleevaPsy" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#3E8587] underline">
-                @InnaFaloleevaPsy
-              </a>
-              .
+              <span className="font-bold text-[#E8734A]">ОПОРА</span> в личные сообщения
             </p>
             <p className="mt-3 text-sm text-[#6F8A8B]">Ваш психолог Фалолеева Инна.</p>
             <div className="mt-5 flex flex-wrap gap-3">
