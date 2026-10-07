@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
   Carousel,
@@ -13,7 +12,6 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 
-const REGISTER_URL = "https://functions.poehali.dev/4af27964-7aa8-44d4-8e2d-9a5bfea7e8ff";
 const TG_LINK = "https://t.me/InnaFaloleevaPsy";
 const MAX_LINK = "https://max.ru/join/Um75KJ9X-7yhUGiL1A0c6GPOup5OBhMH_PkMiyEZDjk";
 const EXPERT_PHOTO = "https://cdn.poehali.dev/projects/8d7832a1-ab23-4aac-a6ba-8f43ca7fdf37/bucket/37160f38-a1d2-45fa-aeb1-540e07378b30.jpg";
@@ -194,16 +192,7 @@ function formatPhone(value: string): string {
 }
 
 const Efir10 = () => {
-  const navigate = useNavigate();
   const countdown = useCountdown(EVENT_DATE);
-  const [utm, setUtm] = useState<Record<string, string>>({});
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("+7");
-  const [consent, setConsent] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
   const [diplomaIndex, setDiplomaIndex] = useState<number | null>(null);
   const [testimonialIndex, setTestimonialIndex] = useState<number | null>(null);
   const [mainApi, setMainApi] = useState<CarouselApi>();
@@ -225,14 +214,6 @@ const Efir10 = () => {
     setMeta("name", "description", desc);
     setMeta("property", "og:title", "Бесплатный онлайн-эфир 21.10 «Я — не последняя буква»");
     setMeta("property", "og:description", desc);
-    const p = new URLSearchParams(window.location.search);
-    setUtm({
-      utm_source: p.get("utm_source") || p.get("src") || "",
-      utm_medium: p.get("utm_medium") || "",
-      utm_campaign: p.get("utm_campaign") || "",
-      utm_content: p.get("utm_content") || "",
-      utm_term: p.get("utm_term") || "",
-    });
   }, []);
 
   useEffect(() => {
@@ -254,45 +235,9 @@ const Efir10 = () => {
     };
   }, [lightboxApi]);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-    if (!name.trim() || !email.trim()) {
-      setError("Заполните имя и email");
-      return;
-    }
-    if (!/^7\d{10}$/.test(phone.replace(/\D/g, ""))) {
-      setError("Пожалуйста, проверьте корректность введённого телефона");
-      return;
-    }
-    if (!consent) {
-      setError("Нужно согласие на обработку персональных данных");
-      return;
-    }
-    setLoading(true);
-    try {
-      const res = await fetch(REGISTER_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, consent, ...utm }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Ошибка регистрации, попробуйте ещё раз");
-      ymGoal("efir10_form_submit");
-      try {
-        localStorage.setItem("faloleeva_efir10_email", email.trim());
-        localStorage.setItem("faloleeva_efir10_email_ts", String(Date.now()));
-      } catch {
-        /* storage unavailable */
-      }
-      setSubmitted(true);
-      navigate(`/thanks?name=${encodeURIComponent(name.trim())}`);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Что-то пошло не так, попробуйте ещё раз");
-    } finally {
-      setLoading(false);
-    }
-  }
+  const handlePhoneInput = (e: React.FormEvent<HTMLInputElement>) => {
+    e.currentTarget.value = formatPhone(e.currentTarget.value);
+  };
 
   const goRegister = (goal: string) => {
     ymGoal(goal);
@@ -318,7 +263,7 @@ const Efir10 = () => {
                 </div>
               </div>
             </div>
-            <button
+            <button type="button"
               onClick={() => goRegister("efir10_header_cta")}
               className="h-9 rounded-xl bg-[#2F7A52] px-3 font-['Montserrat',sans-serif] text-xs font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#1F5E3F] md:px-4 md:text-sm"
             >
@@ -344,7 +289,7 @@ const Efir10 = () => {
             21 октября, 19:00 мск
           </div>
           <div>
-            <button
+            <button type="button"
               onClick={() => goRegister("efir10_hero_cta")}
               className={`${BTN} bg-[#2F7A52] text-white shadow-lg shadow-[#2F7A52]/25 hover:bg-[#1F5E3F]`}
             >
@@ -675,7 +620,7 @@ const Efir10 = () => {
               «21 октября я расскажу то, что обычно говорю только на консультациях один на один. Вы имеете право быть в начале своего списка. Буду рада увидеть вас» — Инна
             </p>
           </div>
-          <button
+          <button type="button"
             onClick={() => goRegister("efir10_final_cta")}
             className={`${BTN} bg-white text-[#2F7A52] shadow-lg hover:bg-[#E3EFE7]`}
           >
@@ -687,65 +632,48 @@ const Efir10 = () => {
 
       <section id="register" className="px-5 py-20">
         <div className={`${CARD} mx-auto max-w-xl p-6 md:p-10`}>
-          {!submitted ? (
-            <>
-              <h2 className={`${H2} mb-2 text-center`}>Регистрация на эфир</h2>
-              <p className="mb-6 text-center text-sm text-[#8A7864]">21 октября · 19:00 мск · онлайн</p>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <label className="mb-1 block text-sm font-medium text-[#3D332B]">Имя</label>
-                  <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Как к вам обращаться" className={INPUT} />
-                </div>
-                <div>
-                  <label className="mb-1 block text-sm font-medium text-[#3D332B]">Email</label>
-                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Для доступа к трансляции" className={INPUT} />
-                </div>
-                <div>
-                  <label className="mb-1 block text-sm font-medium text-[#3D332B]">Телефон</label>
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(formatPhone(e.target.value))}
-                    placeholder="+7 (___) ___-__-__"
-                    className={INPUT}
-                  />
-                </div>
-                <label className="flex items-start gap-3 text-sm text-[#6B5D52]">
-                  <Checkbox checked={consent} onCheckedChange={(v) => setConsent(v === true)} className="mt-0.5" />
-                  <span>
-                    Согласен(на) на{" "}
-                    <Link to="/personal-data-policy" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#2F7A52]">
-                      обработку персональных данных
-                    </Link>{" "}
-                    согласно{" "}
-                    <Link to="/privacy-policy" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#2F7A52]">
-                      политике конфиденциальности
-                    </Link>
-                  </span>
-                </label>
-                {error && <p className="text-sm font-medium text-[#DC2626]">{error}</p>}
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className={`${BTN} w-full bg-[#2F7A52] text-white hover:bg-[#1F5E3F] disabled:opacity-60`}
-                >
-                  {loading ? "Отправляем..." : "Зарегистрироваться на эфир"}
-                  {!loading && <Icon name="ArrowRight" size={20} />}
-                </button>
-                <p className="text-center text-sm font-medium text-[#2F7A52]">
-                  🎁 Подарок за регистрацию: медитация, чтобы успокоиться и расслабиться перед сном
-                </p>
-              </form>
-            </>
-          ) : (
-            <div className="text-center">
-              <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#E3EFE7] text-[#2F7A52]">
-                <Icon name="Check" size={28} />
-              </div>
-              <h3 className="mb-2 font-['Montserrat',sans-serif] text-2xl font-bold text-[#2B2420]">Вы зарегистрированы!</h3>
-              <p className="text-[#6B5D52]">Проверьте почту — туда придёт ссылка на эфир 21 октября в 19:00 мск и подарок.</p>
+          <h2 className={`${H2} mb-2 text-center`}>Регистрация на эфир</h2>
+          <p className="mb-6 text-center text-sm text-[#8A7864]">21 октября · 19:00 мск · онлайн</p>
+          <form id="efir10-register-form" className="space-y-4">
+            <div>
+              <label htmlFor="efir10-name" className="mb-1 block text-sm font-medium text-[#3D332B]">Имя</label>
+              <input id="efir10-name" type="text" name="name" required placeholder="Ваше имя" className={INPUT} />
             </div>
-          )}
+            <div>
+              <label htmlFor="efir10-email" className="mb-1 block text-sm font-medium text-[#3D332B]">Email</label>
+              <input id="efir10-email" type="email" name="email" required placeholder="Email" className={INPUT} />
+            </div>
+            <div>
+              <label htmlFor="efir10-phone" className="mb-1 block text-sm font-medium text-[#3D332B]">Телефон</label>
+              <input
+                id="efir10-phone"
+                type="tel"
+                name="phone"
+                required
+                defaultValue="+7"
+                onInput={handlePhoneInput}
+                placeholder="+7 (___) ___-__-__"
+                className={INPUT}
+              />
+            </div>
+            <label className="flex items-start gap-3 text-sm text-[#6B5D52]">
+              <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 shrink-0 accent-[#2F7A52]" />
+              <span>
+                Согласен на{" "}
+                <Link to="/personal-data-policy" target="_blank" rel="noopener noreferrer" className="underline hover:text-[#2F7A52]">
+                  обработку персональных данных
+                </Link>
+              </span>
+            </label>
+            <p className="bizon-error text-xs font-medium text-[#DC2626] empty:hidden" role="alert"></p>
+            <button type="submit" className={`${BTN} w-full bg-[#2F7A52] text-white hover:bg-[#1F5E3F]`}>
+              Зарегистрироваться на эфир
+              <Icon name="ArrowRight" size={20} />
+            </button>
+            <p className="text-center text-sm font-medium text-[#2F7A52]">
+              🎁 Подарок за регистрацию: медитация, чтобы успокоиться и расслабиться перед сном
+            </p>
+          </form>
         </div>
       </section>
 
