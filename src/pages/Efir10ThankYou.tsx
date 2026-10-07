@@ -56,6 +56,15 @@ const Efir10ThankYou = () => {
   }, []);
 
   useEffect(() => {
+    try {
+      const savedEmail = localStorage.getItem("faloleeva_efir10_email");
+      if (savedEmail) localStorage.setItem("reg_done_efir10_" + savedEmail, String(Date.now()));
+    } catch (e) {
+      /* storage unavailable */
+    }
+  }, []);
+
+  useEffect(() => {
     document.title = "Регистрация почти завершена — онлайн-эфир «Я — не последняя буква»";
     ymGoal("efir10_thankyou_view");
 
