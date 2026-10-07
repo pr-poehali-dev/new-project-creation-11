@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Home from "./pages/Home";
 import Efir09 from "./pages/Efir09";
 import Efir10 from "./pages/Efir10";
+import Efir10ThankYou from "./pages/Efir10ThankYou";
 import OporaGroup from "./pages/OporaGroup";
 import ThankYou from "./pages/ThankYou";
 import OrderStatus from "./pages/OrderStatus";
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/sven" element={<Index />} />
           <Route path="/efir09" element={<Efir09 />} />
           <Route path="/efir10" element={<Efir10 />} />
+          <Route path="/thanks" element={<Efir10ThankYou />} />
           <Route path="/opora_group" element={<OporaGroup />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/order-status" element={<OrderStatus />} />

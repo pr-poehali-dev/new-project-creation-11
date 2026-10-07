@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -194,6 +194,7 @@ function formatPhone(value: string): string {
 }
 
 const Efir10 = () => {
+  const navigate = useNavigate();
   const countdown = useCountdown(EVENT_DATE);
   const [utm, setUtm] = useState<Record<string, string>>({});
   const [name, setName] = useState("");
@@ -278,7 +279,14 @@ const Efir10 = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Ошибка регистрации, попробуйте ещё раз");
       ymGoal("efir10_form_submit");
+      try {
+        localStorage.setItem("faloleeva_efir10_email", email.trim());
+        localStorage.setItem("faloleeva_efir10_email_ts", String(Date.now()));
+      } catch {
+        /* storage unavailable */
+      }
       setSubmitted(true);
+      navigate(`/thanks?name=${encodeURIComponent(name.trim())}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Что-то пошло не так, попробуйте ещё раз");
     } finally {
