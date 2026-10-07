@@ -222,5 +222,116 @@
   }
 })();
 </script>
+<script src="//static.bizon365.ru/form/anyform.min.js"></script>
+<script>
+(function () {
+  // ===== Настройки =====
+  var EVENT_KEY   = 'efir10';                       // метка эфира (ключи localStorage)
+  var FORM_SEL    = '#efir10-register-form';        // ровно одна форма на странице
+  var ERROR_SEL   = '.bizon-error';                 // блок ошибок внутри карточки формы
+  var PAGE_ID     = '209893:ya';                    // идентификатор нового эфира в Бизоне
+  var THANKS_URL  = '/thanks';
+  var PENDING_MS  = 15000;                          // сколько ждём ответ, прежде чем разрешить повтор
+
+  if (window.__efirFormGuardInited) return;         // скрипт подключён дважды -> второй раз ничего не делаем
+  window.__efirFormGuardInited = true;
+
+  function norm(v) { return String(v || '').trim().toLowerCase(); }
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function emailOf(form) {
+    var i = form.querySelector('input[type="email"]');
+    return i ? norm(i.value) : '';
+  }
+
+  var submitting = false, unlockTimer = null;
+
+  function lock(form) {
+    submitting = true;
+    var btn = form.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.setAttribute('data-label', btn.textContent); btn.textContent = 'Отправляем…'; }
+    clearTimeout(unlockTimer);
+    unlockTimer = setTimeout(function () { unlock(form); }, PENDING_MS);
+  }
+  function unlock(form) {
+    submitting = false;
+    clearTimeout(unlockTimer);
+    var btn = form.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = false; if (btn.getAttribute('data-label')) btn.textContent = btn.getAttribute('data-label'); }
+  }
+
+  // ===== 1. Страж отправки. capture на document => срабатывает ДО обработчика Бизона =====
+  document.addEventListener('submit', function (e) {
+    var form = e.target;
+    if (!form || !form.matches || !form.matches(FORM_SEL)) return;
+
+    var email = emailOf(form);
+
+    // Уже регистрировался этим email -> не отправляем, ведём на «Спасибо»
+    if (email && lsGet('reg_done_' + EVENT_KEY + '_' + email)) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      window.location.href = THANKS_URL;
+      return;
+    }
+    // Запрос уже в пути -> повторную отправку гасим
+    if (submitting) {
+      e.preventDefault(); e.stopImmediatePropagation();
+      return;
+    }
+    lock(form);
+    if (email) {                                     // для кнопки «Перейти в почту» на /thanks
+      lsSet('faloleeva_' + EVENT_KEY + '_email', email);
+      lsSet('faloleeva_' + EVENT_KEY + '_email_ts', String(Date.now()));
+    }
+  }, true);
+
+  // ===== 2. Если Бизон показал ошибку -> сразу разблокируем кнопку =====
+  function watchErrors() {
+    var box = document.querySelector(ERROR_SEL);
+    var form = document.querySelector(FORM_SEL);
+    if (!box || !form || box.__watched) return;
+    box.__watched = true;
+    new MutationObserver(function () {
+      if ((box.textContent || '').trim()) unlock(form);
+    }).observe(box, { childList: true, characterData: true, subtree: true });
+  }
+
+  // ===== 3. Инициализация формы Бизона: ровно один раз =====
+  function initBizon() {
+    if (window.__bizonFormInited) return true;
+    var form = document.querySelector(FORM_SEL);
+    if (!form || typeof window.$bizon_init_form !== 'function') return false;
+
+    window.$bizon_init_form({
+      selectors: { form: FORM_SEL, message: ERROR_SEL },
+      form_fields: {
+        email:    FORM_SEL + ' input[type="email"]',
+        phone:    FORM_SEL + ' input[type="tel"]',   // телефон ОБЯЗАТЕЛЕН
+        username: FORM_SEL + ' input[name="name"]'
+      },
+      pageId: PAGE_ID,
+      closestDateOnly: true,
+      redirectUrl: THANKS_URL,
+      successMessage: '',
+      allowFormAction: false          // один путь отправки: только Бизон
+    });
+
+    window.__bizonFormInited = true;
+    watchErrors();
+    return true;
+  }
+
+  function start() {
+    if (initBizon()) return;
+    var attempts = 0;
+    var t = setInterval(function () {
+      attempts++;
+      if (initBizon() || attempts > 50) clearInterval(t);
+    }, 200);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>
 </body>
 </html>
