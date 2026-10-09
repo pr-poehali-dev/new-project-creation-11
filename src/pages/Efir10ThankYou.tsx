@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 
-const TG_LINK = "https://t.me/FaloleevaPsybot?start=dl-1788885417801";
-const MAX_LINK = "https://max.ru/id505003981273_bot?start=dl-17889736833afaa9562bfc";
+const TG_LINK = "https://t.me/FaloleevaPsybot?start=c1791522811044-ds";
+const MAX_LINK = "https://max.ru/id505003981273_bot?start=c1791522811044-ds";
 
 const EMAIL_PROVIDERS: { domains: string[]; url: string; name: string }[] = [
   { domains: ["gmail.com", "googlemail.com"], url: "https://mail.google.com/mail/u/0/#inbox", name: "Gmail" },
