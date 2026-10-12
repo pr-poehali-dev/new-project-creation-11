@@ -191,6 +191,21 @@ function formatPhone(value: string): string {
   return r;
 }
 
+function sanitizeIntlPhone(value: string): string {
+  const hasPlus = value.trim().startsWith("+");
+  const cleaned = value.replace(/[^\d\-\s()]/g, "");
+  let digitCount = 0;
+  let result = hasPlus ? "+" : "";
+  for (const ch of cleaned) {
+    if (/\d/.test(ch)) {
+      digitCount++;
+      if (digitCount > 15) break;
+    }
+    result += ch;
+  }
+  return result;
+}
+
 const Efir10 = () => {
   const countdown = useCountdown(EVENT_DATE);
   const [diplomaIndex, setDiplomaIndex] = useState<number | null>(null);
@@ -235,8 +250,89 @@ const Efir10 = () => {
     };
   }, [lightboxApi]);
 
-  const handlePhoneInput = (e: React.FormEvent<HTMLInputElement>) => {
-    e.currentTarget.value = formatPhone(e.currentTarget.value);
+  const [phone, setPhone] = useState("+7");
+  const [phoneIntl, setPhoneIntl] = useState(false);
+  const [phoneTouched, setPhoneTouched] = useState(false);
+
+  const isPhoneValid = (value: string) => {
+    const digits = value.replace(/\D/g, "");
+    if (phoneIntl) return digits.length >= 7 && digits.length <= 15;
+    return /^7\d{10}$/.test(digits);
+  };
+
+  const switchToIntlPhone = (remainingDigits: string) => {
+    setPhoneIntl(true);
+    setPhone(remainingDigits ? "+" + remainingDigits : "+");
+  };
+
+  const switchToRuPhone = () => {
+    setPhoneIntl(false);
+    setPhone("+7");
+    setPhoneTouched(false);
+  };
+
+  const handlePhoneChange = (rawValue: string) => {
+    if (phoneIntl) {
+      setPhone(sanitizeIntlPhone(rawValue));
+      return;
+    }
+    const plusMatch = rawValue.trim().match(/^\+(\d+)/);
+    if (plusMatch && !plusMatch[1].startsWith("7") && !plusMatch[1].startsWith("8")) {
+      setPhoneIntl(true);
+      setPhone(sanitizeIntlPhone(rawValue));
+      return;
+    }
+    setPhone(formatPhone(rawValue));
+  };
+
+  const handlePhoneKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (phoneIntl) return;
+    if (e.key !== "Backspace" && e.key !== "Delete") return;
+    const input = e.currentTarget;
+    const pos = input.selectionStart ?? 0;
+    const end = input.selectionEnd ?? 0;
+    const value = input.value;
+    const toIntl = () => {
+      e.preventDefault();
+      const digits = value.replace(/\D/g, "");
+      switchToIntlPhone(digits.startsWith("7") ? digits.slice(1) : digits);
+    };
+
+    if (pos !== end) {
+      if (pos < 2) toIntl();
+      return;
+    }
+
+    let idx = -1;
+    if (e.key === "Backspace") {
+      if (pos <= 2) return toIntl();
+      idx = pos - 1;
+      while (idx > 1 && !/\d/.test(value[idx])) idx--;
+      if (idx <= 1) return toIntl();
+    } else {
+      if (pos >= value.length) return;
+      idx = pos;
+      while (idx < value.length && !/\d/.test(value[idx])) idx++;
+      if (idx <= 1 || idx >= value.length) return toIntl();
+    }
+    e.preventDefault();
+    const digitsBefore = value.slice(0, idx).replace(/\D/g, "").length;
+    const formatted = formatPhone(value.slice(0, idx) + value.slice(idx + 1));
+    setPhone(formatted);
+    requestAnimationFrame(() => {
+      let count = 0;
+      let newPos = formatted.length;
+      for (let i = 0; i < formatted.length; i++) {
+        if (/\d/.test(formatted[i])) {
+          count++;
+          if (count === digitsBefore + 1) {
+            newPos = i;
+            break;
+          }
+        }
+      }
+      input.setSelectionRange(newPos, newPos);
+    });
   };
 
   const goRegister = (goal: string) => {
@@ -644,17 +740,36 @@ const Efir10 = () => {
               <input id="efir10-email" type="email" name="email" required placeholder="Email" className={INPUT} />
             </div>
             <div>
-              <label htmlFor="efir10-phone" className="mb-1 block text-sm font-medium text-[#3D332B]">Телефон</label>
+              <div className="mb-1 flex items-center justify-between">
+                <label htmlFor="efir10-phone" className="block text-sm font-medium text-[#3D332B]">Телефон</label>
+                {phoneIntl && (
+                  <button
+                    type="button"
+                    onClick={switchToRuPhone}
+                    className="text-xs font-medium text-[#2F7A52] underline-offset-2 hover:underline"
+                  >
+                    Ввести российский номер
+                  </button>
+                )}
+              </div>
               <input
                 id="efir10-phone"
                 type="tel"
                 name="phone"
                 required
-                defaultValue="+7"
-                onInput={handlePhoneInput}
-                placeholder="+7 (___) ___-__-__"
-                className={INPUT}
+                value={phone}
+                onChange={(e) => handlePhoneChange(e.target.value)}
+                onKeyDown={handlePhoneKeyDown}
+                onBlur={() => setPhoneTouched(true)}
+                placeholder={phoneIntl ? "+___________" : "+7 (___) ___-__-__"}
+                className={`${INPUT} ${phoneTouched && !isPhoneValid(phone) ? "!border-red-500" : ""}`}
               />
+              {phoneIntl && !(phoneTouched && !isPhoneValid(phone)) && (
+                <p className="mt-1 text-xs text-[#8A7864]">Зарубежный номер</p>
+              )}
+              {phoneTouched && !isPhoneValid(phone) && (
+                <p className="mt-1 text-xs text-red-500">Пожалуйста, проверьте корректность введённого телефона</p>
+              )}
             </div>
             <label className="flex items-start gap-3 text-sm text-[#6B5D52]">
               <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 shrink-0 accent-[#2F7A52]" />
