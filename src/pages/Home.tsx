@@ -17,6 +17,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import PaymentDialog, { type PaymentTariff } from "@/components/PaymentDialog";
+import VideoTestimonials from "@/components/VideoTestimonials";
 import InstallmentDialog, { type InstallmentTariff } from "@/components/InstallmentDialog";
 /* ─── Constants ─── */
 const INNA_PHOTO =
@@ -741,6 +742,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <VideoTestimonials onPlay={() => ymGoal("home_video_testimonial_play")} />
 
       {/* ── Testimonials ── */}
       <section id="testimonials" className="bg-white px-5 py-14 md:py-20">
