@@ -368,7 +368,7 @@ const Session = () => {
               src={IMG.inna}
               alt="Инна Фалолеева"
               loading="lazy"
-              className="mb-6 aspect-[16/10] w-full rounded-3xl object-cover"
+              className="mx-auto mb-6 aspect-[3/4] w-full max-w-sm rounded-3xl object-cover"
             />
             <p className="mb-3 text-sm leading-relaxed text-white/85 md:text-base">
               Интегративный психолог, клинический психолог, ЭОТ-терапевт. Более 2400 часов практики с клиентами.

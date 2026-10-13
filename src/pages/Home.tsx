@@ -384,7 +384,7 @@ const Home = () => {
           <div className="ml-auto flex items-center gap-2 md:gap-3">
             <button
               onClick={() => {
-                scrollTo("pricing");
+                scrollTo("start");
                 ymGoal("home_header_cta");
               }}
               className="rounded-lg bg-[#2F7A52] px-4 py-2 font-['Montserrat',sans-serif] text-xs font-bold text-white transition hover:bg-[#1F5E3F] md:text-sm"
@@ -410,7 +410,7 @@ const Home = () => {
             <div className="mb-6 flex flex-wrap items-center justify-center gap-3 md:justify-start">
               <button
                 onClick={() => {
-                  scrollTo("pricing");
+                  scrollTo("start");
                   ymGoal("home_hero_cta_primary");
                 }}
                 className="inline-flex items-center gap-2 rounded-xl bg-[#2F7A52] px-7 py-4 font-['Montserrat',sans-serif] text-base font-bold text-white shadow-lg shadow-[#2F7A52]/25 transition hover:-translate-y-0.5 hover:bg-[#1F5E3F]"
@@ -635,6 +635,29 @@ const Home = () => {
         </div>
       </section>
 
+      {/* ── Start ── */}
+      <section id="start" className="bg-white px-5 py-14 md:py-20">
+        <div className="mx-auto max-w-3xl rounded-3xl border border-[#EEE0D2] bg-[#FBF6F0] p-7 text-center shadow-sm md:p-12">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-[#2F7A52] md:text-sm">
+            Первый шаг
+          </p>
+          <h2 className="mb-4 font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
+            Как начать работать со мной?
+          </h2>
+          <p className="mx-auto mb-6 max-w-xl text-base leading-relaxed text-[#3d332b] md:text-lg">
+            С бесплатной стартовой сессии: 30 минут индивидуально и онлайн, чтобы понять, что стоит за вашими трудностями и с чего начать изменения.
+          </p>
+          <Link
+            to="/session"
+            onClick={() => ymGoal("home_start_session_click")}
+            className="inline-flex items-center gap-2 rounded-xl bg-[#2F7A52] px-7 py-4 font-['Montserrat',sans-serif] text-base font-bold text-white shadow-lg shadow-[#2F7A52]/25 transition hover:-translate-y-0.5 hover:bg-[#1F5E3F]"
+          >
+            Подробнее
+            <Icon name="ArrowRight" size={20} />
+          </Link>
+        </div>
+      </section>
+
       {/* ── Pricing ── */}
       <section id="pricing" className="bg-[#FBF6F0] px-5 py-14 md:py-20">
         <div className="mx-auto max-w-5xl">
@@ -846,7 +869,7 @@ const Home = () => {
           <div className="flex flex-wrap items-center justify-center gap-3">
             <button
               onClick={() => {
-                scrollTo("pricing");
+                scrollTo("start");
                 ymGoal("home_final_cta_primary");
               }}
               className="rounded-xl bg-white px-7 py-4 font-['Montserrat',sans-serif] text-base font-bold text-[#2F7A52] shadow-lg transition hover:-translate-y-0.5"
