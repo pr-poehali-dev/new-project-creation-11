@@ -1,0 +1,7 @@
+{
+  "tests": [
+    {"name": "CORS preflight", "method": "OPTIONS", "path": "/", "expectedStatus": 200},
+    {"name": "Missing fields returns 400", "method": "POST", "path": "/", "body": {"user_name": ""}, "expectedStatus": 400},
+    {"name": "Invalid email returns 400", "method": "POST", "path": "/", "body": {"user_name": "Тест", "user_email": "bad", "user_phone": "+79991234567"}, "expectedStatus": 400}
+  ]
+}
