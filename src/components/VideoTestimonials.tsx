@@ -12,11 +12,13 @@ import {
 const OWNER_ID = "-241762557";
 
 const VIDEOS = [
-  { id: "456239018", label: "Видеоотзыв №1" },
-  { id: "456239019", label: "Видеоотзыв №2" },
-  { id: "456239021", label: "Видеоотзыв №3" },
-  { id: "456239020", label: "Видеоотзыв №4" },
+  { id: "456239018", name: "Тария", cover: "/video/cover1.webp" },
+  { id: "456239019", name: "Виктория", cover: "/video/cover2.webp" },
+  { id: "456239021", name: "Дарья", cover: "/video/cover3.webp" },
+  { id: "456239020", name: "Елена", cover: "/video/cover4.webp" },
 ];
+
+const TITLE = "Отзыв о работе с психологом Инной Фалолеевой";
 
 const embedUrl = (id: string) =>
   `https://vk.com/video_ext.php?oid=${OWNER_ID}&id=${id}&hd=2&autoplay=1`;
@@ -69,7 +71,7 @@ const VideoTestimonials = ({ onPlay }: VideoTestimonialsProps) => {
                     {isPlaying ? (
                       <iframe
                         src={embedUrl(v.id)}
-                        title={v.label}
+                        title={`${TITLE}. ${v.name}`}
                         allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
                         allowFullScreen
                         className="absolute inset-0 h-full w-full border-0"
@@ -77,7 +79,7 @@ const VideoTestimonials = ({ onPlay }: VideoTestimonialsProps) => {
                     ) : (
                       <button
                         type="button"
-                        aria-label={`Смотреть: ${v.label}`}
+                        aria-label={`Смотреть: ${TITLE}. ${v.name}`}
                         onClick={() => {
                           if (!isActive) {
                             api?.scrollTo(i);
@@ -86,13 +88,21 @@ const VideoTestimonials = ({ onPlay }: VideoTestimonialsProps) => {
                           setPlayingId(v.id);
                           onPlay?.();
                         }}
-                        className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-b from-[#3D332B] to-[#2B2420] text-white"
+                        className="absolute inset-0 flex items-center justify-center text-white"
                       >
-                        <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#E8A288] text-[#2B2420] shadow-lg transition hover:scale-110">
+                        <img
+                          src={v.cover}
+                          alt={`${TITLE}. ${v.name}`}
+                          loading="lazy"
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
+                        <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/75 to-transparent" />
+                        <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-[#E8A288] text-[#2B2420] shadow-lg transition hover:scale-110">
                           <Icon name="Play" size={28} />
                         </span>
-                        <span className="px-4 text-center font-['Montserrat',sans-serif] text-sm font-bold">
-                          {v.label}
+                        <span className="absolute inset-x-0 bottom-0 px-4 pb-4 text-left">
+                          <span className="block text-xs text-white/80">{TITLE}</span>
+                          <span className="block font-['Montserrat',sans-serif] text-base font-bold">{v.name}</span>
                         </span>
                       </button>
                     )}
