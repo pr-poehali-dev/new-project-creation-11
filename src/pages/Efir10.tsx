@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Icon from "@/components/ui/icon";
+import VideoTestimonials from "@/components/VideoTestimonials";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
@@ -608,6 +609,8 @@ const Efir10 = () => {
           </div>
         </div>
       </section>
+
+      <VideoTestimonials onPlay={() => ymGoal("efir10_video_testimonial_play")} />
 
       <section className="px-5 py-20">
         <div className="mx-auto max-w-4xl">
