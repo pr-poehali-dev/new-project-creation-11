@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Icon from "@/components/ui/icon";
 import { Checkbox } from "@/components/ui/checkbox";
 import { usePhoneInput } from "@/hooks/usePhoneInput";
@@ -17,8 +17,8 @@ function ymGoal(goal: string) {
   YM_IDS.forEach((id) => ym(id, "reachGoal", goal));
 }
 
-function scrollTo(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+function scrollTo(id: string, smooth = true) {
+  document.getElementById(id)?.scrollIntoView({ behavior: smooth ? "smooth" : "auto", block: "start" });
 }
 
 function isValidEmail(email: string): boolean {
@@ -126,9 +126,18 @@ const Session = () => {
     );
   }, []);
 
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    if (hash !== "#form") return;
+    const timers = [0, 300, 900, 1800].map((ms) => setTimeout(() => scrollTo("form", false), ms));
+    return () => timers.forEach(clearTimeout);
+  }, [hash]);
+
   const goForm = (goal: string) => {
     ymGoal(goal);
-    scrollTo("session-form");
+    window.history.replaceState(null, "", "/session#form");
+    scrollTo("form");
   };
 
   async function handleSubmit(e: React.FormEvent) {
@@ -359,7 +368,7 @@ const Session = () => {
         </div>
       </section>
 
-      <section id="session-form" className="bg-[#1F3A35] px-5 py-14 text-white md:py-20">
+      <section className="bg-[#1F3A35] px-5 py-14 text-white md:py-20">
         <div className="mx-auto grid max-w-6xl items-start gap-10 md:grid-cols-2">
           <div>
             <p className={EYEBROW}>Давайте начнём с вашей истории</p>
@@ -381,7 +390,7 @@ const Session = () => {
             </p>
           </div>
 
-          <div className="rounded-3xl bg-[#F5EFE6] p-6 text-[#1F3A35] shadow-2xl md:p-8">
+          <div id="form" className="scroll-mt-20 rounded-3xl bg-[#F5EFE6] p-6 text-[#1F3A35] shadow-2xl md:p-8">
             {done ? (
               <div className="py-6 text-center">
                 <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#1F3A35] text-[#C9A47A]">
