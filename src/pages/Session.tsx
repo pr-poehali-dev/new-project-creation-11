@@ -198,7 +198,7 @@ const Session = () => {
       <section className="bg-[#1F3A35] px-5 py-12 text-white md:py-20">
         <div className="mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-2">
           <div>
-            <p className={EYEBROW}>Индивидуальная онлайн-встреча</p>
+            <p className={EYEBROW}>Индивидуально онлайн</p>
             <h1 className="mb-6 font-['Montserrat',sans-serif] text-4xl font-extrabold uppercase leading-[1.05] md:text-6xl">
               Бесплатная
               <br />
