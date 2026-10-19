@@ -2,6 +2,7 @@ import json
 import os
 import re
 import smtplib
+import threading
 from email.mime.text import MIMEText
 from urllib.request import Request, urlopen
 from typing import Dict, Any
@@ -114,10 +115,12 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
         f"Email: {user_email}\n"
         f"Телефон: {user_phone}"
     )
-    send_email_notification("Новая заявка на стартовую встречу", text)
-    send_telegram_notification(text.replace("📋 Новая заявка на стартовую встречу", "📋 <b>Новая заявка на стартовую встречу</b>", 1))
+    jobs = [
+        (send_email_notification, ("Новая заявка на стартовую встречу", text)),
+        (send_telegram_notification, (text.replace("📋 Новая заявка на стартовую встречу", "📋 <b>Новая заявка на стартовую встречу</b>", 1),)),
+    ]
 
-    append_row('Лиды-2110', [
+    row = [
         'Стартовая встреча',
         request_id,
         '',
@@ -133,6 +136,13 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
         '',
         '',
         FORMAT_TITLE,
-    ])
+    ]
+    jobs.append((append_row, ('Лиды-2110', row)))
+
+    threads = [threading.Thread(target=fn, args=args) for fn, args in jobs]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
 
     return resp(200, {'id': request_id, 'status': 'ok'})
