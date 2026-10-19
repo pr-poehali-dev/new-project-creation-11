@@ -117,7 +117,7 @@ def handler(event: Dict[str, Any], context) -> Dict[str, Any]:
     send_email_notification("Новая заявка на стартовую встречу", text)
     send_telegram_notification(text.replace("📋 Новая заявка на стартовую встречу", "📋 <b>Новая заявка на стартовую встречу</b>", 1))
 
-    append_row('Лиды', [
+    append_row('Лиды-2110', [
         'Стартовая встреча',
         request_id,
         '',
