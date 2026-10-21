@@ -457,9 +457,7 @@ const Home = () => {
               </div>
             ))}
           </div>
-          <p className="mt-6 text-center text-sm italic text-[#8A7864] md:text-base">
-            Если узнали себя хотя бы в двух пунктах — начните с раздела «Формат работы» ниже
-          </p>
+
         </div>
       </section>
 
@@ -660,7 +658,7 @@ const Home = () => {
       </section>
 
       {/* ── Pricing ── */}
-      <section id="pricing" className="bg-[#FBF6F0] px-5 py-14 md:py-20">
+      {false && (<section id="pricing" className="bg-[#FBF6F0] px-5 py-14 md:py-20">
         <div className="mx-auto max-w-5xl">
           <h2 className="mb-2 text-center font-['Montserrat',sans-serif] text-2xl font-bold md:text-3xl">
             Формат работы
@@ -741,7 +739,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section>)}
 
       <VideoTestimonials onPlay={() => ymGoal("home_video_testimonial_play")} />
 
